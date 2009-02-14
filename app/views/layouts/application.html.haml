@@ -1,0 +1,8 @@
+!!!Strict
+%html
+  %head
+    = stylesheet_link_tag 'application'
+  %body
+    .logo= image_tag('logo.png')
+    .error= flash[:error]
+    = yield

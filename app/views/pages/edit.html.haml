@@ -1,0 +1,8 @@
+%h1 Editing page
+- form_for(@page) do |f|
+  = f.error_messages
+
+  %p= f.submit "Save"
+
+= link_to 'Cancel', @page
+= link_to 'Delete', @page, :method => :delete

@@ -1,0 +1,5 @@
+%h1
+  Index Page
+%ul
+  - for page in @pages
+    %li= link_to page.title, page_path(page)

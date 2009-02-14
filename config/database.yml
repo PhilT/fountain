@@ -1,0 +1,29 @@
+# mysql -u root -p
+# grant all on *.* to 'slipi'@'localhost' identified by 'slipi';
+# exit
+
+common: &common
+  adapter: mysql
+  username: slipi
+  password: slipi
+  host: localhost
+  encoding: utf8
+<% if File.exist? "/var/run/mysqld/mysqld.sock" %>
+  socket: /var/run/mysqld/mysqld.sock
+<% elsif File.exist? "/opt/local/var/run/mysql5/mysqld.sock" %>
+  socket: /opt/local/var/run/mysql5/mysqld.sock
+<% elsif File.exist? "/tmp/mysql.sock" %>
+  socket: /tmp/mysql.sock
+<% end %>
+
+development:
+  <<: *common
+  database: slipi_development
+
+test:
+  <<: *common
+  database: slipi_test
+
+production:
+  <<: *common
+  database: slipi_production

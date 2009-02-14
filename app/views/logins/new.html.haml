@@ -1,0 +1,6 @@
+%h1 Admin Login
+%p
+  - form_tag(logins_path) do
+    = label_tag('password', 'Password')
+    = text_field_tag('password')
+    = submit_tag("Login")
