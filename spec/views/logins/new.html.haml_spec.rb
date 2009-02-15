@@ -10,10 +10,4 @@ describe "/logins/new.html.haml" do
       with_tag("input#password")
     end
   end
-
-  it "should render errors" do
-    assigns[:error_message] = "Incorrect password"
-    render "/logins/new.html.haml"
-    response.should have_tag("p", "Incorrect password")
-  end
 end

@@ -9,7 +9,7 @@ Scenario: Page added to history
     |name 1|title 1|content 1|
     |name 2|title 2|content 2|
     |LinkToAPage|Link To A Page|content|false|
-  And the home page contains a "Link To A Page"
+  And the home page contains a url with a "Link To A Page"
   And I go to the homepage
   When I follow "Link To A Page"
   Then I should see the following links in the history:

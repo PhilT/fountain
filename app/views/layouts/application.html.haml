@@ -3,6 +3,7 @@
   %head
     = stylesheet_link_tag 'application'
   %body
-    .logo= image_tag('logo.png')
-    .error= flash[:error]
+    div.logo= image_tag('logo.png')
+    - display_flash
     = yield
+    #index= link_to 'Index', pages_path

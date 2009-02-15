@@ -40,7 +40,7 @@ describe LoginsController do
 
       it "should set error message" do
         post :create
-        assigns[:error_message].should == "Invalid Password"
+        flash[:error].should == "Invalid Password"
       end
 
       it "should re-render the 'new' template" do

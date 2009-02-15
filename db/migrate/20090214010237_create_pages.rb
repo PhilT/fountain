@@ -4,10 +4,12 @@ class CreatePages < ActiveRecord::Migration
       t.string :name
       t.string :title
       t.text :content
-      t.boolean :public
+      t.boolean :public, :default => true
 
       t.timestamps
     end
+
+    Page.create!(:name => 'HomePage', :title => 'Home Page', :content => 'AnotherPage')
   end
 
   def self.down

@@ -15,7 +15,7 @@ ActiveRecord::Schema.define(:version => 20090214010237) do
     t.string   "name"
     t.string   "title"
     t.text     "content"
-    t.boolean  "public"
+    t.boolean  "public",     :default => true
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -1,3 +1,5 @@
 %h1= @page.title
-.content= @page.content
-= link_to 'Edit', edit_page_path(@page)
+#content= @page.content
+#sidebar
+
+  = link_to 'Edit', edit_page_path(@page) if admin?

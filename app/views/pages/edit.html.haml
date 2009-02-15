@@ -1,8 +1,15 @@
 %h1 Editing page
 - form_for(@page) do |f|
-  = f.error_messages
-
+  %p
+    = f.label('name')
+    = f.text_field('name')
+  %p
+    = f.label('title')
+    = f.text_field('title')
+  %p
+    = f.label('content')
+    = f.text_field('content')
   %p= f.submit "Save"
 
 = link_to 'Cancel', @page
-= link_to 'Delete', @page, :method => :delete
+= button_to 'Delete', @page, :method => :delete

@@ -3,13 +3,9 @@ Feature: Edit page
   An admin
   wants to edit pages
 
-  Scenario: Login page
-    When I go to the login page
-    Then I should see "Login"
-
   Scenario: Successful Admin Login
     Given I am on the login page
-    When I fill in "Password" with "reason"
+    When I fill in the correct password
     And I press "Login"
     Then I should see "Home Page"
     And I should see "Edit"
@@ -20,14 +16,13 @@ Feature: Edit page
     Then I should see "Login"
     And I should see "Invalid Password"
 
-
-  Scenario: New page
-    Given I am logged in
+  Scenario: Create a new page
+    GivenScenario: Successful Admin Login
     And I am on a new page
-    When I fill in "Name" with "PageName"
-    And I fill in "Title" with "page title"
-    And I fill in "Content" with "some content"
-    And I press "Create"
-    Then I should see "PageName"
-    And I should see "page title"
-    And I should see "some content"
+    When I create a new page
+    Then I should see a page with the details I entered
+
+  Scenario: Users cannot edit pages
+    Given I am not logged in
+    When I go to edit the homepage
+    Then I should not see "Title"

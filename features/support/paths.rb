@@ -1,16 +1,14 @@
 def path_to(page_name)
-  case page_name
+  path_mappings = {
+    "the homepage" => lambda { self.root_path },
+    "edit the homepage" => lambda { edit_page_path(Page.find_by_name('HomePage')) },
+    "the login page" => lambda { new_login_path },
+    "a new page" => lambda { new_page_path }
+  }
 
-  when /the homepage/i
-    root_path
-
-  # Add more page name => path mappings here
-  when /the login page/i
-    new_login_path
-
-  when /a new page/i
-    new_page_path
-
+  mapping = path_mappings[page_name]
+  if mapping
+    mapping.call
   else
     raise "Can't find mapping from \"#{page_name}\" to a path."
   end

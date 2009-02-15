@@ -4,12 +4,11 @@ Feature: Show pages
   wants to see a page
 
   Scenario: View the home page
-    Given I'm not on the site
     When I go to the homepage
     Then I should see "Home Page"
     And I should not see "Edit"
 
   Scenario: View the index page
-    Given I go to the homepage
+    And I am on the homepage
     When I follow "Index"
     Then I should see "Index Page"

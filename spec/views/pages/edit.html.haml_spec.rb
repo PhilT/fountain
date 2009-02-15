@@ -5,14 +5,17 @@ describe "/pages/edit.html.haml" do
 
   before(:each) do
     assigns[:page] = @page = stub_model(Page,
+      :name => "PageName",
       :new_record? => false
     )
   end
 
   it "should render edit form" do
     render "/pages/edit.html.haml"
-
     response.should have_tag("form[action=#{page_path(@page)}][method=post]") do
+      with_tag("input#page_name")
+      with_tag("input#page_title")
+      with_tag("input#page_content")
     end
   end
 end

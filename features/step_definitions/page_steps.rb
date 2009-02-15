@@ -1,6 +1,16 @@
 Given /^the following pages:$/ do |pages|
   Page.create!(pages.hashes)
-  puts pages.inspect
+end
+
+Given /^the homepage exists$/ do
+  page = Page.find_by_name('HomePage')
+  page = Page.create!(:name => 'HomePage', :title => 'Home Page', :content => '') unless page
+end
+
+Given /^the home page contains a "(.*)"$/ do |page_link|
+  page = Page.find_by_name('HomePage')
+  page.content << page_link
+  page.save!
 end
 
 When /^I delete the (\d+)(?:st|nd|rd|th) page$/ do |pos|
@@ -8,6 +18,17 @@ When /^I delete the (\d+)(?:st|nd|rd|th) page$/ do |pos|
   within("table > tr:nth-child(#{pos.to_i+1})") do
     click_link "Destroy"
   end
+end
+
+When /^I create a new page$/ do
+  fill_in 'Name', :with => 'PageName'
+  fill_in 'Title', :with => 'Page Title'
+  fill_in 'Content', :with => 'content'
+  click_button 'Save'
+end
+
+Then /^I should see a page with the details I entered$/ do
+
 end
 
 Then /^I should see the following pages:$/ do |pages|
@@ -18,9 +39,6 @@ Then /^I should see the following pages:$/ do |pages|
       }
     end
   end
-end
-
-Given /^the home page contains a "Link To A Page"$/ do
 end
 
 Then /^I should see the following links in the history:$/ do

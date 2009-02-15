@@ -5,8 +5,8 @@ describe "/pages/index.html.haml" do
 
   before(:each) do
     assigns[:pages] = [
-      stub_model(Page),
-      stub_model(Page)
+      stub_model(Page, :name => "PageName"),
+      stub_model(Page, :name => "AnotherPage")
     ]
   end
 
