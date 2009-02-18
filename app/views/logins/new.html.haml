@@ -2,6 +2,6 @@
 %p
   - form_tag(logins_path) do
     %p
-      = label_tag('password', 'Password')
-      = text_field_tag('password')
+      %span= label_tag('password', 'Password')
+      %span= password_field_tag('password')
     = submit_tag("Login")

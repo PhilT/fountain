@@ -1,15 +1,16 @@
-%h1 Editing page
 - form_for(@page) do |f|
   %p
-    = f.label('name')
-    = f.text_field('name')
+    %span= f.label('name')
+    %span= f.text_field('name')
   %p
-    = f.label('title')
-    = f.text_field('title')
-  %p
-    = f.label('content')
-    = f.text_field('content')
-  %p= f.submit "Save"
+    %span= f.label('title')
+    %span= f.text_field('title')
+  %p#edit-box
+    = f.text_area('content')
+  %p.button= f.submit "Save"
 
-= link_to 'Cancel', @page
-= button_to 'Delete', @page, :method => :delete
+.buttons
+  %p.button
+    %span= link_to 'Cancel', @page, :method => :get
+  %p.button
+    %span= link_to 'Delete', @page, :method => :delete

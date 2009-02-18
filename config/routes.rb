@@ -13,7 +13,7 @@ ActionController::Routing::Routes.draw do |map|
   #   map.resources :products
 
   map.resources :pages
-  map.resources :logins, :only => [:new, :create]
+  map.resources :logins, :only => [:new, :create, :destroy]
 
   # Sample resource route with options:
   #   map.resources :products, :member => { :short => :get, :toggle => :post }, :collection => { :sold => :get }

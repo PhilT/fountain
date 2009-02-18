@@ -15,7 +15,7 @@ describe "/pages/edit.html.haml" do
     response.should have_tag("form[action=#{page_path(@page)}][method=post]") do
       with_tag("input#page_name")
       with_tag("input#page_title")
-      with_tag("input#page_content")
+      with_tag("textarea#page_content")
     end
   end
 end

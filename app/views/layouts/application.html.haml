@@ -3,7 +3,21 @@
   %head
     = stylesheet_link_tag 'application'
   %body
-    div.logo= image_tag('logo.png')
-    - display_flash
-    = yield
-    #index= link_to 'Index', pages_path
+    #menu
+      #logo= link_to 'striving for purity in ruby on rails apps', root_path
+      %div
+        = link_to image_tag('home.png'), root_path
+        home
+      - edit_link
+      - login_link
+      %div
+        = link_to image_tag('search.png'), pages_path
+        search
+    #page
+      %h1= page_title
+      - display_flash
+      = yield
+    #sidebar
+      #history
+        History
+        %ul

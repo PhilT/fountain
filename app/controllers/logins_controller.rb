@@ -7,7 +7,7 @@ class LoginsController < ApplicationController
 
     if Login.valid?(@password)
       session[:admin] = true
-      flash[:notice] = 'Login was successful.'
+      flash[:notice] = 'Login was successful'
       redirect_to root_url
     else
       flash[:error] = "Invalid Password"
