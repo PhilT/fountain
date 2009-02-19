@@ -3,7 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 describe "/layouts/application.html.haml" do
 
   before do
-    template.stub!(:page_title).and_return('Page Title')
+    assigns[:heading] = 'title'
   end
 
   it "should render flash errors" do
@@ -19,6 +19,6 @@ describe "/layouts/application.html.haml" do
 
   it "should render h1 with a title" do
     render "/layouts/application.html.haml"
-    response.should have_tag("h1", "Page Title")
+    response.should have_tag("h1", "title")
   end
 end

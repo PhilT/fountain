@@ -6,9 +6,9 @@ Feature: Show pages
   Scenario: View the home page
     When I go to the homepage
     Then I should see "Home Page"
-    And I should not see "Edit"
+    And I should see "Edit disabled"
 
-  Scenario: View the index page
+  Scenario: View the search/index page
     And I am on the homepage
-    When I follow "Index"
-    Then I should see "Index Page"
+    When I follow "Search"
+    Then I should see "Search and Index"

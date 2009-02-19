@@ -1,8 +1,10 @@
 class LoginsController < ApplicationController
   def new
+    @heading = 'Admin Login'
   end
 
   def create
+    @heading = 'Admin Login'
     @password = params[:password]
 
     if Login.valid?(@password)

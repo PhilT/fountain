@@ -23,7 +23,7 @@ end
 When /^I create a new page$/ do
   fill_in 'Name', :with => 'PageName'
   fill_in 'Title', :with => 'Page Title'
-  fill_in 'Content', :with => 'content'
+  fill_in 'page_content', :with => 'content'
   click_button 'Save'
 end
 
