@@ -29,9 +29,9 @@ end
 
 Then /^I should see a page with the details I entered$/ do
   body = response.body
-  body.should =~ /<h1>Page Title<\/h1>/
-  body.should =~ /<strong>Page Title<\/strong> was successfully created/
-  body.should =~ /content/
+  body.should =~ /<h1>.*Page Title/m
+  body.should =~ /<strong>Page Title<\/strong> was successfully created/m
+  body.should =~ /content/m
 end
 
 Then /^I should see the following pages:$/ do |pages|
