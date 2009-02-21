@@ -15,8 +15,6 @@ end
 require 'cucumber/rails/rspec'
 require 'webrat/rspec-rails'
 
-Page.create!(:name => 'HomePage', :title => 'Home Page', :content => '') unless Page.find_by_name('HomePage')
-
 content = <<END
 *some bold text* WikiWordsPointToOtherPages
 
@@ -25,4 +23,8 @@ bc. WikiWordsNotLinkedInCodeTags
 
 h2. A Heading
 END
-Page.create!(:name => 'WikiPage', :title => 'Wiki Page', :content => content) unless Page.find_by_name('WikiPage')
+
+Page.destroy_all
+
+Page.create!(:name => 'WikiPage', :title => 'Wiki Page', :content => content)
+Page.create!(:name => 'HomePage', :title => 'Home Page', :content => 'NewPage')

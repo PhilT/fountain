@@ -18,7 +18,14 @@ describe Page do
       Page.new(:name => "UPPERCASE").to_param.should == "uppercase"
       Page.new(:name => "TLAWithOtherWords").to_param.should == "tla-with-other-words"
     end
+  end
 
+  describe "from_slug" do
+    it "should instaniate a new page with the name and title set from the slug" do
+      page = Page.from_slug('page-name')
+      page.name.should == 'PageName'
+      page.title.should == 'Page Name'
+    end
   end
 
   describe "validations" do
@@ -64,7 +71,7 @@ describe Page do
     end
 
     it "should link to a WikiPage that has not been created" do
-      Page.new(:content => 'NonExistentWikiPage').formatted_content.should == '<p><a href="/pages/non-existent-wiki-page">Non Existent Wiki Page</a></p>'
+      Page.new(:content => 'NonExistentWikiPage').formatted_content.should == '<p><a class="new" href="/pages/non-existent-wiki-page">Non Existent Wiki Page</a></p>'
     end
 
   end

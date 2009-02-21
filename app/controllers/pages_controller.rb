@@ -11,16 +11,15 @@ class PagesController < ApplicationController
 
   def show
     @page = Page.find_by_slug(params[:id])
-    @heading = @page.title
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @page }
+    if @page
+      @heading = @page.title
+    else
+      redirect_to new_page_url(:id => params[:id])
     end
   end
 
   def new
-    @page = Page.new
+    @page = Page.from_slug(params[:id])
     @heading = 'New Page'
     render :action => 'edit'
   end
@@ -43,7 +42,7 @@ class PagesController < ApplicationController
   end
 
   def update
-    @page = Page.find(params[:id])
+    @page = Page.find_by_slug(params[:id])
     @heading = "Editing #{@page.title}"
 
     if @page.update_attributes(params[:page])
@@ -55,8 +54,8 @@ class PagesController < ApplicationController
   end
 
   def destroy
-    @page = Page.find(params[:id])
+    @page = Page.find_by_slug(params[:id])
     @page.destroy
-    redirect_to(pages_url)
+    redirect_to(root_url)
   end
 end

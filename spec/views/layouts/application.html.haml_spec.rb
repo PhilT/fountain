@@ -19,6 +19,6 @@ describe "/layouts/application.html.haml" do
 
   it "should render h1 with a title" do
     render "/layouts/application.html.haml"
-    response.should have_tag("h1", "title")
+    response.should have_tag("h1", /title/)
   end
 end

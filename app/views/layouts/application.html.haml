@@ -2,6 +2,9 @@
 %html
   %head
     = stylesheet_link_tag 'application'
+    %title
+      ev tech:
+      = @heading
   %body
     #menu
       #logo= link_to 'striving for purity in ruby on rails apps', root_path
@@ -14,10 +17,16 @@
         = link_to image_tag('search.png'), pages_path
         search
     #page
-      %h1= @heading
+      %h1
+        #heading= @heading
+        #datestamp
+          last updated:
+          %strong= @datestamp
       - display_flash
       = yield
     #sidebar
       #history
         History
         %ul
+
+    #footer created using slipi a simple wiki by phil thompson copyright &copy;2009

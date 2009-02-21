@@ -12,6 +12,10 @@ class Page < ActiveRecord::Base
     self.name.underscore.dasherize unless self.name.nil?
   end
 
+  def self.from_slug(slug)
+    Page.new(:name => slug.underscore.classify)
+  end
+
   def self.find_by_slug(slug)
     find_by_name(slug.underscore.classify)
   end

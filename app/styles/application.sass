@@ -3,9 +3,10 @@
 !ev_border_blue = !ev_blue + #222
 !ev_dark_blue = !ev_blue - #444
 !ev_orange = #f92
-!ev_pale_orange = !ev_orange + #222
+!ev_pale_orange = !ev_orange + #444
+!ev_dark_orange = !ev_orange - #222
 !line_width = 10px
-!page_width = 1000px
+!page_width = 750px
 !button_width = 80px
 =faded_border
   :border= 2px solid #eee
@@ -17,12 +18,6 @@ body
 
 img
   :border none
-
-h1
-  :font-size 20px
-  :border-bottom= !line_width solid !ev_pale_blue
-  :margin 0 0 6px 0
-  :height 20px
 
 #menu
   font-size: 14px
@@ -52,13 +47,33 @@ h1
         :line-height 90px
 
 a
-  :display block
   :text-decoration none
   :color= !ev_blue
+  &:hover
+    :background= !ev_pale_blue
+
+  &.new
+    :color= !ev_dark_orange
+    &:hover
+      :background= !ev_pale_orange
+
+h1
+  :border-bottom= !line_width solid !ev_pale_blue
+  :margin 10px 0 6px 0
+  :height 20px
+  #heading
+    :float left
+    :font-size 20px
+
+  #datestamp
+    :float right
+    :font
+      :size 11px
+      :weight normal
+
 
 .error, .notice
   :color #d00
-  :font-weight bold
   :background #fee
   :border 1px solid #fcc
   :width 100%
@@ -94,15 +109,11 @@ a
       :border= 2px solid !ev_orange
 
   #history
-    :margin 2px
-    :padding 2px
-    :border 2px solid #fff
     a
       :font-weight normal
 
 form
   :width 100%
-  :height 400px
   p
     :float left
     :width 270px
@@ -113,6 +124,7 @@ form
       :width 260px
     textarea
       :width= !page_width - 4px
+      :height 350px
     &#edit-box
       :width 100%
 
@@ -144,3 +156,8 @@ div.buttons
   :right 0
   :top 32px
   :width 200px
+
+#footer
+  :clear both
+  :font-size 11px
+  :color #aaa

@@ -28,7 +28,10 @@ When /^I create a new page$/ do
 end
 
 Then /^I should see a page with the details I entered$/ do
-
+  body = response.body
+  body.should =~ /<h1>Page Title<\/h1>/
+  body.should =~ /<strong>Page Title<\/strong> was successfully created/
+  body.should =~ /content/
 end
 
 Then /^I should see the following pages:$/ do |pages|

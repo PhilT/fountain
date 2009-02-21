@@ -48,7 +48,8 @@ class TextContent < Content
   def content
     @content.scan(@@wikiword_regex).flatten.each do |word|
       page = Page.find_or_initialize_by_name(word)
-      @content.gsub!(word, "<a href=\"/pages/#{page.to_param}\">#{page.title}</a>")
+      klass = 'class="new" ' if page.new_record?
+      @content.gsub!(word, "<a #{klass}href=\"/pages/#{page.to_param}\">#{page.title}</a>")
     end
     @content.gsub(@@bangs_regex, '\2')
   end

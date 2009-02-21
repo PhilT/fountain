@@ -18,8 +18,8 @@ Feature: Edit page
 
   Scenario: Create a new page
     GivenScenario: Successful Admin Login
-    And I am on a new page
-    When I create a new page
+    When I follow "New Page"
+    And I create a new page
     Then I should see a page with the details I entered
 
   Scenario: Users cannot edit pages
