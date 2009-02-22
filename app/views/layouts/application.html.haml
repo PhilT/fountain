@@ -1,7 +1,7 @@
 !!!Strict
 %html
   %head
-    = stylesheet_link_tag 'application'
+    = stylesheet_link_tag 'application', 'form'
     %title
       ev tech:
       = @heading
@@ -19,9 +19,7 @@
     #page
       %h1
         #heading= @heading
-        #datestamp
-          last updated:
-          %strong= @datestamp
+        - last_updated
       - display_flash
       = yield
     #sidebar
@@ -29,4 +27,7 @@
         History
         %ul
 
-    #footer created using slipi a simple wiki by phil thompson copyright &copy;2009
+    #footer
+      created using
+      %strong slipi
+      a simple wiki by phil thompson copyright &copy;2009

@@ -1,0 +1,48 @@
+@import colors
+@import lines
+
+form
+  :width 100%
+  span
+    :display block
+    :float left
+    :width 250px
+
+  p
+    :clear both
+    :padding 2px
+    :margin 0
+    input,
+    textarea
+      +ev_blue_border
+      :width 260px
+    textarea
+      :width= !page_width - 4px
+
+input,
+a
+  &.button
+    :display block
+    :float left
+    :margin 2px
+    :width= !button_width
+    :cursor pointer
+    +ev_blue_border
+    :color= !ev_blue
+    &:hover
+      :background= !ev_pale_blue
+a.button
+  :width= !button_width - 4px
+  :text-align center
+
+.buttons
+  :float right
+  p
+    :float right
+    :height 20px
+    :margin 0
+    :padding 0
+
+input.readonly
+  +faded_border
+  :color #666

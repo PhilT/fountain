@@ -1,16 +1,5 @@
-!ev_blue = #0045d2
-!ev_pale_blue = #bad2ff
-!ev_border_blue = !ev_blue + #222
-!ev_dark_blue = !ev_blue - #444
-!ev_orange = #f92
-!ev_pale_orange = !ev_orange + #444
-!ev_dark_orange = !ev_orange - #222
-!line_width = 10px
-!page_width = 750px
-!button_width = 80px
-=faded_border
-  :border= 2px solid #eee
-
+@import colors
+@import lines
 
 body
   :font 13px sans-serif
@@ -76,7 +65,7 @@ h1
   :color #d00
   :background #fee
   :border 1px solid #fcc
-  :width 100%
+  :width= !page_width - 6px
   :padding 2px
 
 .notice
@@ -89,6 +78,22 @@ h1
   :float left
   :width= !page_width
   :position relative
+  :padding 2px
+  #content
+    :padding-left 2px
+    pre
+      :background #f6f6f6
+      :padding 10px
+      :border 1px solid #ddd
+    pre,
+    code
+      :color #006
+      :font 9pt "Bitstream Vera Sans Mono"
+    p,
+    pre
+      :margin 5px
+    h1,h2,h3,h4,h5
+      :margin 15px 0 2px 0
 
 #sidebar
   :float right
@@ -112,52 +117,8 @@ h1
     a
       :font-weight normal
 
-form
-  :width 100%
-  p
-    :float left
-    :width 270px
-    :margin 0 0 7px 0
-    input,
-    textarea
-      :border= 2px solid !ev_pale_blue
-      :width 260px
-    textarea
-      :width= !page_width - 4px
-      :height 350px
-    &#edit-box
-      :width 100%
-
-p.button
-  :margin 2px 0 0 0
-  input,
-  a
-    :display block
-    :height 18px
-    :margin 0 2px 0 0
-    :padding 0
-    :width= !button_width
-    :background= !ev_pale_blue
-    :border= 2px solid !ev_border_blue
-    :line-height 18px
-    :text-align center
-    :color= !ev_dark_blue
-    :font-size 11px
-    :float right
-  input
-    :height 22px
-    :width= !button_width + 4px
-    :position absolute
-    :right 0
-    :top 82px
-
-div.buttons
-  :position absolute
-  :right 0
-  :top 32px
-  :width 200px
-
 #footer
   :clear both
+  :padding-top 10px
   :font-size 11px
   :color #aaa

@@ -30,4 +30,11 @@ module ApplicationHelper
       haml_tag :div, image_tag('login_disabled.png', :alt => 'Login disabled') + 'logout', :class => 'disabled'
     end
   end
+
+  def last_updated
+    haml_tag :div, :id => 'datestamp' do
+      haml_tag :span, 'last updated: '
+      haml_tag :strong, @page.updated_at.to_date.to_s(:rfc822)
+    end if @page && !@page.updated_at.blank?
+  end
 end

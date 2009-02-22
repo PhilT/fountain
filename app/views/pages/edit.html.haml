@@ -1,16 +1,16 @@
 - form_for(@page) do |f|
   %p
     %span= f.label('name')
-    %span= f.text_field('name')
+    %span= f.text_field('name', :readonly => true, :class => 'readonly')
   %p
     %span= f.label('title')
     %span= f.text_field('title')
   %p#edit-box
     = f.text_area('content')
-  %p.button= f.submit "Save"
+  %p= f.submit "Save", :class => 'button'
 
 .buttons
-  %p.button
-    %span= link_to 'Cancel', @page, :method => :get
-  %p.button
-    %span= link_to 'Delete', @page, :method => :delete
+  %p
+    %span= link_to 'Cancel', page_path(@page), :class => 'button'
+  %p
+    %span= button_to 'Delete', @page, :method => :delete, :class => 'button' unless @page.new_record?
