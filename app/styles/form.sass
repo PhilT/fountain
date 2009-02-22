@@ -6,18 +6,20 @@ form
   span
     :display block
     :float left
-    :width 250px
+    :width 100px
 
   p
     :clear both
     :padding 2px
     :margin 0
-    input,
-    textarea
-      +ev_blue_border
-      :width 260px
-    textarea
-      :width= !page_width - 4px
+  input,
+  textarea
+    +ev_blue_border
+    :width 260px
+  textarea
+    :border-top-width 1px
+    :margin-top 0
+    :width= !page_width - 4px
 
 input,
 a
@@ -46,3 +48,27 @@ a.button
 input.readonly
   +faded_border
   :color #666
+
+ul.help
+  :list-style-type none
+  :margin 0
+  :padding 0
+  :padding-left 2px
+  +ev_blue_border
+  :border-bottom none
+  :height 18px
+  :background= #fff - 15
+  :font 9px Arial
+  li
+    :display block
+    :float left
+    :height 14px
+    :line-height 12px
+    :padding 2px 3px 2px 2px
+    :margin 0
+    &.odd
+      :background= #fff - 15
+      :color #008
+    &.even
+      :background= #fff - 10
+      :color #080

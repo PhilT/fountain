@@ -5,7 +5,7 @@ Feature: Show pages using wiki formatting
 
   Scenario: View WikiWords
     When I go to a Wiki Page
-    Then I should see "<strong>some bold text</strong>"
-    And I should see "<a class=\"new\" href=\"/pages/wiki-words-point-to-other-pages\">Wiki Words Point To Other Pages</a>"
-    And I should see "<pre><code>WikiWordsNotLinkedInCodeTags</code></pre>"
-    And I should see "<h2>A Heading</h2>"
+    Then I should see some bold text
+    And I should see a WikiWord as a link
+    And I should not see a WikiWord as a link in a code block
+    And I should see "A Heading" in an h2 header tag

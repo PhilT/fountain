@@ -27,4 +27,4 @@ END
 Page.destroy_all
 
 Page.create!(:name => 'WikiPage', :title => 'Wiki Page', :content => content)
-Page.create!(:name => 'HomePage', :title => 'Home Page', :content => 'NewPage')
+Page.create!(:name => 'HomePage', :title => 'Home Page', :content => 'WikiPage NewPage')

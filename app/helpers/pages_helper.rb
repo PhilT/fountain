@@ -1,6 +1,4 @@
 module PagesHelper
-  include ActionView::Helpers::TagHelper
-
   def history
     session[:history].map do |page|
       link_to(page, page_path(page))
@@ -8,7 +6,7 @@ module PagesHelper
   end
 
   def markup_help
-    [ 'h1. header',
+    help = [ 'h1. heading',
       'bc. block code',
       '_italic_',
       '*bold*',
@@ -21,8 +19,12 @@ module PagesHelper
       'fn1. reference',
       '+underline+',
       '-strikethrough-'
-    ].map do |markup|
-      content_tag('li', markup, :class => 'help')
-    end.join
+    ]
+
+    haml_tag :ul, :class => 'help' do
+      help.each do |markup|
+        haml_tag :li, markup, :class => cycle('odd', 'even')
+      end
+    end
   end
 end

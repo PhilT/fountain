@@ -20,28 +20,36 @@ When /^I delete the (\d+)(?:st|nd|rd|th) page$/ do |pos|
   end
 end
 
-When /^I create a new page$/ do
-  fill_in 'Name', :with => 'PageName'
+When /^I enter the details$/ do
   fill_in 'Title', :with => 'Page Title'
   fill_in 'page_content', :with => 'content'
-  click_button 'Save'
 end
 
-Then /^I should see a page with the details I entered$/ do
+Then /^I should see the (.*) page$/ do |action|
   body = response.body
   body.should =~ /<h1>.*Page Title/m
-  body.should =~ /<strong>Page Title<\/strong> was successfully created/m
+  body.should =~ /<strong>Page Title<\/strong> was successfully #{action}/m
   body.should =~ /content/m
 end
 
-Then /^I should see the following pages:$/ do |pages|
-  pages.raw[1..-1].each_with_index do |row, i|
-    row.each_with_index do |cell, j|
-      response.should have_selector("table > tr:nth-child(#{i+2}) > td:nth-child(#{j+1})") { |td|
-        td.inner_text.should == cell
-      }
-    end
-  end
+Then /^I should see some formatting help$/ do
+  response.body.should =~ /h1. heading/m
+end
+
+Then /^I should see some bold text$/ do
+  Then 'I should see "<strong>some bold text</strong>"'
+end
+
+Then /^I should see a WikiWord as a link$/ do
+  response.body.should =~ /<a class="new" href="\/pages\/wiki-words-point-to-other-pages">Wiki Words Point To Other Pages<\/a>/m
+end
+
+Then /^I should not see a WikiWord as a link in a code block$/ do
+  response.body.should =~ /<pre><code>WikiWordsNotLinkedInCodeTags<\/code><\/pre>/
+end
+
+Then /^I should see "(.*)" in (?:a|an) (.*) .* tag$/ do |text, tag|
+  response.body.should =~ /<#{tag}>#{text}<\/#{tag}>/
 end
 
 Then /^I should see the following links in the history:$/ do

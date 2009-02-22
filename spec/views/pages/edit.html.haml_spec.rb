@@ -38,4 +38,9 @@ describe "/pages/edit.html.haml" do
     render "/pages/edit.html.haml"
     response.should have_text(/input.*readonly/)
   end
+
+  it "should show help line" do
+    render "/pages/edit.html.haml"
+    response.should have_text(/h1. heading/)
+  end
 end

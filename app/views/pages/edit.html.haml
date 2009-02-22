@@ -5,7 +5,8 @@
   %p
     %span= f.label('title')
     %span= f.text_field('title')
-  %p#edit-box
+  %p
+    - markup_help
     = f.text_area('content')
   %p= f.submit "Save", :class => 'button'
 
