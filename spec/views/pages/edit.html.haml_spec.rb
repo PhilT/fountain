@@ -28,10 +28,19 @@ describe "/pages/edit.html.haml" do
     end
   end
 
-  it "should not show delete button when new record" do
-    assigns[:page] = @page = stub_model(Page, :name => 'NewPage', :new_record? => true)
-    render "/pages/edit.html.haml"
-    response.should_not have_text(/input.*Delete/)
+  describe "delete button" do
+    it "should not show delete button when new record" do
+      assigns[:page] = @page = stub_model(Page, :name => 'NewPage', :new_record? => true)
+      render "/pages/edit.html.haml"
+      response.should_not have_text(/input.*Delete/)
+    end
+
+    it "should not show delete button when HomePage" do
+      assigns[:page] = @page = stub_model(Page, :name => 'HomePage')
+      render "/pages/edit.html.haml"
+      response.should_not have_text(/input.*Delete/)
+    end
+
   end
 
   it "should show a readonly name field" do

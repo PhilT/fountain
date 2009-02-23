@@ -161,14 +161,14 @@ describe PagesController do
   describe "responding to DELETE destroy" do
 
     it "should destroy the requested page" do
-      Page.should_receive(:find_by_slug).with("37").and_return(mock_page)
+      Page.should_receive(:find_by_slug).with("page").and_return(mock_page)
       mock_page.should_receive(:destroy)
-      delete :destroy, :id => "37"
+      delete :destroy, :id => "page"
     end
 
     it "should redirect to home page (or previous page?)" do
       Page.stub!(:find_by_slug).and_return(mock_page(:destroy => true))
-      delete :destroy, :id => "1"
+      delete :destroy, :id => "page"
       response.should redirect_to(root_url)
     end
 

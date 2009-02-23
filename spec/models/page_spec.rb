@@ -20,6 +20,11 @@ describe Page do
     end
   end
 
+  it "should not destroy the HomePage" do
+    page = Factory(:page, :name => 'HomePage')
+    page.destroy.should be_false
+  end
+
   describe "from_slug" do
     it "should instaniate a new page with the name and title set from the slug" do
       page = Page.from_slug('page-name')

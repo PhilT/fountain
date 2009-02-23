@@ -2,6 +2,7 @@ class Page < ActiveRecord::Base
   include ActiveSupport::CoreExtensions::String::Inflections
   validates_presence_of :title
   validates_format_of :name, :with => /^[a-zA-Z]+$/, :message => "can't contain punctuation or numbers. a-z and A-Z only"
+  before_destroy :stop_homepage_destruction
 
   def initialize(attributes = {})
     super
@@ -22,5 +23,10 @@ class Page < ActiveRecord::Base
 
   def formatted_content
     ContentFormatter.new(RedCloth.new(self.content.to_s).to_html).to_s
+  end
+
+private
+  def stop_homepage_destruction
+    return false if self.name == 'HomePage'
   end
 end

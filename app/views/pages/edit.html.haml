@@ -14,4 +14,4 @@
   %p
     %span= link_to 'Cancel', page_path(@page), :class => 'button'
   %p
-    %span= button_to 'Delete', @page, :method => :delete, :class => 'button' unless @page.new_record?
+    %span= button_to 'Delete', @page, :method => :delete, :class => 'button' unless @page.new_record? || @page.name == 'HomePage'
