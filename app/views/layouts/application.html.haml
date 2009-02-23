@@ -1,7 +1,7 @@
 !!!Strict
 %html
   %head
-    = stylesheet_link_tag 'application', 'form'
+    = stylesheet_link_tag 'application', 'form', 'sidebar'
     %title
       ev tech:
       = @heading
@@ -25,7 +25,7 @@
     #sidebar
       #history
         History
-        %ul
+        - history_list
 
     #footer
       created using

@@ -37,4 +37,15 @@ module ApplicationHelper
       haml_tag :strong, @page.updated_at.to_date.to_s(:rfc822)
     end if @page && !@page.updated_at.blank?
   end
+
+  def history_list
+    history = session[:history]
+    return unless history
+    haml_tag :ul do
+      history.reverse.each do |page|
+        haml_tag :li, link_to(page.title, page_path(page))
+      end
+    end
+  end
+
 end

@@ -21,4 +21,10 @@ describe "/layouts/application.html.haml" do
     render "/layouts/application.html.haml"
     response.should have_tag("h1", /title/)
   end
+
+  it "should render history" do
+    session[:history] = [mock_model(Page, :title => 'page 1'), mock_model(Page, :title => 'page 2')]
+    render "/layouts/application.html.haml"
+    response.should have_text(/li.*page 2.*li.*page 1/m)
+  end
 end

@@ -1,4 +1,5 @@
 class PagesController < ApplicationController
+  include History
   def index
     @pages = Page.find(:all)
     @heading = 'Search and Index'
@@ -13,6 +14,7 @@ class PagesController < ApplicationController
     @page = Page.find_by_slug(params[:id])
     if @page
       @heading = @page.title
+      record @page
     else
       redirect_to new_page_url(:id => params[:id])
     end
@@ -34,6 +36,7 @@ class PagesController < ApplicationController
     @page = Page.new(params[:page])
     @heading = 'New Page'
     if @page.save
+      record @page
       flash[:notice] = "<strong>#{@page.title}</strong> was successfully created"
       redirect_to(@page)
     else

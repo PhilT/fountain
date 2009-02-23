@@ -27,6 +27,7 @@ describe PagesController do
   describe "show" do
     it "should expose the requested page as @page" do
       Page.should_receive(:find_by_slug).with("page-slug").and_return(mock_page)
+      controller.stub!(:record).with(mock_page)
       get :show, :id => "page-slug"
       assigns[:page].should equal(mock_page)
     end
@@ -35,6 +36,18 @@ describe PagesController do
       Page.should_receive(:find_by_slug).with("page-slug").and_return(nil)
       get :show, :id => "page-slug"
       response.should redirect_to(new_page_url(:id => 'page-slug'))
+    end
+
+    it "should save page in history" do
+      Page.stub!(:find_by_slug).with("page-slug").and_return(mock_page)
+      controller.should_receive(:record).with(mock_page)
+      get :show, :id => "page-slug"
+    end
+
+    it "should not save page in history if non-existent" do
+      Page.should_receive(:find_by_slug).with("page-slug").and_return(nil)
+      controller.should_not_receive(:record)
+      get :show, :id => "page-slug"
     end
   end
 
@@ -64,20 +77,25 @@ describe PagesController do
   describe "create" do
     describe "with valid params" do
       it "should expose a newly created page as @page" do
-        Page.should_receive(:new).with({'these' => 'params'}).and_return(mock_page(:save => true))
-        post :create, :page => {:these => 'params'}
+        Page.should_receive(:new).with({'name' => 'name'}).and_return(mock_page(:name => 'name', :save => true))
+        post :create, :page => {:name => 'name'}
         assigns(:page).should equal(mock_page)
       end
 
       it "should redirect to the created page" do
-        Page.stub!(:new).and_return(mock_page(:save => true))
+        Page.stub!(:new).and_return(mock_page(:name => 'name', :save => true))
         post :create, :page => {}
         response.should redirect_to(page_url(mock_page))
+      end
+
+      it "should save page in history" do
+        Page.should_receive(:new).with({'these' => 'params'}).and_return(mock_page(:name => 'name', :save => true))
+        controller.should_receive(:record).with(mock_page)
+        post :create, :page => {:these => 'params'}
       end
     end
 
     describe "with invalid params" do
-
       it "should expose a newly created but unsaved page as @page" do
         Page.stub!(:new).with({'these' => 'params'}).and_return(mock_page(:save => false))
         post :create, :page => {:these => 'params'}
@@ -89,9 +107,7 @@ describe PagesController do
         post :create, :page => {}
         response.should render_template('new')
       end
-
     end
-
   end
 
   describe "responding to PUT udpate" do

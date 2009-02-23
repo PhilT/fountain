@@ -1,10 +1,4 @@
 module PagesHelper
-  def history
-    session[:history].map do |page|
-      link_to(page, page_path(page))
-    end.join(' ')
-  end
-
   def markup_help
     help = [ 'h1. heading',
       'bc. block code',
@@ -27,4 +21,5 @@ module PagesHelper
       end
     end
   end
+
 end
