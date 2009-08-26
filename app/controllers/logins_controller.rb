@@ -1,10 +1,10 @@
 class LoginsController < ApplicationController
   def new
-    @heading = 'Admin Login'
+    @heading = 'Access Login'
   end
 
   def create
-    @heading = 'Admin Login'
+    @heading = 'Access Login'
     @password = params[:password]
 
     if Login.valid?(@password)
@@ -15,6 +15,11 @@ class LoginsController < ApplicationController
       flash[:error] = "Invalid Password"
       render :action => "new"
     end
+  end
+
+  def destroy
+    session[:admin] = false
+    redirect_to root_url
   end
 
 end

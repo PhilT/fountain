@@ -2,38 +2,52 @@
 @import lines
 
 body
-  :font 13px sans-serif
+  :font 14px Arial, Sans
   :margin 3px
+
+
+ol, ul
+  :list-style-type none
+
+#login
+  li
+    :padding 5px
 
 img
   :border none
 
+#index,
+#menu
+  li
+    :display block
+    :width 230px
+    :float left
+
+#history
+  li
+    :float none
+
 #menu
   font-size: 14px
-  div
+  li
     :float left
     :display block
-    :width 60px
-    :height 60px
-    :text-align center
-    :padding-top 10px
-
-    &.disabled
-      :color #ccc
-
+    :margin-right 2px
+    :background #eee
+    :width 100px
+    :height 20px
+    a
+      :text-align center
+      :display block
+      :width 100px
+      :height 20px
     &#logo
-      :text-align left
-      :padding-top 0
-      :width 380px
-      a
-        :display block
-        :width 330px
-        :height 60px
-        :background url(/images/logo.png) no-repeat
-        :color #000
-        :text-align right
-        :font-weight bold
-        :line-height 90px
+      :width 150px
+      :background #fff
+      :color #555
+      :font
+        :size 16px
+        :weight bold
 
 a
   :text-decoration none

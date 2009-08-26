@@ -27,7 +27,7 @@ describe PagesController do
   describe "show" do
     it "should expose the requested page as @page" do
       Page.should_receive(:find_by_slug).with("page-slug").and_return(mock_page)
-      controller.stub!(:record).with(mock_page)
+      controller.stub!(:record)
       get :show, :id => "page-slug"
       assigns[:page].should equal(mock_page)
     end

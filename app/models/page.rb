@@ -14,11 +14,15 @@ class Page < ActiveRecord::Base
   end
 
   def self.from_slug(slug)
-    Page.new(:name => slug.underscore.classify)
+    Page.new(:name => to_name(slug))
   end
 
   def self.find_by_slug(slug)
-    find_by_name(slug.underscore.classify)
+    find_by_name(to_name(slug))
+  end
+
+  def self.to_name(slug)
+    slug.titleize.gsub(' ', '')
   end
 
   def formatted_content

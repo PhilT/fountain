@@ -5,8 +5,8 @@ private
 
   def record(page)
     return if page.name == 'HomePage'
-    history.reject!{ |p| p == page }
-    history << page
+    history.reject!{ |p| p == page.name }
+    history << page.name
     history.delete_at(0) if history.size > SIZE
   end
 

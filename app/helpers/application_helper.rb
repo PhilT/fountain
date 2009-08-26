@@ -15,19 +15,15 @@ module ApplicationHelper
 
   def edit_link
     if admin? && @page && !@page.new_record?
-      haml_tag :div, link_to(image_tag('edit.png'), edit_page_path(@page)) + 'edit', {:id => 'edit'}
-    else
-      haml_tag :div, image_tag('edit_disabled.png', :alt => 'Edit disabled') + 'edit', :class => 'disabled'
+      haml_tag :span, link_to('edit', edit_page_path(@page)), {:id => 'edit'}
     end
   end
 
   def login_link
     if admin?
-      haml_tag :div, image_tag('login_disabled.png', :alt => 'Login disabled') + 'login', :class => 'disabled'
-      haml_tag :div, link_to(image_tag('logout.png'), login_path(1), {:method => :destroy}) + 'logout'
+      haml_tag :span, link_to('logout', login_path(1), {:method => :delete})
     else
-      haml_tag :div, link_to(image_tag('login.png'), new_login_path) + 'login'
-      haml_tag :div, image_tag('login_disabled.png', :alt => 'Login disabled') + 'logout', :class => 'disabled'
+      haml_tag :span, link_to('login', new_login_path)
     end
   end
 
@@ -43,7 +39,8 @@ module ApplicationHelper
     return unless history
     haml_tag :ul do
       history.reverse.each do |page|
-        haml_tag :li, link_to(page.title, page_path(page))
+        page = Page.find_by_name(page)
+        haml_tag :li, link_to(page.title, page_path(page)) if page
       end
     end
   end

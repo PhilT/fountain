@@ -3,19 +3,20 @@
   %head
     = stylesheet_link_tag 'application', 'form', 'sidebar'
     %title
-      ev tech:
+      buzz:
       = @heading
   %body
-    #menu
-      #logo= link_to 'striving for purity in ruby on rails apps', root_path
-      %div
-        = link_to image_tag('home.png'), root_path
-        home
-      - edit_link
-      - login_link
-      %div
-        = link_to image_tag('search.png'), pages_path
-        search
+    %ul#menu
+      %li#logo
+        %strong
+          %em buzz
+
+      %li= link_to 'home', page_path('home-page')
+      %li
+        - edit_link
+      %li
+        - login_link
+      %li= link_to 'search', pages_path
     #page
       %h1
         #heading= @heading
@@ -28,6 +29,7 @@
         - history_list
 
     #footer
-      created using
-      %strong slipi
-      a simple wiki by phil thompson copyright &copy;2009
+      using
+      %strong
+        %em buzz
+      a simple wiki created by phil thompson. copyright &copy;2009

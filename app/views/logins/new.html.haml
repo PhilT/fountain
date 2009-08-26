@@ -1,7 +1,7 @@
-%p
+%div#login
   - form_tag(logins_path) do
-    %p
-      %span= label_tag('password', 'Password')
-      %span= password_field_tag('password')
-    %p.button
-      %span= submit_tag("Login")
+    %ol
+      %li= label_tag('password', 'Enter the Password')
+      %li= password_field_tag('password')
+      %li.button
+        %span= submit_tag("Login")
