@@ -15,7 +15,9 @@ module ApplicationHelper
 
   def edit_link
     if admin? && @page && !@page.new_record?
-      haml_tag :span, link_to('edit', edit_page_path(@page)), {:id => 'edit'}
+      haml_tag :li do
+        haml_tag :span, link_to('edit', edit_page_path(@page)), {:id => 'edit'}
+      end
     end
   end
 
@@ -46,3 +48,4 @@ module ApplicationHelper
   end
 
 end
+

@@ -9,6 +9,20 @@ body
 ol, ul
   :list-style-type none
 
+#logo
+  :clear both
+  :float left
+  :background #fff
+  :color #555
+  :font
+    :size 16px
+    :weight bold
+
+  #caption
+    :padding-top 10px
+    :font-size 11px
+    :color #aaa
+
 #login
   li
     :padding 5px
@@ -16,44 +30,27 @@ ol, ul
 img
   :border none
 
-#index,
-#menu
-  li
-    :display block
-    :width 230px
-    :float left
-
 #history
   li
     :float none
 
-#menu
-  font-size: 14px
+ul#menu
+  :float left
+  :margin 0
   li
+    :border-right= 1px solid !ev_blue
     :float left
-    :display block
+    :padding 4px
     :margin-right 2px
-    :background #eee
-    :width 100px
-    :height 20px
     a
-      :text-align center
-      :display block
-      :width 100px
-      :height 20px
-    &#logo
-      :width 150px
-      :background #fff
-      :color #555
-      :font
-        :size 16px
-        :weight bold
-
+      :padding 4px
+  li.last
+    :border-right none
 a
   :text-decoration none
   :color= !ev_blue
   &:hover
-    :background= !ev_pale_blue
+    :background #e0f0e0
 
   &.new
     :color= !ev_dark_orange
@@ -61,7 +58,7 @@ a
       :background= !ev_pale_orange
 
 h1
-  :border-bottom= !line_width solid !ev_pale_blue
+  :border-bottom= !line_width solid !ev_border_blue
   :margin 10px 0 6px 0
   :height 20px
   #heading
@@ -73,6 +70,8 @@ h1
     :font
       :size 11px
       :weight normal
+    :line-height 30px
+    :margin-right 10px
 
 
 .error, .notice
@@ -109,8 +108,3 @@ h1
     h1,h2,h3,h4,h5
       :margin 15px 0 2px 0
 
-#footer
-  :clear both
-  :padding-top 10px
-  :font-size 11px
-  :color #aaa

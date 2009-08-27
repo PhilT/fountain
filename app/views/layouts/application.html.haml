@@ -6,17 +6,18 @@
       buzz:
       = @heading
   %body
-    %ul#menu
-      %li#logo
-        %strong
-          %em buzz
+    %div#logo
+      %strong
+        %em buzz_
+      %span#caption
+        a simple wiki created by phil thompson. copyright &copy;2009
 
+    %ul#menu
       %li= link_to 'home', page_path('home-page')
-      %li
-        - edit_link
+      - edit_link
       %li
         - login_link
-      %li= link_to 'search', pages_path
+      %li.last= link_to 'index', pages_path
     #page
       %h1
         #heading= @heading
@@ -28,8 +29,3 @@
         History
         - history_list
 
-    #footer
-      using
-      %strong
-        %em buzz
-      a simple wiki created by phil thompson. copyright &copy;2009
