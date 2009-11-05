@@ -4,6 +4,7 @@ I wrote this wiki a while ago when I got fed up of the multitude of Wiki clones 
 
 * Based on the WikiWiki syntax. None of this [[brackets non-sense]]. In other words it uses Redcloth
 * Simple for first time Wiki users
-* Mainly for myself so no complicated login or signup process
+* Mainly for myself so no complicated login or signup process just a single password at the moment
 
 After needing something similar at work recently I decided to dust it off and maybe add a few features
+

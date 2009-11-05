@@ -1,0 +1,3081 @@
+
+--- 
+pages: 
+  columns: 
+  - id
+  - name
+  - title
+  - content
+  - public
+  - created_at
+  - updated_at
+  records: 
+  - - "1"
+    - HomePage
+    - HomePage
+    - |
+      PasswordlessAuthentication
+      FileSync with Unison
+      NasServer
+      UbuntuNotes
+      VersionControl
+      EnvyLaptop
+      
+      h3. Learning
+      
+      RailsDevelopment
+      RubyGUIDevelopment
+      RSpec
+      JqueryQuickstart
+      AgileIdeals
+      VladTheDeployer
+      HandyGitCommands
+      HamlAndSass
+      
+      h3. Projects
+      
+      SimplikiDevelopment
+      WorkStuff
+      RailsEditor (FlowWrite - old info)
+      
+      h3. Reviews
+      
+      TheEnvyHasArrived
+
+    - true
+    - 2008-05-09 01:06:13
+    - 2009-02-13 16:56:01
+  - - "8"
+    - PartitionNewDrives
+    - PartitionNewDrives
+    - |
+      <pre>
+      fdisk -i
+      Do you want to change our idea of what the BIOS thinks? [n] n
+      Do you want to change it? [n] y <ENTER>
+      Supply a decimal value for "sysid (165=FreeBSD)" [165] <ENTER>
+      Supply a decimal value for "start" [63] 0 <ENTER>
+      Supply a decimal value for "size" [976773105] <ENTER>
+      Explicitly beg/end address [n] <ENTER>
+      Are we happy with this entry? [n] y <ENTER>
+      Do you want to change it? [n] <ENTER>
+      Do you want to change it? [n] <ENTER>
+      Do you want to change it? [n] <ENTER>
+      Do you want to change the active partition? [n] <ENTER>
+      Should we write new partition table? [n] y <ENTER>
+      fdisk: Geom not found: "ad4" (couldn't write MBR (I think))
+      </pre>
+      
+      * Label a disk: <code>bsdlabel -w ad4 auto</code>
+      * Create the file system: <code>newfs -U /dev/ad4a</code>
+      * Create a mount folder: <code>mkdir /data</code>
+      * Mount it: <code>mount /dev/ad4a /data</code>
+      * Display the disk info: <code>df</code>
+      * Enable editing of mounted discs: <code>sysctl kern.geom.debugflags=16</code>
+      * Setup the mirror: <code>gmirror label -v -b round-robin gm0 /dev/ad4 /dev/ad6</code>
+      * Tell mirroring to start on boot: <code>echo geom_mirror_load=\"YES\" > /boot/loader.conf</code>
+      * Edit file system table: <code>vi /etc/fstab</code>
+      * Add this line to mount on boot: <code>/dev/mirror/gm0a	/data	ufs		rw	0	0</code>
+
+    - true
+    - 2008-05-16 21:01:30
+    - 2009-08-26 21:18:29
+  - - "9"
+    - FileSync
+    - FileSync
+    - |
+      h2. Two-way syncing with Unison
+      
+      h3. Setting up
+      
+      Make sure SSH keys are setup to ensure PasswordlessAuthentication
+      
+      On the server (FreeBSD):
+      
+      bc. cd /usr/ports/net/unison-nox11;make install clean
+      su
+      echo export UNISON=/data/.unison >> /etc/profile
+      
+      On the client (Ubuntu):
+      
+      bc. sudo apt-get install unison (Linux)
+      
+      On the client (Windows):
+      
+      "Download binaries":http://alan.petitepomme.net/unison/index.html
+      
+      h3. A default configuration
+      
+      bc. ~/.unison/default.prf
+      perms = 0
+      rsrc = false
+      # silent = true
+      batch = true
+      auto = true
+      prefer = ssh://192.168.0.100//data/
+      root = /home/phil
+      root = ssh://192.168.0.100//data/
+      path = !EReader
+      path = Learning
+      path = Music
+      ignore = Path {desktop.ini}
+      ignore = Path Music/lily
+      
+      @silent@ is commented out so we can check things work the first time but this can be uncommented to quieten things down when running normally. (UPDATE: Actually I've left this turned on as it useful to see it working!)
+      
+      h3. Scheduling
+      
+      @crontab -e@ edits scheduled jobs for current user
+      To tell Unison to run one minute past every hour add the following line in the editor:
+      
+      bc. 01 * * * * unison
+
+    - true
+    - 2008-05-16 21:26:48
+    - 2009-08-26 21:18:29
+  - - "10"
+    - InstallRubyAndRails
+    - InstallRubyAndRails
+    - |
+      h3. Summary
+      
+      * PuTTY into FreeBSD machine
+      * switch to root user
+      * install ruby, ruby-gems and sqlite3 (must be done before gems installed)
+      * logout root then log back in to enable gems path
+      * install gems - rails, sqlite3-ruby and !RedCloth (note the case on the !RedCloth gem)
+      
+      h3. Install Steps
+      
+      bc.. su
+      
+      cd /usr/ports/lang/ruby18
+      make install clean
+      
+      cd /usr/ports/devel/ruby-gems
+      make install clean
+      
+      cd /usr/ports/databases/sqlite3
+      make install clean
+      
+      exit
+      su
+      gem install rails
+      gem install mongrel_cluster
+      gem install sqlite3-ruby
+      gem install !RedCloth
+      
+      h3. Setting up Documentation
+      
+      Install rails API docs:
+      
+      bc. cd /usr/local/lib/ruby/gems/1.8/gems
+      rdoc -Y
+      
+      Run rdoc server:
+      
+      bc. gem server --daemon
+
+    - true
+    - 2008-05-17 11:52:47
+    - 2009-08-26 21:18:29
+  - - "11"
+    - FileCopy
+    - FileCopy
+    - |-
+      Download from the "Putty":http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html website
+      
+      Command:
+      <pre>
+      pscp <source> <server>:<dest folder>
+      </pre>
+    - true
+    - 2008-05-18 01:25:13
+    - 2009-08-26 21:18:29
+  - - "12"
+    - SubversionServer
+    - SubversionServer
+    - |
+      Source: "FreeBSD Basics":http://www.onlamp.com/pub/a/bsd/2005/05/12/FreeBSD_Basics.html
+      
+      *I'm switching to Git for VersionControl*
+      
+      
+      (Some of this info is incorrect, specifically, umasks and users. Currently svnserve is running as root and working. I'm not sure that umasks even come into it. Need to test)
+      
+      Add the @svn@ user:
+      <pre>
+      adduse
+      </pre>
+      
+      add @phil@ and @lily@ to the @svn@ group:
+      <pre>
+      vi /etc/group
+      </pre>
+      
+      Change umask to @007@:
+      <pre>
+      vi ~svn/.profile
+      </pre>
+      
+      Update the shell:
+      <pre>
+      source ~svn/.profile
+      </pre>
+      
+      Install subversion:
+      <pre>
+      cd /usr/ports/devel/subversion;make -DBATCH -DWITH_SVNSERVE_WRAPPER install clean
+      </pre>
+      
+      Change the wrapper
+      <pre>
+      vi /usr/local/bin/svn
+      #!/bin/sh
+      #wrapper script to set umask to 007 on subversion binaries
+      umask 007
+      /usr/local/bin/svnserve.bin "$@"
+      </pre>
+      
+      Set user and group ownership of repository to svn:
+      <pre>
+      chown -R svn:svn /data/subversion
+      </pre>
+      
+      Starting @svnserve@:
+      <pre>
+      /usr/local/bin/svnserve -d --listen-port 3690 --listen-host 0.0.0.0 -r /data/subversion --pid-file /var/run/svn.pid
+      </pre>
+      
+      Stopping @svnserve@:
+      <pre>
+      /bin/pkill -F /var/run/svn.pid
+      </pre>
+
+    - true
+    - 2008-05-22 22:58:06
+    - 2009-08-26 21:18:29
+  - - "14"
+    - InstallBash
+    - InstallBash
+    - |-
+      Install the @bash@ shell from the ports collection:
+      <pre>
+      cd /usr/ports/shells/bash;make install clean
+      </pre>
+      
+      Use @adduser@ to set the default shell to bash:
+      <pre>
+      adduser -C
+      </pre>
+      
+      Use @alias@ to get simpler file listings:
+      <pre>
+      alias ls='ls -l'
+      </pre>
+      
+      And to get the original bare, wide format use:
+      <pre>
+      ls -C
+      </pre>
+    - true
+    - 2008-05-23 07:59:09
+    - 2009-08-26 21:18:29
+  - - "15"
+    - NewSystemInstallSummary
+    - NewSystemInstallSummary
+    - |
+      * setup FreeBSD (select user install, select sources @BASE@ and @SYS@ to enable us to RecompileTheKernel)
+      * recreate raid mirror in @/data@ (@gmirror label -v -b round-robin gm0 /dev/ad4 /dev/ad6@ note: this does not wipe any data (unless you repartition))
+      * Do the InitialConfiguration (network and user) then put back on the network
+      * install ruby with oniguruma (@cd /usr/ports/lang/ruby18;make install clean@ and select @ONIGURUMA@ in config GUI)
+      * install ruby-gems (@cd /usr/ports/devel/ruby-gems;make install clean@)
+      * install sqlite3 (@cd /usr/ports/databases/sqlite3;make install clean@)
+      * logout, login (for path to be updated)
+      * install gems (@cd /data/install.scripts;./install-gems.sh@)
+      * run up wiki
+
+    - true
+    - 2008-05-25 00:43:30
+    - 2009-08-26 21:18:29
+  - - "17"
+    - InstallingPrinters
+    - InstallingPrinters
+    - |
+      Source: "HPLIP on FreeBSD by Daniel W. Steinbrook":http://dsteinbrook.googlepages.com/hpliponfreebsd
+      
+      Hey guess what?! We need to RecompileTheKernel! Luckily it's not as bad as it sounds (I hope).
+      
+      Install the HP Linux Imaging and Printing driver (HPLIP). This includes all the dependencies needed such as CUPS, ghostscript, sane (for scanners), foomatic wrappers, etc. *NOTE: hpiod is no longer required. The rest of this information is based on no hpiod*
+      <pre>
+      cd /usr/ports/print/hplip;make install clean
+      </pre>
+      
+      Configure @rc.conf@
+      <pre>
+      echo 'hpssd_enable="YES"' >> /etc/rc.conf
+      echo 'cupsd_enable="YES"' >> /etc/rc.conf
+      echo 'devfs_system_ruleset="system"' >> /etc/rc.conf
+      </pre>
+      
+      Configure devfs
+      <pre>
+      echo [system=10] > /etc/devfs.rules
+      echo "add path 'usb*' group cups" >> /etc/devfs.rules
+      echo "add path 'usb*' mode 0660" >> /etc/devfs.rules
+      echo "add path 'ugen*' group cups" >> /etc/devfs.rules
+      echo "add path 'ugen*' mode 0660" >> /etc/devfs.rules
+      </pre>
+      
+      Reboot
+      <pre>
+      reboot
+      </pre>
+      
+      Plug in the printer and check it is detected as a ugen device
+      <pre>
+      dmesg
+      > ugen0: <Hewlett-Packard HP Color LaserJet 2820, class 0/0, rev 2.00/1.00, addr 2> on uhub4
+      </pre>
+      
+      Then finally set it up (as root):
+      <pre>
+      su
+      hp-setup
+      </pre>
+
+    - true
+    - 2008-05-25 01:12:57
+    - 2009-08-26 21:18:29
+  - - "18"
+    - RecompileTheKernel
+    - RecompileTheKernel
+    - |-
+      Recompiling the Kernel is necessary for InstallingPrinters so that they are detected as generic USB devices instead of printers.
+      
+      Look at the "FreeBSD Handbook":http://www.freebsd.org/doc/en/books/handbook/kernelconfig-building.html for recompiling the kernel
+      
+      
+      Copy the generic kernel configuration
+      <pre>
+      cd /sys/i386/conf
+      cp GENERIC CUSTOM
+      </pre>
+      
+      Make any configuration changes. E.g. to remove USB printer support comment out @device ulpt@
+      <pre>
+      vi CUSTOM
+      #device ulpt
+      </pre>
+      
+      Build the kernel
+      <pre>
+      cd /usr/src
+      make buildkernel KERNCONF=CUSTOM
+      make installkernel KERNCONF=CUSTOM
+      </pre>
+    - true
+    - 2008-05-25 01:16:11
+    - 2009-08-26 21:18:29
+  - - "19"
+    - BeginnerBsdInfo
+    - BeginnerBsdInfo
+    - |
+      * OS Version Info @uname -a@
+      * Display bootup messages: @cat /var/run/dmesg.boot@
+      * Check swap space: @pstat -s@
+      
+      Some notes:
+      Plenty of guides refer to @da1s2a@ to refer to the drive/slice/partition but these notes use a whole SATA drive hence @ad4a@ to refer to the only usable partition (a) on the 4th HDD interface (my first SATA interface). Slices don't even come into it!
+      
+      Use ; to separate muliple commands on a single line i.e. @command1;command2;command3@
+
+    - true
+    - 2008-05-25 01:29:44
+    - 2009-08-26 21:18:29
+  - - "20"
+    - SystemMonitoring
+    - SystemMonitoring
+    - |
+      h2. with Monit
+      
+      <pre>
+      cd /usr/ports/sysutils/monit;make install clean;echo 'monit_enable="YES"' >> /etc/rc.conf
+      </pre>
+      Displays configuration GUI (need find out how to MakeWithoutDisplayingConfigGui)
+      
+      Configuration (@/usr/local/etc/monitrc@):
+      <pre>
+      set daemon 120
+      
+      set httpd port 2812
+        allow 192.168.0.0/255.255.255.0
+      
+      check device rootfs with path /
+        if space usage > 80% then alert
+      
+      check device temp with path /tmp
+        if space usage > 80% then alert
+      
+      check device user with path /usr
+        if space usage > 80% then alert
+      
+      check device var with path /var
+        if space usage > 80% then alert
+      
+      check device data with path /data
+        if space usage > 60% then alert
+      
+      check process sshd with pidfile /var/run/sshd.pid
+        start program  "/usr/sbin/sshd"
+        stop program  "/bin/pkill -F /var/run/sshd.pid"
+        if cpu > 60% for 5 cycles then alert
+        if cpu > 90% for 5 cycles then restart
+        if cpu > 95% for 15 cycles then stop
+        if failed port 22 protocol ssh then restart
+        if 5 restarts within 5 cycles then timeout
+      
+      check process mongrel with pidfile /data/wiki/log/mongrel.pid
+        start program = "/usr/local/bin/ruby /usr/local/bin/mongrel_rails start -d -e development -p 3000 -a 0.0.0.0 -P /data/wiki/log/mongrel.pid -c /data/wiki"
+        stop program = "/usr/local/bin/ruby /usr/local/bin/mongrel_rails stop -P /data/wiki/log/mongrel.pid"
+        if cpu > 60% for 5 cycles then alert
+        if cpu > 90% for 5 cycles then restart
+        if cpu > 95% for 15 cycles then stop
+        if failed port 3000 protocol http with timeout 10 seconds then restart
+        if 5 restarts within 5 cycles then timeout
+      
+      check process subversion with pidfile /var/run/svn.pid
+        start program = "/usr/local/bin/svnserve -d --listen-port 3690 --listen-host 0.0.0.0 -r /data/subversion --pid-file /var/run/svn.pid"
+        stop program = "/bin/pkill -F /var/run/svn.pid"
+        if cpu > 60% for 5 cycles then alert
+        if cpu > 90% for 5 cycles then restart
+        if cpu > 95% for 15 cycles then stop
+        if failed port 3690 then restart
+        if 5 restarts within 5 cycles then timeout
+      
+      check process rsync with pidfile /var/run/rsyncd.pid
+        start program = "/usr/local/bin/rsync --daemon"
+        stop program = "/bin/pkill -F /var/run/rsyncd.pid"
+        if cpu > 60% for 5 cycles then alert
+        if cpu > 90% for 5 cycles then restart
+        if cpu > 95% for 15 cycles then stop
+        if failed port 873 then restart
+        if 5 restarts within 5 cycles then timeout
+      
+      </pre>
+      
+      Some Commands:
+      * @monit@ to start monit
+      * @monit quit@ to kill monit
+      * @monit reload@ to reload the @/usr/local/etc/monitrc@ configuration file
+      
+      Get cool graphs by InstallingMunin!
+
+    - true
+    - 2008-05-25 01:34:52
+    - 2009-08-26 21:18:29
+  - - "21"
+    - InitialConfiguration
+    - InitialConfiguration
+    - |
+      h3. Network Configuration
+      
+      Run @/data/install.scripts/setup-rc.conf.sh@
+      <pre>
+      echo 'defaultrouter="192.168.0.1"' > /etc/rc.conf
+      echo 'hostname="server"' >> /etc/rc.conf
+      echo 'ifconfig_vr0="inet 192.168.0.100  netmask 255.255.255.0"' >> /etc/rc.conf
+      echo 'keymap="uk.iso"' >> /etc/rc.conf
+      echo 'sshd_enable="YES"' >> /etc/rc.conf
+      </pre>
+      
+      *CHECK:* @/etc/resolv.conf@ additional network setup may be needed.
+
+    - true
+    - 2008-05-25 01:47:00
+    - 2009-08-26 21:18:29
+  - - "22"
+    - PortsToInstall
+    - PortsToInstall
+    - |
+      <pre>
+      cd /usr/ports/shells/bash;make -DBATCH install clean
+      cd /usr/ports/www/elinks;make -DBATCH install clean
+      cd /usr/ports/net/ntp;make -DBATCH install clean;echo 'ntpd_enable="YES"' >> /etc/rc.conf
+      </pre>
+
+    - true
+    - 2008-05-25 02:06:29
+    - 2009-08-26 21:18:29
+  - - "23"
+    - TimeServerSetup
+    - TimeServerSetup
+    - |-
+      <pre>
+      cd /usr/ports/net/ntp
+      make install clean
+      echo 'ntpd_enable="YES"' >> /etc/rc.conf
+      echo 'server uk.pool.ntp.org' > /etc/ntp.conf
+      ntpd -gq
+      </pre>
+    - true
+    - 2008-05-25 03:28:51
+    - 2009-08-26 21:18:29
+  - - "24"
+    - PortsCollection
+    - PortsCollection
+    - |-
+      First use (get the baseline ports collection):
+      
+      bc. portsnap fetch
+      portsnap extract
+      
+      Subsequent use:
+      
+      bc. portsnap fetch update
+      
+      Ports are in:
+      
+      bc. /usr/ports/
+      
+      Available options:
+      
+      bc. make showconfig
+    - true
+    - 2008-05-25 11:34:41
+    - 2009-08-26 21:18:29
+  - - "25"
+    - MakeWithoutDisplayingConfigGui
+    - MakeWithoutDisplayingConfigGui
+    - Can use @-DBATCH@ on make commandline to use default options
+    - true
+    - 2008-05-25 12:19:11
+    - 2009-08-26 21:18:29
+  - - "26"
+    - NasServer
+    - NasServer
+    - |
+      |CommandList|
+      |BeginnerBsdInfo|FileSync with Unison|
+      |NewSystemInstallSummary|FileCopy with PSCP|
+      |InitialConfiguration|InstallingPrinters (CUPS)|
+      |PortsCollection|MusicSharing (iTunes?)|
+      |InstallBash|InstallRubyAndRails|
+      |TimeServerSetup|DeployingWithCapistrano|
+      |PartitionNewDrives|GitServer (old: SubversionServer)|
+      |SystemMonitoring (Monit)|RecompilingTheKernel|
+      |SetupTheWiki|SetupCronToBackupWikiToSubversion|
+      | |
+      |PowerManagement|
+      |TemperatureMonitoring|
+      |FileSharing with Samba|
+      
+      h3. External Information
+      
+      "FreeBSD Handbook":http://www.freebsd.org/doc/en/books/
+
+    - true
+    - 2008-06-08 00:06:49
+    - 2009-08-26 21:18:29
+  - - "28"
+    - WindowsDesktop
+    - WindowsDesktop
+    - NliteConfiguration
+    - true
+    - 2008-06-08 00:07:54
+    - 2009-08-26 21:18:29
+  - - "29"
+    - NliteConfiguration
+    - NliteConfiguration
+    - "%SystemRoot%\\system32\\cmd.exe"
+    - true
+    - 2008-06-08 00:23:08
+    - 2009-08-26 21:18:29
+  - - "30"
+    - FileSharing
+    - FileSharing
+    - |-
+      Download initial ports snapshot: <code>portsnap fetch</code>
+      Extract it: <code>portsnap extract</code>
+      Subsequent updates can be downloaded like this: <code>portsnap fetch update</code>
+      Not sure if this is necessary: <code>pkg_add -r cups-base</code> as it was done before I found portsnap
+      <code>cd /usr/ports/net/samba3</code>
+      <code>make install</code>
+      use default options
+      tab to OK, press enter
+      edit samba configuration:
+      <pre>
+      	vi smb.conf
+      		workgroup = UNIVERSE
+      		server string = %h Samba
+      		log file = /var/log/samba/%m.log
+      
+      		========== Share Definitions ========
+      
+      		[homes]
+      			comment = Home dir for %u on %h
+      			browsable = no
+      			writeable = yes
+      			path = /data/home/%u/docs
+      			valid users = %S
+      
+      
+      		[public]
+      			comment = %h Public Directory
+      			path = /data/public
+      			force directory mode = 0777
+      			force create mode = 0777
+      			force group = nobody
+      			force user = nobody
+      			public = yes
+      			writeable = yes
+      			read only = no
+      </pre>
+      what is %S?
+      
+      Test the config file: <code>/usr/local/bin/testparm | more</code>
+      Create directories:
+      <pre>
+      	cd /data
+      	mkdir home
+      	mkdir public
+      </pre>
+      
+      Reboot: <code>reboot</code>
+      Add users to OS and Samba databases: <code>adduser -v</code>
+      Select your shell: <code>csh</code>
+    - true
+    - 2008-06-13 22:29:49
+    - 2009-08-26 21:18:29
+  - - "31"
+    - UbuntuNotes
+    - UbuntuNotes
+    - |
+      h3. Scriptaculous
+      
+      I often use the following syntax when adding to configuration files. It's easy to copy and paste this. Also, it's handy for using in scripts which is what I intend to setup the next time I want to reinstall Linux:
+      
+      bc. cat >> file-to-add-to <<END
+      a line to add
+      another line to add
+      END
+      
+      h3. I am the law!
+      
+      When redirecting output sudo by itself won't help you write to a file owned by root. So you need to do this instead:
+      
+      bc. sudo sh -c 'echo add this >> to-this-root-owned-file'
+      
+      ImproveGuiPerformance
+      PostCommandLineInstall
+      PackagesToInstall
+      BatchResizePictures
+      FixForNoSoundOnResume
+      EditorsForRails
+      UbuntuHotKeys
+      CleanIntrepidInstall
+      
+      h2. External links
+      
+      "A bunch of Ubuntu tips^":http://matthewstechnologyblog.blogspot.com/2007/05/ubuntu-on-my-new-laptop.html
+
+    - true
+    - 2008-06-14 10:56:30
+    - 2009-08-26 21:18:29
+  - - "32"
+    - RecompilingTheKernel
+    - RecompilingTheKernel
+    - |
+      @/usr/src/sys@ == @/sys@
+
+    - true
+    - 2008-06-15 12:56:00
+    - 2009-08-26 21:18:29
+  - - "33"
+    - CommandList
+    - CommandList
+    - |
+      |*pkg_info*|list installed packages|
+
+    - true
+    - 2008-06-21 19:05:19
+    - 2009-08-26 21:18:29
+  - - "35"
+    - InstallWirelessDrivers
+    - InstallWirelessDrivers
+    - |-
+      * Download compat-wireless-old drivers from http://linuxwireless.org/en/users/Download#Wheretodownload
+      * Extract to home
+      * Add @CONFIG_NETDEVICES_MULTIQUEUE=y@ to the top of config.mk
+      * Run @make@
+      * Run @sudo make install@
+      * Goto System->Hardware Drivers and uncheck Enabled for the wifi driver
+      * Run @sudo make unload@ from the @compat-wireless-old@ directory
+      * Run @sudo make load@
+    - true
+    - 2008-09-20 15:20:55
+    - 2009-08-26 21:18:29
+  - - "37"
+    - PackagesToInstall
+    - PackagesToInstall
+    - |
+      h2. Add Google repos for picasa
+      
+      bc.. echo deb http://dl.google.com/linux/deb/ stable non-free >> /etc/apt/sources.list
+      echo deb http://dl.google.com/linux/deb/ testing non-free >> /etc/apt/sources.list
+      
+      sudo su
+      wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
+      apt-get update
+      
+      h2. Packages (Alphabetical)
+      
+      |*build-essential*|Essential build packages - needed for gem builds among others|
+      |*evince*|PDF viewer|
+      |*file-roller*|Archive manager|
+      |*firefox*|Until Chrome for Linux!|
+      |*flashplugin-nonfree*|Adobe Flash player|
+      |*gftp*|GUI FTP client|
+      |*lftp*|Commandline FTP client|
+      |*libasound2*|Alsa sound library|
+      |*libsqlite3-ruby*|SQLite ruby bindings|
+      |*muine*|MP3 Player focused on albums - Import a folder, wait (not too long), then just click Play Album!|
+      |*muine-plugin-audioscrobbler*|Audioscrobbler plugin for muine|
+      |*muine-plugin-trayicon*|Tray Icon plugin for muine|
+      |*mysql-server-5.0*|MySQL database server and client|
+      |nautilus-script-collection-svn|Right-click in file manager to get subversion menu.|
+      |*openoffice*|!OpenOffice for Write and Calc|
+      |*picasa*|Image editing and management from Google|
+      |*pidgin*|IM client|
+      |*prism-google-calendar*|Prism is a minimal XUL viewer. This one installs a shortcut for google calendar into the Office Menu |
+      |*prism-google-reader*|Adds a Prism shortcut to Internet Menu for Google Reader|
+      |*rails*|installs Ruby and Rails (is rubygems and rake installed too?)|
+      |*simple-ccsm*|Simple Compiz Config Settings Manager|
+      |*sqlite3*|SQLite 3 command line interface|
+      |*startupmanager*|Startup Manager for configuring bootloader and selecting the Kernel version (System->Admin->Startup Manager)|
+      |*subversion*|Versioning Tool|
+      |*svn-workbench*|Subversion GUI client|
+      |*thunderbird*|Thunderbird email/news client|
+      |*thunderbird-locale-en-gb*|Thunderbird English language pack|
+      |*tomboy*|Desktop note taking|
+      |*totem*|Simple media player|
+      
+      
+      *!OpenOffice* - To get spell checking go to File > Wizards > Install New Dictionaries
+      
+      
+      h2. Komodo Edit
+      
+      Download from their site [need link]
+      
+      h2. Eclipse
+      
+      |*eclipse*|Java IDE|
+      |*sun-java6-jdk*|Java 6 JDK|
+      
+      Subclipse for Eclipse update site "http://subclipse.tigris.org/update_1.4.x":http://subclipse.tigris.org/update_1.4.x
+
+    - true
+    - 2008-09-21 16:51:17
+    - 2009-08-26 21:18:29
+  - - "39"
+    - EditorsForRails
+    - EditorsForRails
+    - |-
+      h2. ...on Linux
+      
+      
+      Geany - File browser is flat - needs to be tree based
+      Screem - File browser is a tree but doesn't seem to work
+      jEdit - Works better with latest Intrepid. Plugins to support Rails but seems a little clunky
+      NEdit - Not updated since 2005
+      Komodo Edit - The best I've used so far. Still not as good (IMO) as Textmate/E TextEditor
+      gedit - Basic editor but decent file browser and syntax highlighting. No rhtml support though.
+      Netbeans - Full blown IDE. Certainly the prettiest I've seen. Does litter Rails projects with a config directory though
+      E on Wine - Doesn't save config
+      
+      InstallingNetbeans
+    - true
+    - 2008-09-28 00:26:48
+    - 2009-08-26 21:18:29
+  - - "40"
+    - FixForNoSoundOnResume
+    - FixForNoSoundOnResume
+    - bc. sudo sh -c 'echo options snd-hda-intel model=toshiba >> /etc/modprobe.d/alsa-base'
+    - true
+    - 2008-09-28 13:32:00
+    - 2009-08-26 21:18:29
+  - - "42"
+    - TurningItOn
+    - TurningItOn
+    - "!<http://electricvisions.com/images/envy/thumbs/DSC_0021.JPG(first on)!:http://electricvisions.com/images/envy/DSC_0021.JPG\r\n\
+      \r\n\
+      !>http://electricvisions.com/images/envy/thumbs/DSC_0035.JPG(first on)!:http://electricvisions.com/images/envy/DSC_0035.JPG\r\n\
+      \r\n\
+      <span class=\"big-em\">S</span>lick IOS setup screen. Vista configuration went smoothly. Nice touch with the Voodoo wallpaper selection. Be nicer if I could select a theme to go with it!\r\n\
+      \r\n\
+      The auto-brightness gets a bit funny in certain light. It seems to constantly adjust. If it's just a fraction lighter or darker then it's fine. Perhaps it's a bit sensitive. It's not a major issue but it would be nice if Voodoo addressed it at some point.\r\n\
+      \r\n\
+      The power light on the front is rather dazzling if you're sat back a bit.\r\n\
+      \r\n\
+      The *touch-pad* is interesting. I can see what they wanted to do. They wanted a completely flat profile with no indents or a change in the CF look but they had to indicate where the pad was so they went for the grid of dimples. It certainly has the desired effect. \r\n\
+      \r\n\
+      !<http://electricvisions.com/images/envy/thumbs/DSC_0065.JPG(touchpad)!:http://electricvisions.com/images/envy/DSC_0065.JPG\r\n\
+      \r\n\
+      It looks stunning and so in keeping with the rest of the design.  To begin with I found it difficult to move around with my finger but when I came back to it later I found it much smoother. The chiral scrolling rocks. I really like it. It's perfect for those long web pages or forum posts. You don't have to take your finger off to keep scrolling. I never had an iPod so not used it before.\r\n\
+      \r\n\
+      It's got a larger pad than I've had before so that will take some getting used to but it's a welcome increase for sure. The buttons have a nice solid feel to them and the click is kind of an assertive dull knock. Not too loud in my opinion. The tap on the pad is excellent, just the right sensitivity. My Dell was too sensitive and no amount of configuration fiddling could get it to feel right.\r\n\
+      \r\n\
+      The *Instant-On System* (IOS) boots pretty quick. 30 seconds from pressing the power button to seeing the Google home page. So that's including Firefox start time too. As I've not put any pictures or music on it I can only surf the web. I'll come back to it later on. I'm not sure if I'll use this feature too much as I tend to use Sleep mode (hopefully it works in Linux) but I can see this being a very handy feature for some.\r\n\
+      \r\n\
+      The *keyboard* is a little spongy compared to my Das keyboard but then most are. It's still got a nice feel to it and I can find the keys easily enough. It usually takes a bit of time to become familiar with a new layout especially when it's a US instead of a UK keyboard! I found the right shift key a little small but I\xE2\x80\x99m sure I\xE2\x80\x99ll get used to it.\r\n\
+      \r\n\
+      TheEnvyHasArrived | VistaGaming >>\r\n"
+    - true
+    - 2008-09-29 16:53:12
+    - 2009-08-26 21:18:29
+  - - "43"
+    - VistaGaming
+    - VistaGaming
+    - "I want to do this first as I'm going to be reformatting and putting a custom version of Vista as well as Linux and things might not work so well for games later on.\r\n\
+      \r\n\
+      Ooh does my *64GB SSD* drive have enough space? Well it's half full and I've not installed anything yet. That's Vista for you and the HP software. Luckily the software is also all on a DVD so you can remove that _swsetup_ folder if you want to free up that valuable drive space. I was going to test Crysis but it runs like a dog on my gaming desktop so I don't think there is much point.\r\n\
+      \r\n\
+      I'm running the standard Vista Home Premium with SP1 and nothing disabled or removed except Sidebar. \r\n\
+      \r\n\
+      Let\xE2\x80\x99s start with *3D Mark 06*. Well I wasn't expecting much but it barely managed a frame a second on most tests. It managed a whopping 478 3!DMarks but it's pretty irrelevant. Installing 3D Mark across my wi-fi network seemed problematic. First the router died. Then Explorer on the Envy stopped responding. Luckily it came back about a minute later. I\xE2\x80\x99ve been having problems with my phone line recently and it\xE2\x80\x99s still sorting itself out I think that\xE2\x80\x99s what it\xE2\x80\x99s down to. No other problems since.\r\n\
+      \r\n\
+      From the Orange Box I tried *Half-Life 2* and it seemed to run fine. Sound was a little choppy here and there but maybe turning off a few services and AVG will help. Certainly playable though. Oh and the speakers rock. \r\n\
+      \r\n\
+      I was a little surprised by how slow *Need For Speed Most Wanted* was. Even at the lowest res and detail settings I still only managed about 10fps.\r\n\
+      \r\n\
+      !http://electricvisions.com/images/envy/thumbs/need-for-speed.jpg!:http://electricvisions.com/images/envy/need-for-speed.jpg !http://electricvisions.com/images/envy/thumbs/trackmainia.jpg!:http://electricvisions.com/images/envy/trackmainia.jpg\r\n\
+      \r\n\
+      \r\n\
+      *!TrackMaina* ran at a reasonable 20-30fps at the native resolution and default detail settings. It was playable.\r\n\
+      \r\n\
+      *Ghost Recon 2* ran at an abysmal 8-10fps even with all settings bottomed out. Not recommended for the Envy. \r\n\
+      \r\n\
+      *RACE 07*? No chance. Even at 800x600 it was struggling to achieve 5fps at the start and hinting at 10fps once everyone got going.\r\n\
+      \r\n\
+      !http://electricvisions.com/images/envy/thumbs/race07.jpg!:http://electricvisions.com/images/envy/race07.jpg\r\n\
+      \r\n\
+      Okay, so I think I'm being a bit hard on our little office laptop. So how about a bit of *!OpenArena*? It fairs much better achieving a respectable 30-40fps at full resolution and details.\r\n\
+      \r\n\
+      Well all that gaming (and installing) cost my battery. I couldn't even manage 1hr 20mins. However, this is not what the Envy is designed for so we'll leave the gaming and get on to some more realistic benchmarks.\r\n\
+      \r\n\
+      TheEnvyHasArrived | MoreOnHardware >>\r\n"
+    - true
+    - 2008-09-29 17:03:08
+    - 2009-08-26 21:18:29
+  - - "44"
+    - MoreOnHardware
+    - MoreOnHardware
+    - "!>http://electricvisions.com/images/envy/thumbs/Exhausted.jpg!:http://electricvisions.com/images/envy/thumbs/Exhausted.jpg\r\n\
+      \r\n\
+      <span class=\"big-em\">I</span>t gets *pretty warm* on the left side of the touch-pad top and bottom so I did the bed test. Sometimes when I\xE2\x80\x99m in bed being lazy I\xE2\x80\x99ll have the laptop resting on the duvet on my legs. With old Dell Vostro it used to get pretty hot not to mention heavy. I\xE2\x80\x99m typing this on the Envy and I have to say it\xE2\x80\x99s very comfortable. It\xE2\x80\x99s a little warm but doesn\xE2\x80\x99t make your legs tingle like the Dell did.\r\n\
+      \r\n\
+      *Fan noise* is acceptable. My Dell was quieter in fact. Apart from the odd moment when the fans kicked in the Dell was practically silent. Not so with the Envy but you won\xE2\x80\x99t notice it unless it\xE2\x80\x99s completely quiet. You can certainly hear it in the dead of night but my wife hasn't complained when she is trying to sleep.\r\n\
+      \r\n\
+      !<http://electricvisions.com/images/envy/thumbs/DSC_0057.JPG!:http://electricvisions.com/images/envy/DSC_0057.JPG\r\n\
+      \r\n\
+      I\xE2\x80\x99ve just noticed my *typing speed* has become pretty quick and feels good. Oh and the *back-lit* keys rock. I\xE2\x80\x99m now typing this in the dark and although I don\xE2\x80\x99t really look at the keyboard when typing it\xE2\x80\x99s great when you need to press the odd key. The effect is subtle too. I didn\xE2\x80\x99t realise this before getting it but the actual letters are highlighted. Very nice. This even works in Linux.\r\n\
+      \r\n\
+      I\xE2\x80\x99ve also noticed that the *wi-fi key* toggles both wi-fi and Bluetooth. The neat thing is that they can be configured separately through the HP Wireless Assistant. So, for example Bluetooth could be turned off and pressing the wifi button then toggles wi-fi only. Contrary to some concerns I've never accidentally hit the wi-fi or *power keys* and I do use the delete key from time to time. It's a nice touch not having any other buttons or switches on the sides. \r\n\
+      \r\n\
+      !>http://electricvisions.com/images/envy/thumbs/wifi.JPG!:http://electricvisions.com/images/envy/wifi.JPG\r\n\
+      \r\n\
+      The *keyboard proximity sensor* takes a bit of getting used to. It seems that if you leave your left hand over the keyboard you can move the mouse cursor around but cannot scroll. I guess this is because only tap is disabled and a tap is needed to initiate the scrolling (using either chiral or standard). I often leave my left hand resting on the side of the laptop and this has caught me out a few times.\r\n\
+      \r\n\
+      As for *locations of certain keys* such as delete and the PGUP, PGDN, HOME and END keys that need to be used in conjunction with fn I guess this is the price you pay (as well as the $$$!) for a small laptop. Not ideal for a programmer but most of the time I\xE2\x80\x99ll have an external keyboard so it shouldn\xE2\x80\x99t really cause problems and I went through the same small pain with my previous laptop until I got used to the key positions. \r\n\
+      \r\n\
+      *IOS*  is pretty impressive and a lifesaver for some no doubt. However it seems the touch-pad driver is not very mature yet. Firstly, when you lift your finger off the pad and put it down somewhere else on the pad (not a tap) with the intention of moving it the pointer jumps. Not good. Add to that no scrolling and some seriously basic applications (e.g. the picture viewer is a flash application and a pretty limited one at that) and you can't help but think it's a bit of a gimmick. I know it's supposed to be lightweight but it's definitely lacking polish. Still, this technology is in it's infancy and it's installed on the hard drive so with any luck updates are planned to address these problems.\r\n\
+      \r\n\
+      One thing I've not tested is the *Webcam*. Don't really use them much but I'd like to make sure it works! I noticed it was detected in Linux so I might have to try it out. \r\n\
+      \r\n\
+      *Speakers* are clear and not tinny although not that loud. In Linux I couldn't seem to find a way to increase it. Even upping the Pre-Amp in Amarok didn't have much effect other than to start causing pops. I need to check this on Windows as I'm going to be using it to do some post-prod sound work so it need to be good.\r\n\
+      \r\n\
+      Oh, I almost forgot to mention the *screen*. It's beautiful, unless you don't like shiny screens. Other than that small point the screen has a radiant even colour except perhaps at the bottom edge but you have to look closely. I'm not sure what it's like in sunlight we don't get much of that in London but I will check and modify this is appropriate. The great bit about the screen is the one-piece glass that covers the entire inside of the lid leaving no corners to get dirt trapped in. \r\n\
+      \r\n\
+      \r\n\
+      TheEnvyHasArrived | LinuxUsers >>\r\n"
+    - true
+    - 2008-09-29 17:14:36
+    - 2009-08-26 21:18:29
+  - - "45"
+    - TheEnvyHasArrived
+    - TheEnvyHasArrived
+    - "h2. A Tech Buyer's Experience\r\n\
+      \r\n\
+      h3. The Spec\r\n\
+      \r\n\
+      * Original black carbon fibre finish\r\n\
+      * 1.8Ghz processor\r\n\
+      * 64GB solid state disk\r\n\
+      * No Office\r\n\
+      * Extra power adapter\r\n\
+      \r\n\
+      h3. Unboxing\r\n\
+      \r\n\
+      My first words as I opened the lovely gift-wrapped box and slipped it out from its sleeve: \xE2\x80\x9CAh! I love that new smell!\xE2\x80\x9D, and: \xE2\x80\x9CSexy! Slim! Light! Well Presented! My God that is one beautiful laptop!\xE2\x80\x9D.\r\n\
+      \r\n\
+      !http://electricvisions.com/images/envy/thumbs/DSC_0002.JPG(box)!:http://electricvisions.com/images/envy/DSC_0002.JPG !http://electricvisions.com/images/envy/thumbs/DSC_0016.JPG(out of the gift box)!:http://electricvisions.com/images/envy/DSC_0016.JPG\r\n\
+      \r\n\
+      I mean I've been waiting 3 months for this thing. I've seen all the pictures I've looked at other laptops that are of a similar size (e.g. the !MacBook Air just to compare) but nothing prepares you for that ultimate wow factor when you see it for the first time. It really is a thing of beauty. I was afraid that after all this time I'd have hyped myself up so much that I'd be disappointed. I wasn't!\r\n\
+      \r\n\
+      h3. Sections\r\n\
+      \r\n\
+      * TurningItOn\r\n\
+      * VistaGaming\r\n\
+      * MoreOnHardware\r\n\
+      * LinuxUsers\r\n\
+      * OptimizingWindows\r\n\
+      * SettingUp\r\n\
+      * EverydayUse\r\n\
+      * DvdContents\r\n"
+    - true
+    - 2008-09-30 00:50:10
+    - 2009-08-26 21:18:30
+  - - "46"
+    - EverydayUse
+    - EverydayUse
+    - "Plugging in my 26\xE2\x80\x9D monitor via HDMI the Envy and Vista had no trouble switching to the correct 1920x1200 resolution. Working on Linux is also surprisingly simple (after a few more updates on Intrepid Ibex). I've got a nice setup with the main LCD as my work area and the Envy screen for email and documentation.\r\n\
+      \r\n\
+      !http://electricvisions.com/images/envy/thumbs/lots-a-windows.jpg!:http://electricvisions.com/images/envy/lots-a-windows.jpg !http://electricvisions.com/images/envy/thumbs/DSC_0041.JPG!:http://electricvisions.com/images/envy/DSC_0041.JPG\r\n\
+      \r\n\
+      After a few days use the touch-pad is really starting to feel at one with my finger. I guess maybe I just need to wash more often! In fact it even recommends you do in the Essentials guide book!\r\n\
+      \r\n\
+      One thing that is starting to bug me is the brightness sensor. It's a nice idea but doesn't quite work for two reasons. First, it flickers. I thought it was just when the ambient light was a certain brightness but it's happening more now. Second I'm not sure it really sets it to the right brightness. I guess this is a bit subjective though but I was hoping it could be adjusted manually then the brightness sensor would adjust around this base setting. However it seems just to override it. \r\n\
+      \r\n\
+      TheEnvyHasArrived | DvdContents >>"
+    - true
+    - 2008-09-30 02:53:16
+    - 2009-08-26 21:18:30
+  - - "47"
+    - LinuxUsers
+    - LinuxUsers
+    - "<span class=\"big-em\">I</span> was a bit worried about the number of specialised drivers the Envy comes with. I knew Synaptics have a Linux driver but I wasn\xE2\x80\x99t sure whether all features were implemented. As for the proximity sensor, back-lighting and brightness sensor, having seen the options to enable/disable them in the BIOS this could indicate they were implemented at a fairly low level but that would mean software control might interfere.\r\n\
+      \r\n\
+      !<http://electricvisions.com/images/envy/thumbs/DSC_0072.JPG!:http://electricvisions.com/images/envy/DSC_0072.JPG\r\n\
+      \r\n\
+      I needed to boot from CD so I had to change the boot order in the BIOS. Continuously pressing F10 when booting up gets you into the BIOS. Unfortunately this is also the key to save and exit. So when you finally get to the BIOS screen it's asking you if you want to save and exit. Not well thought out but I'm not going to be there all the time so it's minor.\r\n\
+      \r\n\
+      I had a go with !LinuxMint XFCE as it's nice style and lightweight window manager appealed to me. Unfortunately I had some issues with wi-fi namely, not getting it to work. I slipped in a LiveCD of Ubuntu I had and hey presto works out of the box, sound too! So I went ahead and installed it in the 10GB space I had left after Vista for some further testing. There goes the battery again. This time it lasted 2 hours. It's still not really a fair test as I'd being using the DVD a bit. Once I've got everything installed and working I'll test the battery again with more practical applications. \r\n\
+      \r\n\
+      Once Ubuntu was installed I grabbed all the updates noting the Intel graphics drivers it finds. Good. The display looks a little odd at the moment so hopefully this will fix things as well as the rest of the hardware. We'll see.\r\n\
+      \r\n\
+      Well it didn't help. I got lost in xorg.conf and it was still looking odd after all the other updates. When I say odd I mean two screens of different sizes. The Screen Resolution helper could see the two displays so it must have been set somewhere but other than xorg.conf I don't know what else it could be. Something in an Intel configuration somewhere possibly. I'm no Linux expert.\r\n\
+      \r\n\
+      So as it seemed many fixes were being included in later kernels why not try the latest Ubuntu Alpha build. 8.10 Intrepid Ibex is about to go into beta so it should be getting pretty stable by now. Ubuntu has had a good history of stability. So I set a download going. I'm glad we have fast Internet connections these days. 15 minutes later I was burning the ISO to a CD. That's right, unlike bloated Vista many distributions still fit on a single CD although I fear it won't last much longer. I tested the LiveCD of Intrepid and all was looking good. Sound, Video, Wireless, it was all working. So I wanted to do a full install to be sure. It took a few minutes but it was worth it! Everything working. A few little issues but that's to be expected from an Alpha build. \r\n\
+      The best bit though...Sleep works! This is a must have feature for me. There are some odd issues with it at the moment. One I've just posted on the support forum detailing how the power button action gets called when resuming. As I said though with any luck this will be sorted for release. Hibernate also works but it's not much quicker than a cold boot so unless you really need those precious 1-2watts I wouldn't bother. One thing that foxed me for a few seconds was the wi-fi connection. It seemed to lose it after logout. A right-click on the icon soon found me the solution. I just needed to Edit the connection->Wireless->Select router->Edit->Check System setting and Connect automatically. Then Wireless Security tab->type in your password.\r\n\
+      \r\n\
+      Power Management had a few issues. I'd set it to shutdown when battery was critical and the warning came up but it did not shutdown. Instead the battery just discharged and the laptop went off. After a few more updates this seemed to fix itself and I recall Ubuntu shutting down gracefully at some point. Also the mute light always seems to be on and does not function. \r\n\
+      \r\n\
+      Sound also seems to have issues when resuming from sleep. But I found a fix for this: \r\n\
+      \r\n\
+      <pre>sudo echo options snd-hda-intel model=toshiba >> /etc/modprobe.d/alsa-base</pre>\r\n\
+      \r\n\
+      Keyboard back-light seems to come on when typing but it's not influenced by the ambient light as I was led to believe. This could be what's causing the poor battery times.\r\n\
+      So Intrepid Ibex is working well apart from a few niggles and once the full release is out next month it should be very good.\r\n\
+      \r\n\
+      TheEnvyHasArrived | OptimizingWindows >>\r\n"
+    - true
+    - 2008-09-30 02:57:51
+    - 2009-08-26 21:18:30
+  - - "48"
+    - OptimizingWindows
+    - OptimizingWindows
+    - |-
+      My main OS will be Linux (now I know it works well enough for my needs) but I do need Windows for the odd thing. In fact there is only one thing I need it for and that is a music production product called Reason by Propellerhead Software. Unfortunately they only do it in Windows or Mac flavours. My home computer has the full kit installed along with necessary hardware but I wanted to have it on the Envy for the odd bit of editing now and again. However that does mean losing a large chunk of disk space to Vista just to run one application. So I used a tool I'm familiar with. vLite can cull a lot of unneeded junk from Vista (the same could be done with nLite on XP). This not only saves space but should boot and run faster too. I'll spare you the details suffice to say it tends to take a long time to set this sort of thing up as it's easy to remove too much. So I'll see you tomorrow!
+      
+      I wasn't kidding all night I was up with some stupid thing that stopped it working properly but I got there. In fact the majority of the space is taken up by the Hibernate file (hiber.sys) and page swap file (pageswap.sys) with 2GB of RAM these take up a whopping 5GB. On a 64GB disc that's a fair chunk. They can be removed in vLite and also when installed as long as you don't want to use hibernate. This is fine for me as I usually use sleep but will probably just shutdown or reboot to go back into Linux.
+      
+      TheEnvyHasArrived | SettingUp >>
+    - true
+    - 2008-09-30 03:02:10
+    - 2009-08-26 21:18:30
+  - - "49"
+    - DvdContents
+    - DvdContents
+    - "The DVD contains a bunch of utility software and drivers. It's also included in a folder called swsetup on the hard drive. It's safe to remove.\r\n\
+      \r\n\
+      I don't use most of this software as I use lighter weight alternatives such as Foxit for PDF reading and VLC for just about any video file. Obviously the drivers come in handy though. Latest video drivers can be pulled from Intel but most of the other drivers are customized for the Envy (e.g. the Synaptics touch-pad) so I'll need to stick with the ones here.\r\n\
+      \r\n\
+      I've listed the contents below along with a rough description and any alternatives:\r\n\
+      \r\n\
+      *Adobe* \xE2\x80\x93 Acrobat Reader (I use Foxit Software's Reader. Much lighterweight and faster to load)\r\n\
+      *APPINSTL* \xE2\x80\x93 HP Application Installer for installing all this software.\r\n\
+      *Audio* \xE2\x80\x93 Sound drivers\r\n\
+      *AVG* \xE2\x80\x93 Anti-virus (I won't be installing any anti-virus software as I'll mostly be offline in Windows. Maybe grab the occasional new instruments for my music software but that's it. Other than that I'll be in Linux.\r\n\
+      *Btooth* \xE2\x80\x93 Broadcom 2045 Bluetooth drivers\r\n\
+      *Chipset* \xE2\x80\x93 Chipset drivers\r\n\
+      *CyberDVD* \xE2\x80\x93 DVD Player (Won't be watching D!VDs. I can use VLC if I need)\r\n\
+      *ESATA* \xE2\x80\x93 ESATA drivers: JMB36X RAID setup\r\n\
+      *ESUVT* \xE2\x80\x93 Vista Service Pack 1 (Already included))\r\n\
+      *H!PSys* \xE2\x80\x93 Some HP Info tool that displays model info. This info is also available in the BIOS \r\n\
+      *IOS* \xE2\x80\x93 Instant On System (Which I've chosen to remove)\r\n\
+      *MSCU* \xE2\x80\x93 (Not sure what this is but don't seem to need it)\r\n\
+      *P!CDoctor* \xE2\x80\x93 HP Hardware Diagnostic Tools (For a techy like me this is not necessary. I'll install my own if required)\r\n\
+      *Pidgin* \xE2\x80\x93 IM for MSN, Yahoo, ICQ, and a bunch of others (I use Miranda which is lightweight and allows just the protocols you need which in my case is only MSN, I use Pidgin on Linux though)\r\n\
+      *!PowerAdapter* \xE2\x80\x93 Contains the Aura !PowerConnet xml setup file. Adds the Aura as a wireless connection\r\n\
+      *Proximity* \xE2\x80\x93 Add a Control Panel app for turning the Proximity Sensor on or off (As this can be done in the BIOS I don't find this really necessary)\r\n\
+      *QP4W* \xE2\x80\x93 Cyberlink video player (I use VLC)\r\n\
+      *Safety* \xE2\x80\x93 Safety and comfort guide (PDF)\r\n\
+      *Touchpad* \xE2\x80\x93 Touchpad drivers\r\n\
+      *!UserGuide* \xE2\x80\x93 User guide (Another PDF)\r\n\
+      *Video* \xE2\x80\x93 Intel video drivers (Grab the latest from Intel)\r\n\
+      *VoodooVE* \xE2\x80\x93 Voodoo Vista Enhancements (not sure what it enhances exactly. I'll have to check this out)\r\n\
+      *Wallpaper* \xE2\x80\x93 Voodoo Wallpaper (These I like. Could do with a few more though)\r\n\
+      *weblinks* \xE2\x80\x93 Desktop web link to Next bench (Hey it's my default page in Firefox!)\r\n\
+      *WLAN* \xE2\x80\x93 Wi-fi driver\r\n\
+      *WLASST* \xE2\x80\x93 Wireless Assistant for turning on/off wifi and bluetooth\r\n\
+      *Youcam* \xE2\x80\x93 webcam software. Requires Windows Media Player\r\n\
+      \r\n\
+      TheEnvyHasArrived\r\n"
+    - true
+    - 2008-09-30 03:03:35
+    - 2009-08-26 21:18:30
+  - - "51"
+    - SettingUp
+    - SettingUp
+    - "!http://electricvisions.com/images/envy/thumbs/DSC_0028.JPG!:http://electricvisions.com/images/envy/DSC_0028.JPG\r\n\
+      \r\n\
+      So far I've just been testing things out but it's time to get serious and get everything setup so I can start using it properly.\r\n\
+      \r\n\
+      \r\n\
+      h3. The BIOS\r\n\
+      \r\n\
+      It's about the simplest one I've seen. Not even the usual hardware devices to disable. IOS and Proximity and  Light sensors can be disabled here.\r\n\
+      ESC \xE2\x80\x93 See POST screen\r\n\
+      F9 \xE2\x80\x93 Select boot device\r\n\
+      F10 \xE2\x80\x93 Enter BIOS setup\r\n\
+      \r\n\
+      h3. IOS instantly off\r\n\
+      \r\n\
+      I've decided to disable IOS. It's a little clunky for my liking and other than browsing I have no need of the features. I don't talk to people on Skype or IM them. I have an iPhone for music and the picture viewer is a little clumsy. \r\n\
+      \r\n\
+      h3. On goes Windows\r\n\
+      \r\n\
+      I've found installing Windows then Linux works well as Linux kindly sets up a Windows boot option (unlike Windows for Linux) so I'm going to stick with that. So on goes my custom version of Windows in double quick time unsigned drivers and all (Yes Vista moaned a bit but it seems to work ok). The screen went blank for quite a while at the end of installation but eventually it rebooted and Windows loaded. After a bit of tinkering Windows was on a 10GB partition with over 7GB to spare. That's right folks from 30GB to less than 3GB. I'd say that was worth it.\r\n\
+      \r\n\
+      h3. Then Ubuntu Linux\r\n\
+      \r\n\
+      This left a whole 50GB for the Linux partition and so I set about reinstalling Ubuntu Intrepid. This should be enough for all my apps and a good chunk of my music collection. \r\n\
+      \r\n\
+      TheEnvyHasArrived | EverydayUse >>\r\n"
+    - true
+    - 2008-09-30 03:06:54
+    - 2009-08-26 21:18:30
+  - - "53"
+    - ImproveGuiPerformance
+    - ImproveGuiPerformance
+    - |
+      Make your GUI less gooey (Speed up scrolling, dragging, etc):
+      
+      Add to @/etc/X11/xorg.conf@:
+      
+      h3. Current working
+      
+      bc.. Section "Monitor"
+      	Identifier	"Configured Monitor"
+      !EndSection
+      
+      Section "Screen"
+      	Identifier	"Default Screen"
+      	Monitor		"Configured Monitor"
+      	Device		"Configured Video Device"
+      !EndSection
+      
+      Section "Device"
+      	Identifier	"Configured Video Device"
+      	Driver		"intel"
+      	Option		"!AccelMethod"		"exa"
+      	Option		"Exa!NoComposite"	"true"
+      	Option		"!MigrationHeuristic"	"greedy"
+      !EndSection
+
+    - true
+    - 2008-10-07 00:18:00
+    - 2009-08-26 21:18:30
+  - - "54"
+    - SimplikiDevelopment
+    - SimplikiDevelopment
+    - |
+      h2. Bugs
+      
+      <strike>Need to add more rules about converting !WikiWords. E.g. "ThisShouldNotBeConverted" as it's quoted</strike>
+      
+      
+      h2. Enhancements
+      
+       <strike>Add spaces in !WikiWords (works in titles but not in links)</strike>
+      
+      
+      h2. New Features
+      
+      tags - for search feature to be added later
+      
+      <strike>basic auth for editing online</strike>
+      
+      <strike>alternate !WikiWord syntax (to be able to specify a title) e.g.</strike>
+      
+      <strike>
+      bc. $Name of a page$
+      
+      or how about keeping !WikiWord syntax but the page itself could have a title. That title is used in the link instead of the !WikiWord unless no title is specified</strike>
+      
+      *BoldWikiWord*
+
+    - true
+    - 2008-10-07 00:19:35
+    - 2009-08-26 21:18:30
+  - - "55"
+    - BatchResizePictures
+    - BatchResizePictures
+    - |
+      Batch resize pictures:
+      <pre>
+      mogrify -resize 640 *.jpg
+      </pre>
+
+    - true
+    - 2008-10-08 18:58:49
+    - 2009-08-26 21:18:30
+  - - "56"
+    - UbuntuHotKeys
+    - UbuntuHotKeys
+    - |
+      |Alt+F1|Menu|
+      |Alt+F2|Run Application|
+
+    - true
+    - 2008-10-08 19:59:44
+    - 2009-08-26 21:18:30
+  - - "57"
+    - PostCommandLineInstall
+    - PostCommandLineInstall
+    - |-
+      SetupWifi
+      FixAudio
+      LaptopPackages - Power Management, CPU Scaling etc
+      SwitchMonitors
+      UpdateInstalledPackages
+      OptimizeLinux
+      InstallGnomeWithNoApps
+      InstallApplications
+      BuildOniguruma
+      InstallGems
+    - true
+    - 2008-10-11 15:02:12
+    - 2009-08-26 21:18:30
+  - - "58"
+    - SetupWifi
+    - SetupWifi
+    - |
+      h2. Working Wireless Connection Configuration
+      
+      h3. Contents of /etc/wpa_supplicant.conf
+      
+      bc.. ctrl_interface=/var/run/wpa_supplicant
+      eapol_version=2
+      ap_scan=1
+      fast_reauth=1
+      
+      network={
+      	ssid="Voodoo Power Adapter"
+      	scan_ssid=0
+      	key_mgmt=WPA-PSK
+      	psk="!ABinkie!"
+      }
+      
+      network={
+      	ssid="NETGEAR"
+      	scan_ssid=0
+      	key_mgmt=WPA-PSK
+      	psk=3c804ed5969a7c7f7d92a46b24f90942554c9579c11541cabe07f6a7da91757d
+      }
+      
+      h3. Contents of /etc/network/interfaces
+      
+      bc.. # The loopback network interface
+      auto lo
+      iface lo inet loopback
+      
+      #Wireless Card
+      auto wlan0
+      iface wlan0 inet dhcp
+      	wpa-conf /etc/wpa_supplicant.conf
+      
+      h3. To get the encrypted key:
+      
+      bc. wpa_passphrase NETGEAR password
+      
+      this generates:
+      
+      bc. network={
+      ssid="NETGEAR"
+      #psk="password"
+      psk=encrypted password
+      }
+      
+      Make it only accessible by root:
+      
+      bc. chmod 640 /etc/wpa_supplicant.conf
+      
+      To redirect Wifi:
+      
+      bc. sudo service networking restart
+      
+      
+      h2. Other commands used to get this working
+      
+      bc. sudo iwconfig wlan0 essid NETGEAR key B8E6FAD33F channel 6 mode Managed
+      sudo ifconfig wlan0 up
+      @sudo iwlist wlan0 scan@ - Scan for wireless networks
+      sudo dhclient wlan0
+      wget google.com
+      
+      
+      sudo nano -w /etc/network/interfaces
+      
+      iface wlan0 inet dhcp
+      wireless-essid   MYNETWOTK
+      wireless-key     FEFEFEFEFE
+      wireless-channel 11
+      wireless-mode    managed
+      
+      h3. Commands used
+      
+      @lshw@ - List hardware
+      @sudo dhclient wlan0@ - dynamically assign an ip address
+      @sudo iwlist wlan0 scan@ - Scan for wireless networks
+      
+      h3. Check Wi-fi device exists
+      
+      bc. sudo lshw | more
+      
+      If you see @configuration: ... driver=iwlagn ...@ then driver is setup
+      
+      h3. Connect to the router
+      
+      bc. sudo iwconfig wlan0 essid NETGEAR key s:b0rn0fin commit
+      
+      
+      h3. Setup Wi-fi
+      
+      @iwconfig@ Should show that wlan0 is the wireless card. If it says "no wireless extensions" you've got a problem.
+      
+      In my case it says @IEEE 802.11abgn ESSID:""@
+
+    - true
+    - 2008-10-11 22:47:40
+    - 2009-08-26 21:18:30
+  - - "60"
+    - UpdateInstalledPackages
+    - UpdateInstalledPackages
+    - |-
+      Usually the following is sufficient:
+      
+      bc. sudo apt-get update && apt-get upgrade
+      
+      Sometimes (e.g. kernels updates) you'll need this:
+      
+      bc. sudo apt-get dist-upgrade
+    - true
+    - 2008-10-11 23:11:45
+    - 2009-08-26 21:18:30
+  - - "61"
+    - OptimizeLinux
+    - OptimizeLinux
+    - |-
+      Remove the extra virtual terminals:
+      
+      bc. cd /etc/event.d
+      sudo rm tty3 tty4 tty5 tty6
+      
+      If memory is enough reduce the amount of swapping that occurs:
+      
+      bc. echo vm.swappiness=10 >> /etc/sysctl.conf
+    - true
+    - 2008-10-11 23:42:29
+    - 2009-08-26 21:18:30
+  - - "64"
+    - InstallApplications
+    - InstallApplications
+    - |
+      h3. The Basics
+      
+      Installed with:
+      
+      bc. sudo apt-get -y install ...
+      
+      word processor, spreadsheet, browser, flash, email, IM client, archiver, PDF viewer, image editor/manager, media player, MP3 player, required java
+      
+      bc. openoffice.org-writer openoffice.org-calc firefox flashplugin-nonfree thunderbird-locale-en-gb pidgin file-roller evince picasa totem muine muine-plugin-audioscrobbler muine-plugin-trayicon sun-java6-jre
+      
+      (note working: sun-java6-plugin)
+      
+      h3. Extra office related
+      
+      bc. prism-google-calendar prism-google-reader
+      
+      h3. Development
+      
+      FTP
+      
+      bc. gftp
+      
+      Ruby (build-essential to build some ruby gems)
+      
+      bc. ruby rubygems build-essential ruby-dev irb libopenssl-ruby
+      
+      Databases (the dev lib is for build the mysql gem)
+      
+      bc. mysql-server mysql-query-browser libmysqlclient-dev sqlite3 libsqlite3-ruby
+      
+      Subversion
+      
+      bc. subversion nautilus-script-collection-svn svn-workbench
+      
+      This needs to be run to enable the Nautilus Subversion shell integration:
+      
+      bc. nautilus-script-manager enable Subversion
+
+    - true
+    - 2008-10-12 00:57:18
+    - 2009-08-26 21:18:30
+  - - "65"
+    - InstallGnomeWithNoApps
+    - InstallGnomeWithNoApps
+    - |-
+      All the packages below can be added using:
+      
+      bc. sudo apt-get -y install ...
+      
+      Gnome Window Manager and graphical login with no extra applications.
+      
+      bc. xorg gnome-core gdm fast-user-switch-applet usplash-ubuntu-theme
+      
+      Required for "Dust theme":https://wiki.ubuntu.com/Artwork/Incoming/!DustTheme (deb package on that page no longer needed as it's been updated in main repo):
+      
+      bc. human-theme gtk2-engines-murine gtk2-engines-pixbuf gtk2-engines-clearlooks
+      
+      You could also add these for package management:
+      
+      bc. install synaptic gnome-app-install update-manager update-notifier
+      
+      Add this for printing support:
+      
+      bc. install system-config-printer-gnome
+    - true
+    - 2008-10-12 03:39:09
+    - 2009-08-26 21:18:30
+  - - "66"
+    - FixAudio
+    - FixAudio
+    - |
+      Sound works even after suspend/resume:
+      
+      bc. echo options snd-hda-intel model=toshiba >> /etc/modprobe.d/alsa-base
+
+    - true
+    - 2008-10-12 04:52:01
+    - 2009-08-26 21:18:30
+  - - "68"
+    - LaptopPackages
+    - LaptopPackages
+    - |-
+      Install ACPI and GUI for power management
+      
+      bc. sudo apt-get install acpi-support gnome-power-manager
+      
+      This sets the power button to do nothing. A little workaround to stop the annoying Logout dialog appearing after resuming from suspend:
+      
+      bc. gconftool-2 --type string --set /apps/gnome-power-manager/buttons/power ""
+      
+      
+      
+      You can add the CPU Frequency Scaling Monitor to a GNOME Panel to get a live view on you current CPU speed and also select other modes.
+      
+      bc. sudo sh -c 'cat >> /etc/modules <<END
+      acpi_cpufreq
+      cpufreq_conservative
+      cpufreq_ondemand
+      cpufreq_powersave
+      cpufreq_stats
+      cpufreq_userspace
+      END'
+      
+      To set the governor to use on startup use the code below.
+      Note that this replaces the default @/etc/rc.local@ as there is nothing in it (except exit):
+      
+      bc. sudo sh -c 'cat > /etc/rc.local <<END
+      /bin/echo ondemand > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+      exit 0
+      END'
+    - true
+    - 2008-10-13 20:43:50
+    - 2009-08-26 21:18:30
+  - - "69"
+    - BuildOniguruma
+    - BuildOniguruma
+    - |
+      bc. sudo apt-get -y install libonig-dev
+      sudo gem install oniguruma
+      
+      May also need:
+      
+      bc. sudo apt-get install ruby-dev
+
+    - true
+    - 2008-10-20 10:38:46
+    - 2009-08-26 21:18:30
+  - - "71"
+    - RailsDevelopment
+    - RailsDevelopment
+    - |
+      RailsCaching
+      
+      
+      h3. Using !RedCloth 4.0.4
+      
+      bc. require 'rubygems'
+      gem '!RedCloth'
+      require 'redcloth'
+      !RedCloth::VERSION => 4.0.4
+      
+      AutotestNotify
+      
+      Add the following to @/etc/bash.bashrc@ to enable ruby cmdline tools to run and for @fif@ a find in files for Rails projects. Uses @grep@ and excludes a bunch of directories
+      
+      bc. sudo sh -c 'cat >> /etc/bash.bashrc <<END
+      export PATH=$PATH:/var/lib/gems/1.8/bin
+      alias fif="grep -i!RIn --exclude-dir=assets --exclude-dir=log --exclude-dir=.git --exclude-dir=script --exclude-dir=tmp --exclude-dir=vendor --exclude-dir=db"
+      END'
+
+    - true
+    - 2008-10-21 00:33:15
+    - 2009-08-26 21:18:30
+  - - "72"
+    - RubyGUIDevelopment
+    - RubyGUIDevelopment
+    - |
+      Currently looking at "Ruby Gnome2":http://ruby-gnome2.sourceforge.jp/ ^
+      
+      Install with:
+      
+      bc. sudo apt-get -y install ruby-gnome2
+      
+      GtkEvents
+      PackingBoxes
+      
+      h3. !EventKey
+      
+      state can be SHIFT_MASK (SHIFT), CONTROL_MASK (CTRL), MOD1_MASK (ALT)
+      keyval is the key code
+
+    - true
+    - 2008-10-21 23:45:51
+    - 2009-08-26 21:18:30
+  - - "73"
+    - SetupCronToBackupWikiToSubversion
+    - SetupCronToBackupWikiToSubversion
+    - |
+      bc.. cat > /etc/periodic/daily/220.backup-wiki-db <<END
+      #!/bin/sh
+      /usr/local/bin/svn commit -m 'Auto DB Backup by cron' --non-interactive /data/wiki/db
+      END
+      
+      chmod 755 /etc/periodic/daily/220.backup-wiki-db
+
+    - true
+    - 2008-10-22 20:18:27
+    - 2009-08-26 21:18:30
+  - - "76"
+    - AgileIdeals
+    - AgileIdeals
+    - |
+      *Testing is everything* - No such thing as a quick fix. No coverage == No ability to change, increasing time to develop and increasing the brittleness of the code and increasing the hacks
+      
+      *Feedback through testing and demos* - Unit testing reduces debugging time through localization of the issue. Functional/Acceptance testing improves flow and cohesion of the system and ensures the direction is according to customers requests
+      
+      *Warnings are Errors* - Visual Noise! They are telling you something is wrong. Refer to quick fix or hack
+      
+      *Stick to the plan* - Don't be beaten into submission. Extra tasks cannot get squeezed into an iteration, something has to give.
+      
+      *Use simple solutions but not the easiest* - No need to be clever, implement what you need to solve the problem at hand. If it's well tested it can be improved without breaking existing functionality
+      
+      *Tell, don't ask* (related: Demeter, Pass Something in, Command&Query) - Don't query an object then change the state of that object based on the query. Get the object to change it's own state. Just send a message or command to tell it to do so.
+
+    - true
+    - 2008-10-23 21:40:45
+    - 2009-08-26 21:18:30
+  - - "77"
+    - TestRdFormat
+    - TestRdFormat
+    - |-
+      = module Gdk
+      The GDK initialization functions and miscellaneous utility functions.
+      
+      == Module Functions
+      --- Gdk.display_arg_name
+          Gets the display name specified in the command line arguments(--display command line option) passed to Gtk.init if any. ((*Since 2.2*))
+          * Returns: the display name, if specified explicitely, otherwise nil
+      
+      --- Gdk.set_locale
+          Initializes the support for internationalization by calling the setlocale() system call. This function is called by Gtk.set_locale and so GTK+ applications should use that instead.
+          The locale to use is determined by the LANG environment variable, so to run an application in a certain locale you can do something like this:
+      
+            export LANG="fr"
+             ... run application ...
+      
+          If the locale is not supported by X then it is reset to the standard "C" locale.
+          * Returns: the resulting locale.
+      
+      --- Gdk.sm_client_id=(id)
+          Sets the SM_CLIENT_ID property on the application's leader window so that the window manager can save the application's state using the X11R6 ICCCM session management protocol.
+          See the X Session Management Library documentation for more information on session management and the Inter-Client Communication Conventions Manual (ICCCM) for information on the WM_CLIENT_LEADER property. (Both documents are part of the X Window System distribution.)
+          * id: the client id assigned by the session manager when the connection was opened, or nil to remove the property. (String)
+          * Returns: id
+      
+      --- Gdk.set_sm_client_id(id)
+          Same as Gdk.sm_client_id=.
+          * id: the client id assigned by the session manager when the connection was opened, or nil to remove the property. (String)
+          * Returns: self
+      
+      --- Gdk.notify_startup_complete
+          Indicates to the GUI environment that the application has finished loading. If the applications opens windows, this function is normally called after opening the application's initial set of windows.
+          GTK+ will call this function automatically after opening the first Gtk::Window unless Gtk::Window.auto_startup_notification= is called to disable that feature. ((*Since 2.2*))
+          * Returns: self
+      --- Gdk.program_class
+          Gets the program class. Unless the program class has explicitly been set with Gdk.program_class= or with the --class commandline option, the default value is the program name (determined with GLib.prgname) with the first character converted to uppercase.
+          * Returns: the program class. (String)
+      
+      --- Gdk.program_class=(program_class)
+          Sets the program class. The X11 backend uses the program class to set the class name part of the WM_CLASS property on toplevel windows; see the ICCCM.
+          * program_class: a string.
+          * Returns: program_class
+      --- Gdk.set_program_class(program_class)
+          Same as Gdk.program_class=.
+          * program_class: a string.
+          * Returns: self
+      
+      --- Gdk.display
+          Gets the name of the display, which usually comes from the DISPLAY environment variable or the --display command line option.
+          * Returns: the name of the display.
+      
+      --- Gdk.flush
+          Flushes the X output buffer and waits until all requests have been processed by the server. This is rarely needed by applications. It's main use is for trapping X errors with Gdk.error_trap_push and Gdk.error_trap_pop.
+          * Returns: self
+      
+      --- Gdk.screen_width
+          Returns the width of the default screen in pixels.
+          * Returns: the width of the default screen in pixels.
+      --- Gdk.screen_height
+          Returns the height of the default screen in pixels.
+          * Returns: the height of the default screen in pixels.
+      
+      --- Gdk.screen_width_mm
+          Returns the width of the default screen in millimeters. Note that on many X servers this value will not be correct.
+          * Returns: the width of the default screen in millimeters, though it is not always correct.
+      --- Gdk.screen_height_mm
+          Returns the height of the default screen in millimeters. Note that on many X servers this value will not be correct.
+          * Returns: the height of the default screen in millimeters, though it is not always correct.
+      
+      --- Gdk.pointer_grab(window, owner_events, event_mask, confine_to, cursor, time)
+          Grabs the pointer (usually a mouse) so that all events are passed to this application until the pointer is ungrabbed with Gdk.pointer_ungrab, or the grab window becomes unviewable. This overrides any previous pointer grab by this client.
+          Pointer grabs are used for operations which need complete control over mouse events, even if the mouse leaves the application. For example in GTK+ it is used for Drag and Drop, for dragging the handle in the Gtk::HPaned and Gtk::VPaned widgets.
+          Note that if the event mask of an X window has selected both button press and button release events, then a button press event will cause an automatic pointer grab until the button is released. X does this automatically since most applications expect to receive button press and release events in pairs. It is equivalent to a pointer grab on the window with owner_events set to true.
+          * window: the Gdk::Window which will own the grab (the grab window).
+          * owner_events: if false then all pointer events are reported with respect to window and are only reported if selected by event_mask. If true then pointer events for this application are reported as normal, but pointer events outside this application are reported with respect to window and only if selected by event_mask. In either mode, unreported events are discarded.
+          * event_mask: specifies the event mask(((<GdkEventMask|Gdk::Event#GdkEventMask>))), which is used in accordance with owner_events. Note that only pointer events (i.e. button and motion events) may be selected.
+          * confine_to: If non-nil, the pointer will be confined to this window during the grab. If the pointer is outside confine_to, it will automatically be moved to the closest edge of confine_to and enter and leave events will be generated as necessary.
+          * cursor: the Gdk::Cursor to display while the grab is active. If this is nil then the normal cursors are used for window and its descendants, and the cursor for window is used for all other windows.
+          * time: the timestamp of the event which led to this pointer grab. This usually comes from a Gdk::EventButton struct, though Gdk::Event::CURRENT_TIME can be used if the time isn't known.
+          * Returns: Gdk::GRAB_SUCCESS if the grab was successful. (((<GdkGrabStatus|Gdk#GdkGrabStatus>)))
+      
+      --- Gdk.pointer_ungrab(time)
+          Ungrabs the pointer, if it is grabbed by this application.
+          * time: a timestamp from a Gdk::Event, or Gdk::Event::CURRENT_TIME if no timestamp is available.
+          * Returns: self
+      
+      --- Gdk.pointer_is_grabbed?
+          Returns true if the pointer is currently grabbed by this application.
+          Note that this does not take the inmplicit pointer grab on button presses into account.
+          * Returns: true if the pointer is currently grabbed by this application
+      
+      --- Gdk.double_click_time=(msec)
+          Set the double click time for the default display. See Gdk::Display#double_click_time=. See also Gdk::Display#double_click_distance=. Applications should not set this, it is a global user-configured setting.
+          * msec: double click time in milliseconds (thousandths of a second)
+          * Returns: msec
+      --- Gdk.set_double_click_time(msec)
+          Same as Gdk.double_click_time=.
+          * msec: double click time in milliseconds (thousandths of a second)
+          * Returns: self
+      
+      --- Gdk.keyboard_grab(window, owner_events, time)
+          Grabs the keyboard so that all events are passed to this application until the keyboard is ungrabbed with Gdk.keyboard_ungrab. This overrides any previous keyboard grab by this client.
+          * window: the Gdk::Window which will own the grab (the grab window).
+          * owner_events: if false then all keyboard events are reported with respect to window. If true then keyboard events for this application are reported as normal, but keyboard events outside this application are reported with respect to window. Both key press and key release events are always reported, independant of the event mask set by the application.
+          * time: a timestamp from a Gdk::Event, or Gdk::Event::CURRENT_TIME if no timestamp is available.
+          * Returns: Gdk::GRAB_SUCCESS if the grab was successful. (((<GdkGrabStatus|Gdk#GdkGrabStatus>)))
+      --- Gdk.keyboard_ungrab(time)
+          Ungrabs the keyboard, if it is grabbed by this application.
+          * time: a timestamp from a Gdk::Event, or Gdk::Event::CURRENT_TIME if no timestamp is available.
+          * Returns: self
+      
+      --- Gdk.beep
+          Emits a short beep.
+          * Returns: self
+      
+      --- Gdk.error_trap_push
+          This function allows X errors to be trapped instead of the normal behavior of exiting the application. It should only be used if it is not possible to avoid the X error in any other way.
+          * Returns: self
+      
+           Example 1. Trapping an X error
+      
+            Gdk.error_trap_push
+            # ... Call the X function which may cause an error here ...
+      
+            # Flush the X queue to catch errors now.
+            Gdk.flush
+      
+            if Gdk.error_trap_pop
+              # ... Handle the error here ...
+            end
+      
+      --- Gdk.error_trap_pop
+          Removes the X error trap installed with Gdk.error_trap_push.
+          * Returns: the X error code, or 0 if no error occurred.
+      
+      --- Gdk.windowing_x11?
+          Returns true if GDK is configured to use the X backend, otherwise false.
+          * Returns: true if GDK is configured to use the X backend, otherwise false
+      
+      --- Gdk.windowing_win32?
+          Returns true if GDK is configured to use the Win32 backend.
+          * Returns: true if GDK is configured to use the Win32 backend
+      
+      --- Gdk.windowing_fb?
+          Returns true if GDK is configured to use the Linux framebuffer backend.
+          * Returns: true if GDK is configured to use the Linux framebuffer backend
+      
+      --- Gdk.target
+          Returns a String from pkg-config which backend GDK is configured to.
+          * Returns: self
+      
+      --- Gdk.cairo_available?
+          Returns true if Ruby/Cairo is supported.
+          * Returns true if Ruby/Cairo is supported.
+      
+      --- Gdk.set_x_error_handler{|serial, error_code, request_code, minor_code| ... }
+          Sets an global error handler caused by X. This function works on X backend only.
+          * {|serial, error_code, request_code, minor_code| ... }: An error handler
+            * serial: Serial number of failed request
+            * error_code: Error code of failed request
+            * request_code: Major op-code of failed request
+            * minor_code: Minor op-code of failed request
+          * Returns: self
+      
+      --- Gdk.set_x_io_error_handler{|disp, errno, error| ... }
+          Sets an global fatal I/O error handler caused by X. This function works on X backend only.
+          * {|disp, errno, error| ... }
+            * disp: The display name which the error is occured
+            * errno: The errno
+            * error: The error message
+          * Returns: self
+      
+      == Constants
+      === GdkGrabStatus
+      Returned by Gdk.pointer_grab and Gdk.keyboard_grab to indicate success or the reason for the failure of the grab attempt.
+      --- GRAB_SUCCESS
+          = 0, the resource was successfully grabbed
+      --- GRAB_ALREADY_GRABBED
+          = 1, the resource is actively grabbed by another client
+      --- GRAB_INVALID_TIME
+          = 2, the resource was grabbed more recently than the specified time
+      --- GRAB_NOT_VIEWABLE
+          = 3, the grab window or the confine_to window are not viewable
+      --- GRAB_FROZEN
+          = 4, the resource is frozen by an active grab of another client
+      
+      === GdkStatus
+      --- OK
+          = 0
+      --- ERROR
+          = -1
+      --- ERROR_PARAM
+          = -2
+      --- ERROR_FILE
+          = -3
+      --- ERROR_MEM
+          = -4
+      
+      == ChangeLog
+      * 2005-05-07 Added. - ((<Masao>))
+    - true
+    - 2008-10-24 21:52:37
+    - 2009-08-26 21:18:30
+  - - "78"
+    - InstallGems
+    - InstallGems
+    - |
+      Standard Rails gems:
+      
+      bc. sudo gem install rails mongrel will_paginate rspec-rails !ZenTest hoe rdoc rcov
+      
+      Some extras:
+      
+      bc. sudo gem install hpricot syntax diff-lcs
+      
+      To use the docs first make sure all gems have their rdocs installed:
+      
+      bc. sudo gem rdoc --all
+      
+      Then simply run the server with:
+      
+      bc. gem server --daemon
+
+    - true
+    - 2008-10-24 22:58:52
+    - 2009-08-26 21:18:30
+  - - "82"
+    - AutotestNotify
+    - AutotestNotify
+    - |-
+      Packages: @sudo apt-get install -y libnotify-dev@
+      
+      h3. Getting autotest to notify you of passes
+      
+      Download "ruby-libnotify":http://rubyforge.org/frs/?group_id=1911
+      
+      bc. wget http://rubyforge.org/frs/download.php/27134/ruby-libnotify-0.3.3.tar.bz2
+      tar xvf ruby-libnotify-0.3.3.tar.bz2
+      cd ruby-libnotify-0.3.3
+      ruby extconf.rb
+      make
+      sudo make install
+      
+      Then add the following to @.autotest@ and make sure you have icons called @pass.png@, @fail.png@ and @pending.png@ in your @IMAGE_ROOT@
+      
+      bc.. cat > ~/.autotest <<END
+      #!/usr/bin/env ruby
+      
+      require 'autotest/redgreen'
+      require '!RNotify'
+      
+      IMAGE_ROOT = File.dirname(__FILE__) + "/autotest"
+      
+      puts 'Autotest Hook: loading Notify'
+      Notify.init('Rake Autotest') || raise('Failed to initialize Notify')
+      puts 'Autotest Hook: initializing tray icon'
+      $tray_icon = Gtk::!StatusIcon.new
+      $tray_icon.icon_name = 'face-cool'
+      $tray_icon.tooltip = '!RSpec Autotest'
+      puts 'Autotest Hook: Creating Notifier'
+      $notification = Notify::Notification.new('X',nil,nil,$tray_icon)
+      $notification.timeout = 6000
+      
+      puts 'Autotest Hook: Loading Autotest Images'
+      $fail    = {:status => 'FAIL', :icon => Gdk::Pixbuf.new("#{IMAGE_ROOT}/fail.png",   48,48), :tray_icon => 'dialog-error'}
+      $pass    = {:status => 'PASS', :icon => Gdk::Pixbuf.new("#{IMAGE_ROOT}/pass.png",   48,48), :tray_icon => 'emblem-default'}
+      $pending = {:status => 'Pending', :icon => Gdk::Pixbuf.new("#{IMAGE_ROOT}/pending.png",48,48), :tray_icon => 'dialog-warning'}
+      
+      puts 'Autotest Hook: Entering Main Loop'
+      Thread.new { Gtk.main }
+      sleep 1
+      $tray_icon.embedded? || raise('Failed to set up tray icon')
+      
+      def notify(status, line)
+        $notification.update(status[:status], line, nil)
+        $notification.pixbuf_icon = status[:icon]
+        $tray_icon.icon_name = status[:tray_icon]
+      end
+      
+      Autotest.add_hook :ran_command do |at|
+        line = at.results.last || ""
+        if line.match(/example/)
+          examples = line.match(/(\d+)\sexamples[s]?/)
+          failures = line.match(/(\d+)\sfailure[s]?/)
+          pending = line.match(/(\d+)\spending/) || []
+          if failures[1].to_i > 0
+            notify($fail, "#{failures[1]} of #{examples[1]} examples failed")
+          elsif pending[1].to_i > 0
+            notify($pending, "#{pending[1]} of #{examples[1]} examples pending")
+          else
+            notify($pass, "All #{examples[1]} examples passed!")
+          end
+          $tray_icon.tooltip = "Last Result: #{line}"
+          $notification.show
+        end
+      end
+      
+      Autotest.add_hook :quit do |at|
+        puts 'Autotest Hook: Shutting Down...'
+        Notify.uninit
+        Gtk.main_quit
+      end
+      END
+    - true
+    - 2008-11-05 20:08:31
+    - 2009-08-26 21:18:30
+  - - "83"
+    - CleanIntrepidInstall
+    - CleanIntrepidInstall
+    - |
+      So far...
+      
+      h3. Remove unwanted applications
+      
+      bc. sudo apt-get purge evolution evolution-common tomboy tracker rhythmbox gnome-games gnome-games-data bluetooth bluez.* bogofilter-common gnome-orca xsane .*compiz.* gnome-user-guide
+      rm -rf Examples
+      
+      h3. Dust theme
+      
+      "Download":https://wiki.ubuntu.com/Artwork/Incoming/!DustTheme
+      
+      h3. Flashplugin
+      
+      Doesn't seem to work correctly if using apt. Better to install via Firefox.
+      
+      h3. Applications
+      
+      * Thunderbird email client
+      * Muine music album player and gstreamer plugins for playing MP3
+      * Workrave
+      * Unison multi-way file synchronisation (rsync on acid)
+      
+      bc. sudo apt-get install thunderbird thunderbird-locale-en-gb muine gstreamer0.10-plugins-ugly workrave unison
+      
+      h3. Development (Client & Server)
+      
+      bc. sudo su
+      apt-get install ruby rubygems build-essential ruby-dev libopenssl-ruby git-core git-svn mysql-server libfreeimage-dev subversion
+      ln -s /usr/bin/irb1.8 /usr/bin/irb
+      gem install rubygems-update
+      update_rubygems
+      gem -v                             # should output 1.3.1
+      gem install -v=2.2.2 rails
+      gem install rake
+      rake gems:install
+      RAILS_ENV=test rake gems:install
+      
+      
+      
+      h3. Development (Client)
+      
+      bc. sudo apt-get install ruby-gnome2 mysql-query-browser libmysqlclient-dev libonig-dev libnotify-dev
+      
+      h3. Gems
+      
+      *NOT WORKING*: This needs work. A number of issues currently occur with this method.
+      Now installed by @rake gems:install@  by settings them in the Initializer section of the @environment.rb@ file:
+      
+      bc.. config.gem "mysql"
+      config.gem "mongrel"
+      config.gem "!ZenTest", :lib => 'zentest'
+      config.gem "hoe"
+      config.gem "rspec-rails", :lib => 'spec/rails'
+      config.gem "rcov"
+      config.gem "will_paginate"
+      config.gem "hpricot"
+      config.gem "image_science"
+      
+      config.gem "oniguruma"
+      config.gem "!RedCloth"
+      
+      
+      h3. Autotest
+      
+      This needs ruby-libnotify which can be downloaded from "!RubyForge":http://rubyforge.org/frs/?group_id=1911&release_id=15878.
+      
+      Extract and terminal into the folder. Then do:
+      
+      bc. ruby extconf.rb
+      make
+      sudo make install
+
+    - true
+    - 2008-11-11 23:10:09
+    - 2009-08-26 21:18:30
+  - - "84"
+    - VersionControl
+    - VersionControl
+    - |-
+      I'm switching to Git!
+      
+      bc.. Here is a quickref:
+      
+      git config --global user.name "User Name"
+      git config --global user.email user@name.com
+      git config --global apply.whitespace nowarn
+      
+      [~]cat .gitconfig
+      cat .git/config              # repo info -edit to setup remote branches
+      
+      gitk --all                   # a git gui
+      git init                     # create git repository in current directory
+      gedit .gitignore             # ignore patterns
+      git add .                    # add everything to git (recursive)
+      git reset                    # undo latest commit
+                --hard ORIG_HEAD   # revert changes before merge
+      git commit -m "commit msg"   # commit into git
+                 -a                # add and commit files
+                 -v                # include diff in commit
+      git status                   # check for any changes in local git
+      git rm <file_or_dir>         # remove a file from git
+              -rf                  # force deletion (recursive)
+      git ls-files                 # list what's in git
+      git log                      # list previous commit messages
+              --stat               # see how much changed with ascii graph
+              -p                   # include the diffs
+      
+      git branch                   # show existing branches
+                 --color           # see if color
+                 <new branch>      # create new branch
+      git branch -d <branch>       # delete <branch>
+      git branch -D <branch>       # delete unmerged <branch>
+      git branch -a                # see all branches
+      git branch --track <local> <remote> # setup branch with remote tracking
+      
+      git checkout <branch>        # switch to other branch
+                            -b     # create branch as well (moves uncommitted)
+      git rebase <branch>          # sync up changes from <branch>
+                  master           # sync up changes from master into current
+      git diff <branch1> <branch2> # show changes made between two branches
+      
+      git stash                    # temporarily saves aways changes
+      git stash list               # see what has been stashed
+      git stash apply              # reapply stashed code
+      git stash clear              # clear out stash
+      
+      git push                     # sync back to main server
+      git pull                     # sync from main server
+      
+      git remote show <repo>       # view info from remote
+      git remote add <repo> <url>  # add a source
+      git fetch <repo>             # grabs branches from <repo> without merge
+      git pull <repo> <branch>     #
+      git merge <branch>           # merge contents from <branch>
+      git merge <repo/branch>      # merge previously fetched branch and repo
+      git push <repo> <branch>     # push changes back to repo (creates brnch)
+      
+      Subversion:
+      git-svn clone <url>          # grab a subversion repo
+      git-svn dcommit              # commit to a subversion repo
+      git-svn rebase               # get updates from subversion
+      
+      
+      GIT - Don't Panic!
+      
+      reflog - Gives you a list of recent actions in the repo
+      git co -b new_branch_name HEAD@{n} - Where n is the number you want to create the new branch with from reflog
+      git fsck --lost-found - Find orphaned objects (from (no branch) or merge/rebase accidents)
+      
+      
+      The following two commands shows you deleted branches incase, like me,
+      you delete the branch before making absolutely sure it merged correctly.
+      git fsck --lost-found
+      gitk $(cd .git/lost-found/commit && echo ??*)
+      
+      git archive --format=zip <branch> > ~/Workspace/releases/release.zip
+      cp ~/Workspace/releases/release.zip ~/Workspace/releases/release_<branch>.zip
+      
+      git clean -fd # remove untracked files and directories
+      
+      git reset --hard <commit-sha>
+    - true
+    - 2008-11-18 20:05:40
+    - 2009-08-26 21:18:30
+  - - "85"
+    - SwitchMonitors
+    - SwitchMonitors
+    - |
+      bc.. #!/bin/bash
+      if xrandr|grep -q 'connected 1920x1200'; then
+      echo 'Currently using external screen...'
+      echo 'Turning on laptop screen...';
+      xrandr --output LVDS --auto
+      echo 'Turning off external screen';
+      xrandr --output HDMI-1 --off --output TMDS-1 --off
+      else
+      if xrandr|grep -q 'HDMI-1 connected' || xrandr|grep -q 'TMDS-1 connected'; then
+      echo 'External screen available. Switching to it...';
+      echo 'Turning on external screen';
+      xrandr --output HDMI-1 --auto --output TMDS-1 --auto
+      echo 'Turning off laptop screen...';
+      xrandr --output LVDS --off
+      else
+      echo 'External screen not available. Cannot switch.';
+      fi
+      fi
+      xrandr|grep 'VGA'
+      xrandr|grep 'LVDS'
+      xrandr|grep 'HDMI-1'
+      xrandr|grep 'TMDS-1'
+
+    - true
+    - 2008-11-29 23:06:56
+    - 2009-08-26 21:18:30
+  - - "86"
+    - EnvyLaptop
+    - EnvyLaptop
+    - VoodooAuraConnectWifi
+    - true
+    - 2008-11-29 23:09:11
+    - 2009-08-26 21:18:30
+  - - "87"
+    - VoodooAuraConnectWifi
+    - VoodooAuraConnectWifi
+    - |
+      bc. name: Voodoo Power Adapter
+      SSID
+      hex: 566F6F646F6F20506F7765722041646170746572
+      name: Voodoo Power Adapter
+      nonBroadcast: true
+      connectionType: ESS
+      connectionMode: auto
+      authentication: WPA2PSK
+      encryption: AES
+      useOneX: false
+      keyType: passPhrase
+      protected: false
+      keyMaterial: ABinkie!
+
+    - true
+    - 2008-11-29 23:09:28
+    - 2009-08-26 21:18:30
+  - - "88"
+    - WorkStuff
+    - WorkStuff
+    - |-
+      Sirius: smb://192.168.0.9/puresolo/
+      Milkyway: smb://192.168.0.14/share/
+    - true
+    - 2008-11-29 23:46:51
+    - 2009-08-26 21:18:30
+  - - "89"
+    - GitServer
+    - GitServer
+    - |
+      Sync non-git managed files with Unison (see FileSync)
+      
+      Installing:
+      
+      bc. cd /usr/ports/devel/git;make install clean
+      
+      
+      Setting up a remote repository:
+      
+      bc. mkdir /data/phil/Documents; cd /data/phil/Documents; git init
+      
+      Setting up the client:
+      
+      bc.. cd ~/Documents; git init; echo > .gitignore <<END
+      log/*.log
+      tmp/**/*
+      obj/**/*
+      dist/**.dll
+      dist/**.pdb
+      dist/**.exe
+      END
+      
+      git add .
+      git commit
+      git remote add origin phil@192.168.0.100:/data/phil/Documents
+      git push origin master
+
+    - true
+    - 2008-12-01 21:29:09
+    - 2009-08-26 21:18:30
+  - - "92"
+    - PasswordlessAuthentication
+    - PasswordlessAuthentication
+    - |
+      With SSH...
+      
+      # generate the files @~/.ssh/id_rsa@ and @~/.ssh/id_rsa.pub@ with @ssh-keygen@
+      # append contents of @~/.ssh/id_rsa.pub@ to @~/.ssh/authorized_keys@ file on remote machine
+      
+      For Capistrano the keys need to be added to the ssh-agent
+      
+      To add the default id_rsa keys do @ssh-add@
+      To specify another key file do @ssh-add <keyfile>@
+      
+      h3. Unfuddle
+      
+      If you have multiple accounts the ssh keys for accessing git must be different. This means it won't work if you access through the different accounts on the same machine.
+
+    - true
+    - 2008-12-07 13:24:27
+    - 2009-08-26 21:18:30
+  - - "95"
+    - FlowRoadMap
+    - FlowRoadMap
+    - |
+      Done
+      
+      * Load, edit, save, exit
+      
+      !ToDo
+      
+      # Save with CTRL+S
+      # Open File Panel with CTRL+O (Enter a file name + path. Panel is dismissed)
+      # New File Panel with CTRL+N (enter a file name. Panel is dismissed)
+
+    - true
+    - 2008-12-10 07:32:53
+    - 2009-08-26 21:18:30
+  - - "96"
+    - FlowWrite
+    - FlowWrite
+    - |-
+      flowwrite flow write edit rails ruby gnome ubuntu text editor textmate gedit ring
+      
+      Currently called *Ring*
+      
+      * Fullscreen
+      * No menus
+      * No icons
+      * Simple shortcuts
+      * Aids for Test driven users
+      * Fast
+      * Focused on Rails
+      * Doc Panel for simple and consistent interface to features
+      
+      Ring is an editor for writing Ruby on Rails web applications. It was written to fill a gap in available programmers editors on Linux and more specifically Ubuntu. gedit does a pretty good job these days especially considering it's the built-in editor. However, due to it's lack of much needed features like decent search and replace and other plugins that don't quite do the job or conflict with built-in features, it's not quite as polished as equivalent editors for other platforms. Now I could have corrected these issues but I have some ideas for a slightly different spin on the standard editor. I will also take some ideas from Rails to build an easily accessible, modular editor.
+      
+      It's designed from the ground up as a Rails editor. With that in mind it will of course support Ruby syntax, snippets and templates. However, it will also primarily support Haml and Sass for HTML and CSS development. It's about time we moved away from these cumbersome technologies. Ring is modular. It provides a basic editing framework using the gtksourceview library and helpers provide all the features you'd expect to see for a Rails editor written in Ruby so if you don't like the way something works feel free to tweak it.
+      
+      Where Ring differs is in it's use of the mouse. It doesn't. Everything is designed to be optimized for the keyboard since this is where a programmer spends most of their time. Moving your hand to grab a mouse is slow. At least that is the thinking. It's been proven however that a lot of shortcuts especially complex combinations are actually slower. I'm trying to overcome this by limiting the functionality to the bare minimum. People use a mouse because it's useful for many things but editors don't focus enough on ease of keyboard control. I believe it can be more efficient if designed correctly.
+      
+      Another design goal for this editor is to maximize screen real-estate for those of us that spend a fair proportion of our time on a laptop. Icons and menus will be kept to a minimum (in other words none! At least that's the aim).
+      
+      It will be based on the fact that Rails is meant to be simple to develop and will therefore concentrate on maximizing that ability by being fast but with just enough features to make things easier than using say VI or gedit. It won't get in the way or be slow to respond like Eclipse/!RadRails or !NetBeans. It will focus on Behaviour Driven Development and will therefore support RSpec snippets. The interface will be sparse and lots of shortcuts will be provided using common defaults where appropriate.
+      
+      It will learn from other editors and I!DEs such as Eclipse, !NetBeans, Komodo, !TextMate, E-!TextEditor, inType, gedit, Sci-Te, Textpad, Editplus
+      
+      Support for Git would be nice but gits commandline is pretty good so this is a low priority for now.
+      
+      Plugins will be focused on RSpec for testing and jQuery for Javscript as these are what I currently use.
+      
+      BootstrappingFlow
+      FlowFeatures
+      FlowRoadMap
+      LearningResources
+    - true
+    - 2008-12-10 07:34:52
+    - 2009-08-26 21:18:30
+  - - "98"
+    - JqueryQuickstart
+    - JqueryQuickstart
+    - |
+      h2. What I need to know
+      
+      h3. Where do I start?
+      
+      bc. $(document).ready(function() {
+         $("a").click(function() {
+           console.log("a link was clicked")
+         });
+       });
+      
+      Document ready basically waits until the DOM is loaded then excutes the code inside it. Out of interest you can have as many of these as you like. This might come in handy when trying to organize all the Javascript that has amassed after adding a little DOM manipulation here and an event handler there.
+      
+      h3. Selecting elements
+      
+      That's the @$("blar")@ bit. Doing @$("#some_id")@ will get you the element with that id and @$("input:checkbox")@ gives us all the inputs with type checkbox
+      Use @$(this).next()@ to select the next element
+      @$("input:radio", document.forms[0])@ Select all inputs of type radio within first form
+      
+      h3. Grab urls
+      
+      Attributes can be retrieved by doing:
+      
+      bc. var url = $("#id_of_some_a_tag").attr("href")
+      
+      Other attributes include @title@, @alt@, @src@, @href@, @width@, @style@, etc.
+      
+      h3. do things on each item in a collection
+      
+      bc. $("#some_id").each(function(i) {
+        //i - autoincrementing index
+        //this - current element
+      });
+      
+      h3. toggle something on or off
+      
+      @toggle(func1, func2, func3, ...)@ toggle between two or more function calls every other click
+      
+      h3. Use effects
+      
+      bc. $("#some_id").hide("slow")
+      $("#some_id").show("fast")
+      
+      h3. Display/Change images
+      
+      Could be done by replacing html or additional/removal of a class e.g.
+      css:
+      
+      bc. .hide_button {background: url(hide.png) no-repeat center center;}
+      .show_button {background: url(show.png) no-repeat center center;}
+      
+      js (switches to the hide image):
+      
+      bc. $("#some_element").addClass("hide_button")
+      $("#some_element").removeClass("show_button")
+      
+      I think this could be simplified with a toggle()
+      
+      h3. Manipulate the DOM such as adding new elements
+      
+      Add some text to an element:
+      
+      bc. $(this).append("some text");
+      
+      Replace some text:
+      
+      bc. $("p").html("this is replacing what's in the <strong>p</strong> tag");
+      
+      Insert some HTML before or after the matched elements:
+      
+      bc. $("p").before("some <strong>HTML</strong>");
+       $("p").after"some more <strong>HTML</strong>");
+      
+      You can also @wrap@, @replaceWith@, @empty@, @remove@, @clone@ etc.
+      
+      h3. Respond to events like change, select, click, submit
+      
+      @blur, focus, change, click, dblclick, select (text), submit@, key and mouse events all have two forms. Use @$(this).event()@ to call the event or @$(this).event(func())@ to bind a function to the event.
+      
+      h3. add and remove classes
+      
+      bc. $("#some_id").addClass("some_class");
+       $("#some_id").removeClass("some_class");
+      
+      h3. call/create functions and organise code
+      
+      bc. function hello() {
+        console.log("hello");
+      }
+      
+      Plugin syntax:
+      
+      bc. jQuery.fn.foobar = function() {
+         // do something
+       };
+      
+      create a file named @jquery.your_plugin_name.js@ and use the syntax above to create jquery functions
+      
+      Namespacing:
+      
+      bc. jQuery.log = {
+        error : function() { ... },
+        warning : function() { ... },
+        debug : function() { ... }
+      };
+      
+      Call with @$.log.error()@
+      
+      
+      h3. set cookies
+      
+      bc. $.cookie('some_cookie_name', 'some value');
+      
+      h3. make ajax calls. Update in response to ajax
+      
+      Basically @$.get@ or @$.post@ like this:
+      
+      bc.  $.get( url, [data {}], [callback ()], [type] )
+      
+      type can be "xml", "html", "script", "json", "jsonp", or "text".
+      
+      (note: Look into Ajax events)
+      
+      Adds handlers on page load and on subsequent ajax calls:
+      
+      bc. function addClickHandlers() {
+         $("a.remote", this).click(function() {
+           $("#target").load(this.href, addClickHandlers);
+         });
+       }
+       $(document).ready(addClickHandlers);
+      
+      A way to pass extra parameters:
+      
+      bc.. // get some data
+       var foobar = ...;
+      
+       // specify handler, it needs data as a paramter
+       function handler(data) {
+         //...
+       }
+      
+       // add click handler and pass foobar!
+       $('a').click(function(){
+         handler(foobar);
+       });
+      
+       // if you need the context of the original handler, use apply:
+       $('a').click(function(){
+         handler.apply(this, [foobar]);
+       });
+      
+      
+      h3. Use a table sorter
+      
+      bc. $("#the_table").tablesorter({
+      widgets: ['zebra']
+      });
+      
+      h3. So how do I test all this stuff?
+      
+      "Unit-testable jQuery":http://www.onenaught.com/posts/85/turn-your-jquery-code-into-a-richer-unit-testable-plugin#toc-as-a-simple-jquery-plugin
+      
+      "!QUnit - jQuery's unit test runner":http://docs.jquery.com/!QUnit
+
+    - true
+    - 2008-12-24 09:55:37
+    - 2009-08-26 21:18:30
+  - - "99"
+    - RSpec
+    - RSpec
+    - |-
+      h2. Installation
+      
+      To run Cucumber in Rails it needs webrat and webrat needs:
+      
+      @sudo apt-get install libxslt1-dev libxml2-dev@
+      
+      h2. Stories with Cucumber
+      
+      h2. Models
+      
+      Partial mocks are useful here:
+      
+      bc. Model.should_receive(:method).with(parameter).and_return(something)
+      
+      
+      
+      h2. Views
+      
+      bc.. before do
+        model_1 = Model.stub!(...
+        model_2 = Model.stub!(...
+        assigns[:models] = [model_1, model_2]
+      end
+      
+      it
+        render '/models/index.html.erb'
+        response.should have_tag('css', 'match string', ...)
+        with_tag
+      end
+      
+      h2. Controllers
+      
+      * does not hit views
+      * mock the models so just testing the controller
+      
+      bc.. before do
+        @mock_model = mock.model(Model, :mock_method => return_value, :another_method => another_return )
+        @mock_model.stub!(:method).and_return(something)
+        Model.stub!(:new).and_return(@mock_model)
+        @params = {params usually created by forms}
+      end
+      
+      it
+        @model.should_receive(:method).with(param)
+        do_post
+      end
+      
+      def do_post
+        post :create, :model => @params
+      end
+    - true
+    - 2009-01-02 12:09:45
+    - 2009-08-26 21:18:30
+  - - "100"
+    - VladTheDeployer
+    - VladTheDeployer
+    - |
+      h3. Deploying to s3
+      
+      Bootstrap package to be stored on s3:
+      
+      deploy.rb:
+      
+      bc. set :application, "project"    # what is this for?
+      set :domain, "example.com"
+      set :deploy_to, "/path/to/install"
+      set :repository, "git or subversion url"
+      
+      Rakefile:
+      
+      bc. begin
+        require 'vlad'
+        Vlad.load :config => 'deploy.rb', :scm => :git
+      rescue LoadError
+        #do nothing
+      end
+      
+      Bootstrap
+      
+      bc. cat >> /root/.gemrc <<END
+      :verbose: true
+      gem: --no-ri --no-rdoc
+      :update_sources: true
+      :sources:
+      - http://mirror.rightscale.com
+      - http://gems.rubyforge.org
+      :backtrace: false
+      :bulk_threshold: 1000
+      :benchmark: false
+      END
+      
+      Install base packages and gems
+      
+      bc.. #!/usr/bin/ruby
+      
+      SCRIPT_NAME = 'ApacheGems'
+      require '/opt/helpers'
+      
+      skip_on_reboot
+      
+      log('Setting Locale')
+      append('/etc/environment', 'LANG="en_GB"')
+      append('/etc/environment', 'LANGUAGE="en_GB:en"')
+      append('/var/lib/locales/supported.d/local', 'en_GB ISO-8859-1')
+      run('source /etc/environment')
+      run('dpkg-reconfigure locales')
+      
+      package_install('apache2-mpm-prefork')
+      package_install('apache2-prefork-dev')
+      run('gem update --system')
+      gem_install('rails', '2.2.2')
+      gem_install('rake', '0.8.3')
+      gem_install('aws-s3', '0.5.1')
+      gem_install('mysql', '2.7')
+      gem_install('passenger', '2.0.6')
+      run('yes | passenger-install-apache2-module')
+      
+      
+      bc. s3cmd get puresolo-releases:staging.tar.gz /tmp/staging.tar.gz
+      tar -xf /tmp/staging.tar.gz /var/www/application/releases
+      cd /home/rails/application/releases
+      cd $(echo ??*)
+      rake gems:install RAILS_ENV=production
+      
+      Not used:
+      @gem install vlad -v '1.2.0'@
+      
+      
+      Enable use of maintenance page (apache)
+      
+      bc. cat >> /etc/apache2/httpd.conf <<END
+      !RewriteCond %{REQUEST_URI} !\.(css|jpg|png)$
+      !RewriteCond %{DOCUMENT_ROOT}/system/maintenance.html -f
+      !RewriteCond %{SCRIPT_FILENAME} !maintenance.html
+      !RewriteRule ^.*$ /system/maintenance.html [L]
+      END
+      
+      Passenger Configuration (apache)
+      
+      bc.. cat > /etc/apache2/sites-available/application <<EOF
+      !LoadModule passenger_module /usr/lib/ruby/gems/1.8/gems/passenger-2.0.6/ext/apache2/mod_passenger.so
+      !PassengerRoot /usr/lib/ruby/gems/1.8/gems/passenger-2.0.6
+      !PassengerRuby /usr/bin/ruby1.8
+      
+      <!VirtualHost *:80>
+        !ServerName puresolo.local
+        !DocumentRoot "/var/www/application/public"
+        !RailsEnv development
+        !RailsAllowModRewrite off
+        <Directory "/var/www/application/public">
+          Options !FollowSymLinks
+          !AllowOverride None
+          Order allow,deny
+          Allow from all
+        </Directory>
+      </!VirtualHost>
+      EOF
+      
+      ln -s /etc/apache2/sites-available/application /etc/apache2/sites-enabled/
+
+    - true
+    - 2009-01-08 08:06:22
+    - 2009-08-26 21:18:30
+  - - "101"
+    - LearningResources
+    - LearningResources
+    - "\"Ruby Syntax highlighter written in JS\":http://code.google.com/p/syntaxhighlighter/downloads/list"
+    - true
+    - 2009-01-16 22:55:46
+    - 2009-08-26 21:18:30
+  - - "102"
+    - FlowFeatures
+    - FlowFeatures
+    - |
+      Back to FlowWrite
+      
+      Expand these headings to include details of the features to help flesh it out.
+      
+      h3. Basic editing of files
+      
+      Open/Save/Edit. Initially open running from commandline with filename as argument.
+      
+      h3. Slide Panel
+      
+      For use with File Browser, Find/Replace, Notifications, etc. Opens at the bottom of the window and provides a slim popup that hovers until it's no longer needed (Press ESC to dismiss). Like Firefox's find popup, or E's find/replace, or a Growl notification.
+      
+      h3. File Selector (CTRL+O)
+      
+      An open dialog like Snap open but also a tree view browser. Allows searches to be entered like e-text-editor (e.g. match on any combination of characters). Include matching on folders. Could also autocomplete folder names (using TAB) to allow you to drill down directories.
+      
+      bc. |
+      
+      h3. Find/Replace in Files (CTRL+F)
+      
+      Pops up a window
+      Highlight matches as typed like E's inline find/replace
+      
+      bc. | Find (CTRL+F): [          ]  Replace (CTRL+H): [          ]  Replace All (CTRL+SHIFT+H) |
+      
+      Railscast theme
+      Indent with 2 spaces
+      Handle moving 2 spaces as a tab (think of the rules)
+      Open Test - opens the correpsonding rspec test
+      Line numbering
+      Smart indents
+      Highlight current line
+      Smart wrapping - Wrap text using current indent level + 1
+      Smart Brackets - Close brackets, don't add extra closing brackets (just match opened)
+      Autosave - After idle for 2 seconds
+      Autotest - Built autotest runner and notifier - shows test runs and what failed. Clickable to go to the error
+      Trailing Space remover - Removes trailing spaces when saving. Help get rid of whitespace changes in Git
+      Server Slide Panel - Show output from mongrel (may change to passenger) - allows errors to be clicked.. err I mean .. selected with the keyboard!
+      Capistrano deployment support
+      SQL Query browser - use script/dbconsole?
+      Script Window - use script/console?
+      
+      h3. Snippets
+      
+      Basically a copy of gedits snippets plugin but using my nice Slide Panel to edit them. OR could work like other plugins that manipulate the edit window.
+
+    - true
+    - 2009-01-16 22:57:29
+    - 2009-08-26 21:18:30
+  - - "104"
+    - BootstrappingFlow
+    - BootstrappingFlow
+    - |-
+      In the true spirit of self reference we're going to develop all of Flow in Flow as soon as possible. However, for the first few iterations we'll need to bootstrap it to the point of being able to load and save files. Luckily Ruby and GTK gives us quite a bit for free. We don't want to completely re-invent the wheel!
+      
+      h3. Back To Basics
+      
+      We'll start by creating a directory and jotting some notes about the general concept and a todo list so we can keep track of what we've done and make sure we're progressing:
+      
+      bc.. mkdir flow
+      cd flow
+      cat > README << EOF
+      
+      Flow Goals
+      
+      * Minimalist
+      ** Useful for laptops with small screens
+      ** Good for developers who don't like clutter
+      ** No menus or toolbars. Learn those shortcuts!
+      * Modular - All built with ruby scripts. Easy to add functionality
+      * API Layer for GUI interaction with all editor components
+      * Test driven using BDD and !RSpec (Easy switch between code and spec)
+      * Quick file open/selector/creator
+      * Syntax highlighting
+      EOF
+      
+      h3. Tools
+      
+      As mentioned in the notes this is a Ruby project so we'll need a Ruby GUI library. As Gnome is pretty popular these days I'm going with GTK. We'll keep in mind that GUI preferences change as well as the fact that there are other Window Managers out there and keep the view code separate:
+      
+      bc. sudo apt-get install ruby-gnome2
+      
+      h3. Give me a GUI
+      
+      So we'll start by creating the simplest possible editor that allows us to pass in a filename, edit and have it save on exit. I want to start testing as soon as possible but life will be very difficult without an editor. I'm going to follow Rails conventions where applicable as it'll make it easy for Rails developers to mess around with. It's a good convention so we'll start with this. This may not end up working but it's a start.
+      
+      bc.. mkdir -p config script app/controllers app/helpers app/models app/views/layouts
+      cat > app/controllers/application_controller.rb <<EOF
+      require 'gtk2'
+      require File.dirname(__FILE__) + '/events'
+      
+      class !ApplicationController
+        include Events
+      
+        def initialize
+          @window = Gtk::Window.new('Flow Write')
+          @window.set_default_size(800, 600)
+          @editor = Gtk::!TextView.new
+          @window.add(@editor)
+          wire_events
+          @window.show_all
+        end
+      
+        def run
+          Gtk.main
+        end
+      end
+      EOF
+      
+      cat > app/controllers/events.rb <<EOF
+      module Events
+        def wire_events
+          @window.signal_connect("destroy") {
+            Gtk.main_quit
+          }
+        end
+      end
+      EOF
+      
+      cat > script/start <<EOF
+      #!/usr/bin/env ruby
+      require '/home/phil/projects/flow/app/controllers/application_controller'
+      application = !ApplicationController.new
+      application.run
+      EOF
+      chmod 755 script/start
+      script/start
+      
+      p. This gives us an editor window but we also need to load the filename specified on the command line and save it on exit. So lets *exit* the editor for now. We'll just hack the run method to do this (as it's easier to tack on extra code with @cat@ ) we'll also redo the events.rb file to add the extra event for saving:
+      
+      bc.. cat >> app/controllers/application_controller.rb <<EOF
+      
+      class !ApplicationController
+        def run
+          @buffer = @editor.buffer
+          load
+          Gtk.main
+          save
+        end
+      
+        def save
+          File.open(ARGV[0], "w"){|f|  f.write(@buffer.get_text(*@buffer.bounds))}
+        end
+      
+        def load
+          @buffer.set_text(File.open(ARGV[0]){|f| ret = f.readlines.join })
+        end
+      
+      end
+      EOF
+      
+      cat > app/controllers/events.rb <<EOF
+      
+      module Events
+        def wire_events
+          @window.signal_connect("delete_event"){
+            save
+            false
+          }
+      
+          @window.signal_connect("destroy") {
+            Gtk.main_quit
+          }
+        end
+      end
+      EOF
+      script/start app/controllers/application_controller.rb
+      
+      h3. Tidy up
+      
+      Now we've got something better to edit with lets test it out by tidying up the application_controller.rb file:
+      
+      bc. script/start app/controllers/application_controller.rb
+      
+      I removed the duplicate run method and moved the other methods into a single class by removing the following block of code. When exiting the file is saved:
+      
+      bc.. def run
+          Gtk.main
+        end
+      end
+      
+      class !ApplicationController
+      
+      p. Ok lets just add some convenience for starting flow:
+      
+      bc. ln -s /home/phil/projects/flow/script/start /usr/bin/flow
+      
+      p. Well that didn't quite work. Now we're calling from @/usr/bin/flow@ it needs the full path. So lets add @pwd@ to get the current path and add that to the load (and save) method. We need to edit @app/controllers/application_controller.rb@ :
+      
+      Add @require 'fileutils'@ to the top
+      Add @@filepath = File.join(!FileUtils.pwd, ARGV[0])@ to the end of @initialize@
+      and use @@filepath@ instead of @ARGV[0]@ in @save@ and @load@
+      
+      Now when we do @flow app/controllers/application_controller.rb@ the @application_controller.rb@ file appears in the editor.
+      
+      h3. Heard of VersionControl?
+      
+      When coding it's a must. You can save the history of your changes and view and collaborate with others. And I've had enough of copying and pasting code in this tutorial! You will be able to track the progress through Git, the distributed version control system. It'll also save our asses if we break our editor.
+      
+      Lets create the repository:
+      
+      bc. git init
+      git add .
+      git commit -m 'A working editor!'
+      
+      Now we have a working editor lets get some tests in there...
+      
+      FirstTestsInFlow>>
+    - true
+    - 2009-01-16 23:06:00
+    - 2009-08-26 21:18:30
+  - - "105"
+    - FirstTestsInFlow
+    - FirstTestsInFlow
+    - |
+      <<BootstrappingFlow
+      
+      Firstly lets install rspec:
+      
+      bc. sudo gem install rspec
+      
+      p. I just noticed that flow won't open a file that doesn't exist. We'll make a note of this and fix it later. For now I want to concentrate on getting these tests in. This is a key principle of productive working. Focus must be kept on the task at hand. I'm really bad at this I'll be the first to admit but if you've ever sat down at a computer and browsed the Internet with the intention of looking for something specific only to find two hours later that you're looking and something completely unrelated thinking _that's interesting_, then you know what I mean. Speaking of which, back to the tests.
+      
+      p. And here we have a case in point. Controller testing is never an easy thing but we've made it even more difficult for ourselves in our pursuit of trying to get something running quickly. As we see in the !ApplicationController it contains view code and also model code. In fact it's not really doing much controlling at all.
+      
+      p. So lets move try refactoring this code. Luckily the app is very small so we can play around to get things right before tying it up with tests.
+      
+      h3. Refactoring
+      
+      move @save@ and @load@ into an application model
+      
+      bc.. flow app/controllers/application_controller.rb &
+      touch app/models/application.rb
+      flow $! &
+      
+      bc.
+      
+      bc.. mkdir -p spec/controllers
+      touch spec/controllers/application_controller_spec.rb
+      flow !$
+      
+      p. Now to start with we're adding tests after we've created the code which helps us ensure we don't break it down the road. Later on we'll start creating testing _before_ we add the required functionality. This gives us the added benefit of driving the code implementation from the outside-in or the interface which is known to improve the design.
+      
+      bc.. require 'app/controllers/application_controller'
+      
+      describe !ApplicationController do
+        it "should do something" do
+        end
+      end
+      
+      p. This is !RSpec a very fine way to _describe_ what your code should do. To run this test do @spec spec@
+
+    - true
+    - 2009-01-17 00:18:55
+    - 2009-08-26 21:18:30
+  - - "106"
+    - HandyGitCommands
+    - HandyGitCommands
+    - |-
+      
+      bc. git diff -w -U1 --diff-filter=AM HEAD
+      
+      Diff against committed code, don't show whitespace, one line of context, Only show additions and modifications
+    - true
+    - 2009-02-04 21:53:21
+    - 2009-08-26 21:18:30
+  - - "107"
+    - GtkEvents
+    - GtkEvents
+    - |
+      bc.. widget = Gtk::Widget.new
+      widget = signal_connect("event name") do |widget, event|
+        # ...
+        # true # stop further processing
+        # false # continue processing event
+      end
+      => 1234
+      
+      widget.signal_emit('clicked')
+      
+      widget.signal_handler_disconnect 1234
+      widget.signal_handler_block 1234
+      widget.signal_handler_unblock 1234
+      
+      
+      List of events catchable with signal_connect:
+      * event
+      * button_press_event
+      * button_release_event
+      * scroll_event
+      * motion_notify_event
+      * delete_event - Issued when window killed by manager (usually when user closes it). Return false to continue to destroy event
+      * destroy_event - After delete event - Calling Gtk.main_quit here closes the application
+      * expose_event
+      * key_press_event
+      * key_release_event
+      * enter_notify_event
+      * leave_notify_event
+      * configure_event
+      * focus_in_event
+      * focus_out_event
+      * map_event
+      * unmap_event
+      * property_notify_event
+      * selection_clear_event
+      * selection_request_event
+      * selection_notify_event
+      * proximity_in_event
+      * proximity_out_event
+      * visibility_notify_event
+      * client_event
+      * no_expose_event
+      * window_state_event
+      
+      Selection and drag/drop events from GDK:
+      * selection_received
+      * selection_get
+      * drag_begin_event
+      * drag_end_event
+      * drag_data_delete
+      * drag_motion
+      * drag_drop
+      * drag_data_get
+      * drag_data_received
+
+    - true
+    - 2009-02-08 22:16:05
+    - 2009-08-26 21:18:30
+  - - "108"
+    - PackingBoxes
+    - PackingBoxes
+    - |
+      bc. box = Gtk::HBox.new(false, 0)
+      window.add(box)
+      label = Gtk::Label.new('find')
+      textbox = Gtk::TextField.new('find_text')
+      box.pack_start(label)
+      box.pack_start(textbox)
+
+    - true
+    - 2009-02-08 22:42:59
+    - 2009-08-26 21:18:30
+  - - "109"
+    - RailsEditor
+    - RailsEditor
+    - |
+      edit rails ruby gnome ubuntu text editor textmate gedit e-texteditor
+      
+      RailsEditorFeatures
+      
+      Currently called *Ring*
+      Other candidates: Lines, Keyed, Railed, FlowWrite
+      
+      * Fullscreen
+      * No menus
+      * No icons
+      * Simple shortcuts
+      * Aids for Test driven users
+      * Fast
+      * Focused on Rails
+      * Doc Panel for simple and consistent interface to features
+      
+      This is an editor for writing Ruby on Rails web applications. It was written to fill a gap in available programmers editors on Linux and more specifically Ubuntu. gedit does a pretty good job these days especially considering it's the built-in editor. However, due to it's lack of much needed features like decent search and replace and other plugins that don't quite do the job or conflict with built-in features, it's not quite as polished as equivalent editors for other platforms. Now I could have corrected these issues but I have some ideas for a slightly different spin on the standard editor. I will also take some ideas from Rails to build an easily accessible, modular editor.
+      
+      It's designed from the ground up as a Rails editor. With that in mind it will of course support Ruby syntax, snippets and templates. However, it will also primarily support Haml and Sass for HTML and CSS development. It's about time we moved away from these cumbersome technologies. Ring is modular. It provides a basic editing framework using the gtksourceview library and helpers provide all the features you'd expect to see for a Rails editor written in Ruby so if you don't like the way something works feel free to tweak it.
+      
+      Where Ring differs is in it's use of the mouse. It doesn't. Everything is designed to be optimized for the keyboard since this is where a programmer spends most of their time. Moving your hand to grab a mouse is slow. At least that is the thinking. It's been proven however that a lot of shortcuts especially complex combinations are actually slower. I'm trying to overcome this by limiting the functionality to the bare minimum. People use a mouse because it's useful for many things but editors don't focus enough on ease of keyboard control. I believe it can be more efficient if designed correctly.
+      
+      Another design goal for this editor is to maximize screen real-estate for those of us that spend a fair proportion of our time on a laptop. Icons and menus will be kept to a minimum (in other words none! At least that's the aim).
+      
+      It will be based on the fact that Rails is meant to be simple to develop and will therefore concentrate on maximizing that ability by being fast but with just enough features to make things easier than using say VI or gedit. It won't get in the way or be slow to respond like Eclipse/!RadRails or !NetBeans. It will focus on Behaviour Driven Development and will therefore support RSpec snippets. The interface will be sparse and lots of shortcuts will be provided using common defaults where appropriate.
+      
+      It will learn from other editors and I!DEs such as Eclipse, !NetBeans, Komodo, !TextMate, E-!TextEditor, inType, gedit, Sci-Te, Textpad, Editplus
+      
+      Support for Git would be nice but gits commandline is pretty good so this is a low priority for now.
+      
+      Plugins will be focused on RSpec for testing and jQuery for Javscript as these are what I currently use.
+
+    - true
+    - 2009-02-12 22:58:52
+    - 2009-08-26 21:18:30
+  - - "110"
+    - RailsEditorFeatures
+    - RailsEditorFeatures
+    - |
+      
+      Expand these headings to include details of the features to help flesh it out.
+      
+      h3. Basic editing of files
+      
+      Open/Save/Edit. Initially open running from commandline with filename as argument.
+      
+      h3. Slide Panel
+      
+      For use with File Browser, Find/Replace, Notifications, etc. Opens at the bottom of the window and provides a slim popup that hovers until it's no longer needed (Press ESC to dismiss). Like Firefox's find popup, or E's find/replace, or a Growl notification.
+      
+      h3. File Selector (CTRL+O)
+      
+      An open dialog like Snap open but also a tree view browser. Allows searches to be entered like e-text-editor (e.g. match on any combination of characters). Include matching on folders. Could also autocomplete folder names (using TAB) to allow you to drill down directories.
+      
+      bc. |
+      
+      h3. Find/Replace in Files (CTRL+F)
+      
+      Pops up a window
+      Highlight matches as typed like E's inline find/replace
+      
+      bc. | Find (CTRL+F): [          ]  Replace (CTRL+H): [          ]  Replace All (CTRL+SHIFT+H) |
+      
+      Railscast theme
+      Indent with 2 spaces
+      Handle moving 2 spaces as a tab (think of the rules)
+      Open Test - opens the correpsonding rspec test
+      Line numbering
+      Smart indents
+      Highlight current line
+      Smart wrapping - Wrap text using current indent level + 1
+      Smart Brackets - Close brackets, don't add extra closing brackets (just match opened)
+      Autosave - After idle for 2 seconds
+      Autotest - Built autotest runner and notifier - shows test runs and what failed. Clickable to go to the error
+      Trailing Space remover - Removes trailing spaces when saving. Help get rid of whitespace changes in Git
+      Server Slide Panel - Show output from mongrel (may change to passenger) - allows errors to be clicked.. err I mean .. selected with the keyboard!
+      Capistrano deployment support
+      SQL Query browser - use script/dbconsole?
+      Script Window - use script/console?
+      
+      h3. Snippets
+      
+      Basically a copy of gedits snippets plugin but using my nice Slide Panel to edit them. OR could work like other plugins that manipulate the edit window.
+
+    - true
+    - 2009-02-12 23:25:03
+    - 2009-08-26 21:18:30
+  - - "111"
+    - HamlAndSass
+    - HamlAndSass
+    - |
+      h3. Haml
+      
+      A simple example:
+      
+      bc. !!!Strict
+      %html
+        %head
+        %body
+          %h1 Hello, World
+          %img{:src => 'logo.png'}
+      
+      
+      Generates:
+      
+      bc. <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+      <html>
+        <head></head>
+        <body>
+          <h1>Hello, World</h1>
+        </body>
+      </html>
+      
+      Quick reference:
+      
+      bc. !!!Strict
+      %html-tag
+      .css-class
+      #css-id
+      =output
+      -logic
+      -#comment
+      ~render(:partial => 'form')
+      div {:class => @dynamic_class}
+      
+      A more comprehensive example:
+      
+      bc.. #main
+        .note
+          %h2 Quick Notes
+          %ul
+            %li
+              Haml is indented with
+              %strong two spaces *only*
+            %li
+              The first character of any line is called the "control character"
+            %li Haml magically takes care of indention for you
+            %li It looks complicated until you look closely.
+            %li
+              Haml does have blocks. Except, not in this example.
+              We turned them off for security.
+            %li If you see any errors here, please let me know
+      
+        .note
+          You can get more information by reading the
+          %a{:href => "http://haml.hamptoncatlin.com/docs/haml"}
+            Official Haml Reference
+      
+        .note
+          %p This example doesn't allow ruby to be executed, but real Haml does in Rails.
+          %p This would be done with an = at the end or beginning of a line.
+          %p Read the documentation for more information
+      
+      h3. Sass
+      
+      A simple example:
+      
+      bc. body
+        h1
+          :background-color #ffffcc
+          :width 25em -10em
+      
+      Generates:
+      
+      bc. body h1 {
+        background-color: #ffffcc;
+        width: 25em -10em; }
+      
+      Syntax:
+      
+      bc. h1
+      .class
+      #id
+      :attr
+      @import
+      !variable
+      =add_behaviour
+      +mixin_behaviour
+      
+      CSS selectors:
+      
+      bc. h1 - element
+      h1.class - specific element
+      h1, .class - both, unrelated elements (use behaviours instead)
+      h1 .class - any child node (use indentation instead)
+      h1 >.class - direct descendant
+      
+      A more comprehensive example:
+      
+      bc.. !yellow = #ffffcc
+      
+      =image-replacement
+        :text-indent -5000px
+        :margin-bottom 0.3em
+      
+      
+      body
+        h1
+          :background-color = !yellow
+          :border-bottom = 1px dotted !yellow
+          :width 25em -10em
+          +image-replacement
+      
+          a
+            :border-bottom #ff88ff
+      
+            &.current
+              :color #000
+      
+            &:hover, &.visted
+              :color #fff
+      
+          #id-1
+            :color #222
+
+    - true
+    - 2009-02-13 15:24:10
+    - 2009-08-26 21:18:30
