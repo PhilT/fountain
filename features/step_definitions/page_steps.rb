@@ -52,5 +52,3 @@ Then /^I should see "(.*)" in (?:a|an) (.*) .* tag$/ do |text, tag|
   response.body.should =~ /<#{tag}>#{text}<\/#{tag}>/
 end
 
-Then /^I should see the following links in the history:$/ do
-end

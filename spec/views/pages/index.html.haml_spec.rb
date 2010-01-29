@@ -1,7 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe "/pages/index.html.haml" do
-  include PagesHelper
 
   before(:each) do
     assigns[:pages] = [
@@ -14,3 +13,4 @@ describe "/pages/index.html.haml" do
     render "/pages/index.html.haml"
   end
 end
+

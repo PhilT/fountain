@@ -52,7 +52,7 @@ describe Page do
     end
 
     it "should turn a WikiWord into a link using title and slug" do
-      Page.new(:content => ' WikiWord').formatted_content.should == '<a href="/pages/wiki-word">Wiki Title</a>'
+      Page.new(:content => ' WikiWord').formatted_content.should == '<p> <a href="/pages/wiki-word">Wiki Title</a></p>'
     end
 
     it "should turn a WikiWord into a link when surrounded by a tag" do
@@ -60,19 +60,19 @@ describe Page do
     end
 
     it "should not link 'QuotedWikiWords'" do
-      Page.new(:content => "'QuotedWikiWords'").formatted_content.should == "<p>&#8216;QuotedWikiWords&#8217;</p>"
+      Page.new(:content => "'QuotedWikiWords'").formatted_content.should == "<p>'QuotedWikiWords'</p>"
     end
 
     it "should not link !BangedWikiWords" do
-      Page.new(:content => ' a !WikiWord').formatted_content.should == 'a WikiWord'
+      Page.new(:content => ' a !WikiWord').formatted_content.should == '<p> a WikiWord</p>'
     end
 
     it "should not link WikiWords inside pre tags" do
-      Page.new(:content => 'bc. a WikiWord').formatted_content.should == '<pre><code>a WikiWord</code></pre>'
+      Page.new(:content => '    a WikiWord').formatted_content.should == "<pre><code>a WikiWord\n</code></pre>"
     end
 
     it "should not link WikiWords inside code tags" do
-      Page.new(:content => '@a WikiWord@').formatted_content.should == '<p><code>a WikiWord</code></p>'
+      Page.new(:content => '`a WikiWord`').formatted_content.should == '<p><code>a WikiWord</code></p>'
     end
 
     it "should link to a WikiPage that has not been created" do
@@ -81,3 +81,4 @@ describe Page do
 
   end
 end
+

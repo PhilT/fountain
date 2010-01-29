@@ -2,7 +2,10 @@
 @import lines
 
 form
+  :float left
+  :background url(/images/content_gradient.png) repeat-x
   :width 100%
+  :padding-top 10px
   span
     :display block
     :float left
@@ -10,65 +13,35 @@ form
 
   p
     :clear both
-    :padding 2px
+    :padding 5px
     :margin 0
-  input,
-  textarea
+  input.field,
+  textarea.field
     +ev_blue_border
-    :width 260px
-  textarea
+    :width 250px
+  textarea.field
     :border-top-width 1px
     :margin-top 0
-    :width= !page_width - 4px
+    :width= !page_width - 10px
+    :height 500px
 
-input,
-a
-  &.button
-    :display block
-    :float left
-    :margin 2px
-    :width= !button_width
-    :cursor pointer
-    +ev_blue_border
-    :color= !ev_blue
-    &:hover
-      :background= !ev_pale_blue
-a.button
-  :width= !button_width - 4px
-  :text-align center
-
-.buttons
-  :float right
-  p
+  ul
+    :list-style-type none
     :float right
-    :height 20px
     :margin 0
-    :padding 0
+    li
+      :float left
+      :padding-right 10px
+    a
+      :padding-top 3px
+      :display block
 
 input.readonly
   +faded_border
   :color #666
 
-ul.help
-  :list-style-type none
-  :margin 0
-  :padding 0
-  :padding-left 2px
-  +ev_blue_border
-  :border-bottom none
-  :height 18px
-  :background= #fff - 15
-  :font 9px Arial
-  li
-    :display block
-    :float left
-    :height 14px
-    :line-height 12px
-    :padding 2px 3px 2px 2px
-    :margin 0
-    &.odd
-      :background= #fff - 15
-      :color #008
-    &.even
-      :background= #fff - 10
-      :color #080
+.delete
+  form
+    :background none
+  :float right
+

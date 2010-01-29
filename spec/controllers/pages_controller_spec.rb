@@ -66,12 +66,6 @@ describe PagesController do
       assigns[:page].should equal(mock_page)
       response.should render_template('edit')
     end
-
-    it "should redirect to show page when not an admin" do
-      Page.should_receive(:find_by_slug).with("page-slug").and_return(mock_page)
-      get :edit, :id => "page-slug"
-      response.should redirect_to(page_url(mock_page))
-    end
   end
 
   describe "create" do
@@ -175,3 +169,4 @@ describe PagesController do
   end
 
 end
+

@@ -1,7 +1,7 @@
 module History
 
 private
-  SIZE = 15
+  SIZE = 20
 
   def record(page)
     return if page.name == 'HomePage'
@@ -16,3 +16,4 @@ private
   end
 
 end
+

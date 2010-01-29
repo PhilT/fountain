@@ -2,13 +2,13 @@
 @import lines
 
 #page
-  :clear both
-  :float left
-  :width= !page_width
-  :position relative
-  :padding 2px
   #content
-    :padding-left 2px
+    :float left
+    :overflow auto
+    :width= !page_width - 10px
+    :background url(/images/content_gradient.png) repeat-x
+    :margin 0
+    :padding 5px
     pre
       :background #f6f6f6
       :padding 5px
@@ -24,6 +24,7 @@
 
     h1,h2,h3,h4,h5,h6
       :background none
+      :border none
       :padding 0
       :margin 15px 0 0 0
 
@@ -35,4 +36,11 @@
 
     p
       :margin 10px 0 0 0
+
+    hr
+      :border 1px solid #ccc
+      :text-align center
+      :padding 0
+      :background none
+      :width 80%
 

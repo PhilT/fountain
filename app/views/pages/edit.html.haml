@@ -1,17 +1,16 @@
 - form_for(@page) do |f|
   %p
     %span= f.label('name')
-    %span= f.text_field('name', :readonly => true, :class => 'readonly')
+    %span= f.text_field('name', :readonly => true, :class => 'readonly field')
   %p
     %span= f.label('title')
-    %span= f.text_field('title')
+    %span= f.text_field('title', :class => 'field')
+  = render :partial => 'actions', :locals => {:form => f}
   %p
-    - markup_help
-    = f.text_area('content')
-  %p= f.submit "Save", :class => 'button'
+    = f.text_area('content', :class => 'field')
+  = render :partial => 'actions', :locals => {:form => f}
 
-.buttons
-  %p
-    %span= link_to 'Cancel', page_path(@page), :class => 'button'
-  %p
-    %span= button_to 'Delete', @page, :method => :delete, :class => 'button' unless @page.new_record? || @page.name == 'HomePage'
+%div.delete
+  - unless @page.new_record? || @page.name == 'HomePage'
+    %li= button_to 'Delete...', @page, :method => :delete, :confirm => "Delete '#{@page.title}'?"
+

@@ -23,8 +23,13 @@ describe "/layouts/application.html.haml" do
   end
 
   it "should render history" do
-    session[:history] = [mock_model(Page, :title => 'page 1'), mock_model(Page, :title => 'page 2')]
+    page1 = mock_model(Page, :name => 'page 1', :title => 'Page 1')
+    page2 = mock_model(Page, :name => 'page 2', :title => 'Page 2')
+    Page.stub(:find_by_name).with(page1.name).and_return(page1)
+    Page.stub(:find_by_name).with(page2.name).and_return(page2)
+    session[:history] = [page1.name, page2.name]
     render "/layouts/application.html.haml"
-    response.should have_text(/li.*page 2.*li.*page 1/m)
+    response.should have_text(/.*li.*Page 2.*li.*Page 1.*/m)
   end
 end
+

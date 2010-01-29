@@ -38,7 +38,7 @@ class PagesController < ApplicationController
     @heading = 'New Page'
     if @page.save
       record @page
-      flash[:notice] = "<strong>#{@page.title}</strong> was successfully created"
+      flash[:notice] = "page created"
       redirect_to(@page)
     else
       render :action => "new"
@@ -50,7 +50,7 @@ class PagesController < ApplicationController
     @heading = "Editing #{@page.title}"
 
     if @page.update_attributes(params[:page])
-      flash[:notice] = "<strong>#{@page.title}</strong> was successfully updated"
+      flash[:notice] = "page updated"
       redirect_to(@page)
     else
       render :action => "edit"
