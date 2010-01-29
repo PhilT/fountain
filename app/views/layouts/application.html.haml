@@ -19,7 +19,7 @@
     #page
       %h1
         #heading= @heading
-        - last_updated
+        = render :partial => 'last_updated' if @page && !@page.updated_at.blank?
       - display_flash
       = yield
     #sidebar

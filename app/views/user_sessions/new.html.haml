@@ -1,0 +1,13 @@
+- form_for @user_session do |f|
+  %p= f.error_messages
+  %p
+    %span= f.label :email
+    %span= f.text_field :email
+
+  %p
+    %span= f.label :password
+    %span= f.password_field :password
+
+  %p
+    %span= f.submit "Login"
+

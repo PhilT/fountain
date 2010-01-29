@@ -9,12 +9,8 @@ module ApplicationHelper
     nil
   end
 
-  def admin?
-    true
-  end
-
   def edit_link
-    if admin? && @page && !@page.new_record?
+    if @page && !@page.new_record?
       haml_tag :li do
         haml_tag :span, link_to('edit', edit_page_path(@page)), {:id => 'edit'}
       end
@@ -22,18 +18,11 @@ module ApplicationHelper
   end
 
   def login_link
-    if admin?
-      haml_tag :span, link_to('logout', '#', {:method => :delete})
+    if current_user
+      haml_tag :span, link_to('logout', user_session_path(current_user), {:method => :delete})
     else
-      haml_tag :span, link_to('login', '#')
+      haml_tag :span, link_to('login', new_user_session_path)
     end
-  end
-
-  def last_updated
-    haml_tag :div, :id => 'datestamp' do
-      haml_tag :span, 'last updated: '
-      haml_tag :strong, @page.updated_at.to_date.to_s(:rfc822)
-    end if @page && !@page.updated_at.blank?
   end
 
   def history_list

@@ -6,6 +6,7 @@ Rails::Initializer.run do |config|
   config.gem 'bluecloth'
   config.gem 'paper_trail'
   config.gem 'haml'
+  config.gem 'authlogic'
 
   config.time_zone = 'UTC'
 

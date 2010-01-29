@@ -3,16 +3,25 @@
 
 class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
-  include ApplicationHelper
-
-  # See ActionController::RequestForgeryProtection for details
-  # Uncomment the :secret if you're not using the cookie session store
   protect_from_forgery # :secret => '0069c6b15e17ba43821b85f002c589d4'
+  filter_parameter_logging :password
+  before_filter :login_required
 
-  # See ActionController::Base for details
-  # Uncomment this to filter the contents of submitted sensitive data parameters
-  # from your application log (in this case, all fields with names like "password").
-  # filter_parameter_logging :password
+  helper_method :current_user
+
+  private
+  def current_user_session
+    return @current_user_session if defined?(@current_user_session)
+    @current_user_session = UserSession.find
+  end
+
+  def current_user
+    @current_user = current_user_session && current_user_session.user
+  end
+
+  def login_required
+    redirect_to new_user_session_url unless current_user
+  end
 
 end
 

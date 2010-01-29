@@ -1,8 +1,9 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe "/layouts/application.html.haml" do
-
   before do
+    activate_authlogic
+    UserSession.create(Factory :user)
     assigns[:heading] = 'title'
   end
 

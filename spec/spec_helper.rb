@@ -15,4 +15,5 @@ Spec::Runner.configure do |config|
 end
 
 require 'spec/factories'
+require 'authlogic/test_case'
 
