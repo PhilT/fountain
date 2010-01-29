@@ -1,0 +1,38 @@
+@import colors
+@import lines
+
+#page
+  :clear both
+  :float left
+  :width= !page_width
+  :position relative
+  :padding 2px
+  #content
+    :padding-left 2px
+    pre
+      :background #f6f6f6
+      :padding 5px
+      :margin 3px 0
+      :border 1px solid #ddd
+      :overflow auto
+    code
+      :background #f6f6f6
+      :color= !code_color
+      :font
+        :family 'monospace'
+        :size 12px
+
+    h1,h2,h3,h4,h5,h6
+      :background none
+      :padding 0
+      :margin 15px 0 0 0
+
+    h1
+      :font-size 20px
+
+    h2
+      :font-size 16px
+
+    p
+      :margin 10px 0 0 0
+

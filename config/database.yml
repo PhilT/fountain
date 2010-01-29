@@ -20,7 +20,7 @@ development:
   <<: *common
   database: buzz_development
 
-test:
+test: &TEST
   <<: *common
   database: buzz_test
 
@@ -28,3 +28,6 @@ production:
   <<: *common
   database: buzz_development
 
+
+cucumber:
+  <<: *TEST

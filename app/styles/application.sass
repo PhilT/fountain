@@ -5,23 +5,21 @@ body
   :font 14px Arial, Sans
   :margin 3px
 
+#header
+  :background url(/images/header_gradient.png)
+  :overflow auto
+  h1, h2
+    :display block
+    :float left
+    :color #444
 
-ol, ul
-  :list-style-type none
-
-#logo
-  :clear both
-  :float left
-  :background #fff
-  :color #555
-  :font
-    :size 16px
-    :weight bold
-
-  #caption
-    :padding-top 10px
-    :font-size 11px
-    :color #aaa
+  h1
+    :font-size 16px
+  h2
+    :font
+      :size 13px
+    :padding-top 5px
+    :padding-left 20px
 
 #login
   li
@@ -37,6 +35,7 @@ img
 ul#menu
   :float left
   :margin 0
+  :list-style-type none
   li
     :border-right= 1px solid !ev_blue
     :float left
@@ -48,30 +47,40 @@ ul#menu
     :border-right none
 a
   :text-decoration none
-  :color= !ev_blue
+  :color= !existing_link_color
   &:hover
-    :background #e0f0e0
+    :background= !existing_link_hover_background
+    :border-radius 8px
+    :-moz-border-radius 8px
 
   &.new
-    :color= !ev_dark_orange
+    :color= !new_link_color
     &:hover
-      :background= !ev_pale_orange
+      :background= !new_link_hover_background
 
-h1
-  :border-bottom= !line_width solid !ev_border_blue
-  :margin 10px 0 6px 0
-  :height 20px
-  #heading
-    :float left
-    :font-size 20px
+#page
+  h1
+    :background= !heading_background
+    :display block
+    :overflow auto
+    :padding 3px
+    :margin 10px 0 6px 0
+    :border-radius 10px 10px 0 0
+    :-moz-border-radius 10px 10px 0 0
+    #heading
+      :padding-left 10px
+      :float left
+      :font
+        :size 18px
+      :color= !heading_color
 
-  #datestamp
-    :float right
-    :font
-      :size 11px
-      :weight normal
-    :line-height 30px
-    :margin-right 10px
+    #datestamp
+      :float right
+      :font
+        :size 11px
+        :weight normal
+      :line-height 20px
+      :margin-right 10px
 
 
 .error, .notice
@@ -85,26 +94,4 @@ h1
   :color #0a0
   :background #efe
   :border 1px solid #cfc
-
-#page
-  :clear both
-  :float left
-  :width= !page_width
-  :position relative
-  :padding 2px
-  #content
-    :padding-left 2px
-    pre
-      :background #f6f6f6
-      :padding 10px
-      :border 1px solid #ddd
-    pre,
-    code
-      :color #006
-      :font 9pt "Bitstream Vera Sans Mono"
-    p,
-    pre
-      :margin 5px
-    h1,h2,h3,h4,h5
-      :margin 15px 0 2px 0
 

@@ -10,7 +10,7 @@ module ApplicationHelper
   end
 
   def admin?
-    session[:admin]
+    true
   end
 
   def edit_link
@@ -23,9 +23,9 @@ module ApplicationHelper
 
   def login_link
     if admin?
-      haml_tag :span, link_to('logout', login_path(1), {:method => :delete})
+      haml_tag :span, link_to('logout', '#', {:method => :delete})
     else
-      haml_tag :span, link_to('login', new_login_path)
+      haml_tag :span, link_to('login', '#')
     end
   end
 

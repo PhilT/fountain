@@ -1,8 +1,6 @@
 class PagesController < ApplicationController
   include History
 
-  before_filter :login_required
-
   def index
     @pages = Page.find(:all)
     @heading = 'Search and Index'
@@ -65,3 +63,4 @@ class PagesController < ApplicationController
     redirect_to(root_url)
   end
 end
+

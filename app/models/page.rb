@@ -1,4 +1,5 @@
 class Page < ActiveRecord::Base
+  has_paper_trail
   include ActiveSupport::CoreExtensions::String::Inflections
   validates_presence_of :title
   validates_format_of :name, :with => /^[a-zA-Z]+$/, :message => "can't contain punctuation or numbers. a-z and A-Z only"
@@ -26,7 +27,7 @@ class Page < ActiveRecord::Base
   end
 
   def formatted_content
-    ContentFormatter.new(RedCloth.new(self.content.to_s).to_html).to_s
+    ContentFormatter.new(BlueCloth.new(self.content.to_s).to_html).to_s
   end
 
 private
@@ -34,3 +35,4 @@ private
     return false if self.name == 'HomePage'
   end
 end
+
