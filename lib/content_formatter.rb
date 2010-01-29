@@ -9,7 +9,7 @@ class ContentFormatter
   end
 
   def split_pre_tags
-    @content.split(/(<pre>.*?<\/pre>|<code>.*?<\/code>)/).reject{|section| section.blank?}.map do |section|
+    @content.split(/(<pre>.*?<\/pre>|<code>.*?<\/code>)/m).reject{|section| section.blank?}.map do |section|
       section.match(/^<pre>|^<code>/) ? PreformattedContent.new(section) : TextContent.new(section)
     end
   end
@@ -36,14 +36,14 @@ end
 
 class TextContent < Content
   # A WikiWord is:
-  # Preceeded by whitespace, parenthesis, or start of string      (?:\w|\(|^|>)
-  # Uppercase letter(s)                                           [A-Z]+
-  # Lowercase letter(s) or numbers(s)                             [a-z0-9]+
-  # Uppercase letter(s)                                           [A-Z]+
-  # Optional lowercase or uppercase letter(s) or number(s)        [a-zA-Z0-9]*
-  wikiword_regex_suffix = '([A-Z]+[a-z0-9]+[A-Z]+[a-zA-Z0-9]*)'
-  @@wikiword_regex = Regexp.new('(?:\s|\(|^|>)' + wikiword_regex_suffix)
-  @@bangs_regex = Regexp.new('(!)' + wikiword_regex_suffix)
+  no_backslash = '[^\\\\]'      # Not preceeded by a backslash
+  preceeding = '(?:\s|\(|^|>)'  # Preceeded by whitespace, parenthesis, or start of string
+  lowercase = '[a-z0-9]+'       # Lowercase letter(s) or numbers(s)
+  uppercase = '[A-Z]+'          # Uppercase letter(s)
+  optional = '[a-zA-Z0-9]*'     # Optional lowercase or uppercase letter(s) or number(s)
+  wikiword_regex_suffix = '(' + uppercase + lowercase + uppercase + optional + ')'
+  @@wikiword_regex = Regexp.new(preceeding + wikiword_regex_suffix)
+  @@escape_regex = Regexp.new('(\\\\)' + wikiword_regex_suffix)
 
   def content
     @content.scan(@@wikiword_regex).flatten.each do |word|
@@ -51,6 +51,7 @@ class TextContent < Content
       klass = 'class="new" ' if page.new_record?
       @content.gsub!(word, "<a #{klass}href=\"/pages/#{page.to_param}\">#{page.title}</a>")
     end
-    @content.gsub(@@bangs_regex, '\2')
+    @content.gsub(@@escape_regex, '\2')
   end
 end
+

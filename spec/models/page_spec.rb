@@ -63,8 +63,8 @@ describe Page do
       Page.new(:content => "'QuotedWikiWords'").formatted_content.should == "<p>'QuotedWikiWords'</p>"
     end
 
-    it "should not link !BangedWikiWords" do
-      Page.new(:content => ' a !WikiWord').formatted_content.should == '<p> a WikiWord</p>'
+    it "should not link \\EscapedWikiWords" do
+      Page.new(:content => ' a \WikiWord').formatted_content.should == '<p> a WikiWord</p>'
     end
 
     it "should not link WikiWords inside pre tags" do
