@@ -12,5 +12,5 @@
 
 %div.delete
   - unless @page.new_record? || @page.name == 'HomePage'
-    %li= button_to 'Delete...', @page, :method => :delete, :confirm => "Delete '#{@page.title}'?"
+    = button_to 'Delete...', @page, :method => :delete, :confirm => "Delete '#{@page.title}'?"
 
