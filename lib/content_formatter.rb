@@ -36,20 +36,20 @@ end
 
 class TextContent < Content
   # A WikiWord is:
-  no_backslash = '[^\\\\]'      # Not preceeded by a backslash
-  preceeding = '(?:\s|\(|^|>)'  # Preceeded by whitespace, parenthesis, or start of string
+  backslash = '(\\\\)'          # tokenize any backslashed WikiWords to exclude them from the link process
+  @@preceeding = '(?:\s|\(|^|>)'  # Preceeded by whitespace, parenthesis, or start of string
   lowercase = '[a-z0-9]+'       # Lowercase letter(s) or numbers(s)
   uppercase = '[A-Z]+'          # Uppercase letter(s)
   optional = '[a-zA-Z0-9]*'     # Optional lowercase or uppercase letter(s) or number(s)
   wikiword_regex_suffix = '(' + uppercase + lowercase + uppercase + optional + ')'
-  @@wikiword_regex = Regexp.new(preceeding + wikiword_regex_suffix)
-  @@escape_regex = Regexp.new('(\\\\)' + wikiword_regex_suffix)
+  @@wikiword_regex = Regexp.new(@@preceeding + wikiword_regex_suffix)
+  @@escape_regex = Regexp.new(backslash + wikiword_regex_suffix)
 
   def content
     @content.scan(@@wikiword_regex).flatten.each do |word|
       page = Page.find_or_initialize_by_name(word)
       klass = 'class="new" ' if page.new_record?
-      @content.gsub!(word, "<a #{klass}href=\"/pages/#{page.to_param}\">#{page.title}</a>")
+      @content.gsub!(/(#{@@preceeding})#{word}/, "\\1<a #{klass}href=\"/pages/#{page.to_param}\">#{page.title}</a>")
     end
     @content.gsub(@@escape_regex, '\2')
   end
