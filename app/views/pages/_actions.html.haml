@@ -1,4 +1,7 @@
 %ul
   %li= form.submit "Save"
   %li= link_to 'Cancel', page_path(@page)
+%div.delete
+  - unless @page.new_record? || @page.name == 'HomePage'
+    = button_to 'Delete', @page, :method => :delete, :confirm => "Delete '#{@page.title}'?"
 
