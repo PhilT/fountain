@@ -5,6 +5,8 @@ class PagesController < ApplicationController
     # want none as default
     sort_order = params[:order] ||= 'name'
     @pages = Page.find(:all, :order => sort_order)
+    @pages.reverse! if sort_order == 'updated_at'
+
     @heading = 'Index'
 
     respond_to do |format|
