@@ -1,3 +1,8 @@
+Sort by :
+= link_to 'Name', pages_path(:order => 'name')
+= link_to 'Updated', pages_path(:order => 'updated_at')
+
 %ul#index
   - for page in @pages
     %li= link_to page.title, page_path(page)
+
