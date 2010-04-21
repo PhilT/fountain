@@ -19,7 +19,7 @@ module ApplicationHelper
 
   def login_link
     if current_user
-      haml_tag :span, link_to('logout', user_session_path(current_user), {:method => :delete})
+      haml_tag :span, link_to('logout ' + @current_user.name, user_session_path(current_user), {:method => :delete})
     else
       haml_tag :span, link_to('login', new_user_session_path)
     end
