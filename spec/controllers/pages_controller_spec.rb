@@ -108,7 +108,7 @@ describe PagesController do
     end
   end
 
-  describe "responding to PUT udpate" do
+  describe "responding to PUT update" do
 
     describe "with valid params" do
 
