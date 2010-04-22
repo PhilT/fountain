@@ -8,4 +8,7 @@
   %p
     = f.text_area('content', :class => 'field')
   = render :partial => 'actions', :locals => {:form => f}
+%div.delete
+  - unless @page.new_record? || @page.name == 'HomePage'
+    = button_to 'Delete', @page, :method => :delete, :confirm => "Delete '#{@page.title}'?"
 
