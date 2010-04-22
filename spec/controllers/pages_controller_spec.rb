@@ -16,15 +16,15 @@ describe PagesController do
       get :index
       assigns[:pages].should == [mock_page]
     end
+  end
 
-    describe "with mime type of xml" do
-      it "should render all pages as xml" do
-        request.env["HTTP_ACCEPT"] = "application/xml"
-        Page.should_receive(:find).with(:all).and_return(pages = mock("Array of Pages"))
-        pages.should_receive(:to_xml).and_return("generated XML")
-        get :index
-        response.body.should == "generated XML"
-      end
+  describe "with mime type of xml" do
+    it "should render all pages as xml" do
+      request.env["HTTP_ACCEPT"] = "application/xml"
+      Page.should_receive(:find).with(:all).and_return(pages = mock("Array of Pages"))
+      pages.should_receive(:to_xml).and_return("generated XML")
+      get :index
+      response.body.should == "generated XML"
     end
   end
 
