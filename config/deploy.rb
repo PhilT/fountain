@@ -5,7 +5,7 @@ set :scm, :git
 set :branch, 'master'
 
 set :user, 'ubuntu'
-set :deploy_to, "/data/#{application}"
+set :deploy_to, nil
 
 set :use_sudo, false
 set :keep_releases, 3
@@ -25,7 +25,15 @@ after "deploy:update_code", "gems:install"
 after "deploy:update_code", "copy_db_config"
 after "deploy:symlink", "deploy:update_crontab"
 
+task :check_env do
+  unless deploy_to
+    puts "You must do 'cap wiki deploy'"
+    exit
+  end
+end
+
 task :wiki do
+  set :deploy_to, '/data/wiki'
 end
 
 namespace :gems do
