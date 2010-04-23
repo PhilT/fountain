@@ -25,6 +25,8 @@ after "deploy:update_code", "gems:install"
 after "deploy:update_code", "copy_db_config"
 after "deploy:symlink", "deploy:update_crontab"
 
+before "deploy", "check_env"
+
 task :check_env do
   unless deploy_to
     puts "You must do 'cap wiki deploy'"
