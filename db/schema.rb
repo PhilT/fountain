@@ -9,13 +9,20 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100129043403) do
+ActiveRecord::Schema.define(:version => 20100425211933) do
 
   create_table "pages", :force => true do |t|
     t.string   "name"
     t.string   "title"
     t.text     "content"
     t.boolean  "public",     :default => true
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "uploads", :force => true do |t|
+    t.integer  "page_id"
+    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
