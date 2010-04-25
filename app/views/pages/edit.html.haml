@@ -8,7 +8,10 @@
   = render :partial => 'actions', :locals => {:form => f}
   %p
     = f.text_area('content', :class => 'field')
-  = render :partial => 'actions', :locals => {:form => f}
+  %p
+    = render :partial => 'file_actions', :locals => {:form => f}
+  %p
+    = render :partial => 'actions', :locals => {:form => f}
 
 %div.delete
   - unless @page.new_record? || @page.name == 'HomePage'

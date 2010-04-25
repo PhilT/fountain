@@ -1,0 +1,8 @@
+%ol
+  - form.fields_for :uploads do |builder|
+    %li
+    = builder.label :name, "Name"
+    = builder.text_field :name #, :readonly => (true if not last)
+    = builder.check_box :_destroy
+    = builder.label :_destroy, "Remove"
+
