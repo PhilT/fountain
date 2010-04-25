@@ -36,5 +36,14 @@ module ApplicationHelper
     end
   end
 
+  def display_uploads_list
+    if @page.uploads.count > 0
+      for upload in @page.uploads
+        haml_tag :li, upload.name
+      end
+    else
+      haml_tag :span, 'No uploads.'
+    end
+  end
 end
 
