@@ -3,6 +3,7 @@
     %li
     = builder.label :name, "Name"
     = builder.text_field :name #, :readonly => (true if not last)
+    = builder.file_field :document
     = builder.check_box :_destroy
     = builder.label :_destroy, "Remove"
 
