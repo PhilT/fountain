@@ -39,7 +39,7 @@ module ApplicationHelper
   def display_uploads_list
     if @page.uploads.count > 0
       for upload in @page.uploads
-        haml_tag :li, upload.name
+        haml_tag :li, link_to("#{upload.name} -- #{upload.document.url}", upload.document.url)
       end
     else
       haml_tag :span, 'No uploads.'
