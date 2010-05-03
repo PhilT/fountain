@@ -2,4 +2,4 @@
 tmp/*
 public/stylesheets/*
 rerun.txt
-
+*.swp
