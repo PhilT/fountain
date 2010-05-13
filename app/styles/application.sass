@@ -19,6 +19,8 @@ ul,ol
 
   h1
     :font-size 16px
+    a
+      :color #444
   h2
     :font
       :size 13px
@@ -106,3 +108,15 @@ a
   :background #efe
   :border 1px solid #cfc
 
+ul.dashboard
+  :list-style-type none
+  :margin 0
+  :padding 0
+  li
+    :line-height 2em
+    &.create
+      :background-color lightyellow
+    &.update
+      :background-color #E7FFD8
+    &.destroy
+      :background-color #f5f5f5

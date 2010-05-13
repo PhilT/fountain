@@ -7,7 +7,8 @@
       = @heading
   %body
     %div#header
-      %h1 BUZZ
+      %h1 
+        = link_to 'BUZZ', page_path('home-page')
       %h2 Simple Versioned Wiki
 
       %ul#menu
@@ -15,7 +16,9 @@
         - edit_link
         %li
           - login_link
-        %li.last= link_to 'index', pages_path
+        %li= link_to 'index', pages_path
+        %li.last 
+          = link_to 'dashboard', dashboard_path
     #page
       %h1
         #heading= @heading

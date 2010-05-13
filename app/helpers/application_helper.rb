@@ -36,5 +36,11 @@ module ApplicationHelper
     end
   end
 
-end
+  def username(version)
+    User.find(version.whodunnit).name
+  end
 
+  def created_or_updated(version)
+    %w(create update).include?(version.event) ? "#{version.event}d" : "#{version.event}ed"
+  end
+end
