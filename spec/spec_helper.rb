@@ -14,6 +14,4 @@ Spec::Runner.configure do |config|
   config.fixture_path = RAILS_ROOT + '/spec/fixtures/'
 end
 
-require 'spec/factories'
 require 'authlogic/test_case'
-
