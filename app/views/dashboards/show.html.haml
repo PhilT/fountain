@@ -1,4 +1,6 @@
 %div#content
+  %div.homepage
+    (Go to #{link_to 'Home Page', page_path(:id => 'home-page')})
   %ul.dashboard
     - @version_groups.each do |key, versions|
       - version = versions.first
