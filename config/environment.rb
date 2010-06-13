@@ -5,7 +5,6 @@ require File.join(File.dirname(__FILE__), 'boot')
 Rails::Initializer.run do |config|
   config.gem 'authlogic'
   config.gem 'bluecloth'
-  config.gem 'db2s3'
   config.gem 'haml'
   config.gem 'paper_trail'
   config.gem 'whenever', :lib => false
