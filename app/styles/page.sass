@@ -1,0 +1,36 @@
+@import lines
+@import colors
+
+#page
+  float: left
+  width= !page_width
+  :position relative
+  :padding 2px
+  :margin 0
+  h1
+    :background= !heading_background
+    :border-bottom 4px solid #fff
+    :display block
+    :overflow auto
+    :padding 3px
+    :padding-bottom 5px
+    :margin 10px 0 0 0
+    :border-radius 10px 10px 0 0
+    :-moz-border-radius 10px 10px 0 0
+    #heading
+      color= !heading_color
+      float: left
+      font:
+        size: 18px
+        weight: normal
+      padding-left: 10px
+
+    #datestamp
+      color: #eee
+      float: right
+      font:
+        size: 11px
+        weight: normal
+      margin-right: 10px
+      padding-top: 5px
+

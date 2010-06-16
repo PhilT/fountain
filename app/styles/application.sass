@@ -2,30 +2,26 @@
 @import lines
 
 body
-  :font 14px Arial, Sans
-  :margin 3px
+  :font 14px arial, helvetica, clean, sans-serif
+  :margin 0
 
 ul,ol
   :list-style-type none
 
 
-#header
-  :background url(/images/header_gradient.png)
-  :overflow auto
-  h1, h2
-    :display block
-    :float left
-    :color #444
+a
+  text-decoration: none
+  color= !existing_link_color
+  &:hover
+    background= !existing_link_hover_background
+    text-decoration: underline
 
-  h1
-    :font-size 16px
-    a
-      :color #444
-  h2
-    :font
-      :size 13px
-    :padding-top 2px
-    :padding-left 20px
+  &.new
+    color= !new_link_color
+    &:hover
+      background= !new_link_hover_background
+      text-decoration: underline
+
 
 #login
   li
@@ -37,64 +33,6 @@ img
 #history
   li
     :float none
-
-ul#menu
-  :float left
-  :margin 0
-  :padding-left 100px
-  li
-    :border-right= 1px solid !ev_blue
-    :float left
-    :padding 4px
-    :margin-right 2px
-    a
-      :padding 4px
-  li.last
-    :border-right none
-a
-  :text-decoration none
-  :color= !existing_link_color
-  &:hover
-    :background= !existing_link_hover_background
-    :border-radius 8px
-    :-moz-border-radius 8px
-
-  &.new
-    :color= !new_link_color
-    &:hover
-      :background= !new_link_hover_background
-
-#page
-  :float left
-  :width= !page_width
-  :position relative
-  :padding 2px
-  :margin 0
-  h1
-    :background= !heading_background
-    :border-bottom 2px solid #ccc
-    :display block
-    :overflow auto
-    :padding 3px
-    :padding-bottom 5px
-    :margin 10px 0 0 0
-    :border-radius 10px 10px 0 0
-    :-moz-border-radius 10px 10px 0 0
-    #heading
-      :padding-left 10px
-      :float left
-      :font
-        :size 18px
-      :color= !heading_color
-
-    #datestamp
-      :float right
-      :font
-        :size 11px
-        :weight normal
-      :padding-top 5px
-      :margin-right 10px
-
 
 .error, .notice
   :color #d00
@@ -126,3 +64,4 @@ ul.dashboard
       :background-color #E7FFD8
     &.destroy
       :background-color #f5f5f5
+

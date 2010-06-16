@@ -1,7 +1,7 @@
 !!!Strict
 %html
   %head
-    = stylesheet_link_tag 'application', 'content', 'form', 'sidebar'
+    = stylesheet_link_tag 'application', 'header', 'menu', 'sidebar', 'content', 'form', 'page'
     %title
       fountain:
       = @heading
@@ -27,6 +27,6 @@
       = yield
     #sidebar
       #history
-        %h2 History
+        %h2 previously viewed
         - history_list
 
