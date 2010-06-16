@@ -2,8 +2,12 @@ class PagesController < ApplicationController
   include History
 
   def index
-    @pages = Page.find(:all)
-    @heading = 'Search and Index'
+    # want none as default
+    sort_order = params[:order] ||= 'name'
+    @pages = Page.find(:all, :order => sort_order)
+    @pages.reverse! if sort_order == 'updated_at'
+
+    @heading = 'Index'
 
     respond_to do |format|
       format.html # index.html.erb
