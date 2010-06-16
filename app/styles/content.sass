@@ -1,26 +1,34 @@
 @import colors
 @import lines
+@import css3
 
 #page
   #content
-    :float left
-    :overflow auto
-    :width= !page_width - 10px
-    :background url(/images/content_gradient.png) repeat-x
-    :margin 0
-    :padding 5px
+    +set-gradient(#eed, 50)
+    float: left
+    overflow: auto
+    width= !page_width - 10px
+    margin: 0
+    padding: 5px
+    pre, code
+      color= !code_color
+      background= !code_background
+      font:
+        family: 'monospace'
+        size: 12px
     pre
-      :background #f6f6f6
-      :padding 5px
-      :margin 3px 0
-      :border 1px solid #ddd
-      :overflow auto
+      padding: 5px
+      margin: 3px 0
+      border= 1px solid !code_border
+      +border-radius(5px)
+      overflow: hidden
+      code
+        padding: 0
+      &:hover
+        overflow: auto
+
     code
-      :background #f6f6f6
-      :color= !code_color
-      :font
-        :family 'monospace'
-        :size 12px
+      padding: 1px 3px
 
     h1,h2,h3,h4,h5,h6
       :background none

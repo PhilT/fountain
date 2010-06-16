@@ -1,0 +1,40 @@
+=set-gradient(!from, !amount = -50)
+  !to = !from + !amount
+  :background= !from - !amount / 2
+  :background= -moz-linear-gradient(top, !from, !to)
+  :background= -webkit-gradient(linear, 0% 0%, 0% 100%, from(!from), to(!to))
+
+=box-shadow(!x, !y, !size, !color = 0)
+  box-shadow= !x !y !size !color
+  -moz-box-shadow= !x !y !size !color
+  -webkit-box-shadow= !x !y !size !color
+
+//border-radius(radius)
+//border-radius(top, bottom)
+//border-radius(top-left, top-right, bottom-right, bottom-left)
+=border-radius(!topleft, !topright = -1, !bottomright = -1, !bottomleft = -1)
+  @if !topright == -1
+    !topright = !topleft
+    !bottomleft = !topleft
+    !bottomright = !topleft
+  @else if !bottomright == -1
+    !bottomleft = !topright
+    !bottomright = !topright
+    !topright = !topleft
+
+  border-radius-topleft= !topleft
+  -moz-border-radius-topleft= !topleft
+  -webkit-border-top-left-radius= !topleft
+
+  border-radius-topright= !topright
+  -moz-border-radius-topright= !topright
+  -webkit-border-top-right-radius= !topright
+
+  border-radius-bottomright= !bottomright
+  -moz-border-radius-bottomright= !bottomright
+  -webkit-border-bottom-right-radius= !bottomright
+
+  border-radius-bottomleft= !bottomleft
+  -moz-border-radius-bottomleft= !bottomleft
+  -webkit-border-bottom-left-radius= !bottomleft
+
