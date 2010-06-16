@@ -3,12 +3,12 @@
   %head
     = stylesheet_link_tag 'application', 'content', 'form', 'sidebar'
     %title
-      buzz:
+      fountain:
       = @heading
   %body
     %div#header
-      %h1 
-        = link_to 'BUZZ', page_path('home-page')
+      %h1
+        = link_to 'Fountain', page_path('home-page')
       %h2 Simple Versioned Wiki
 
       %ul#menu
@@ -17,7 +17,7 @@
         %li
           - login_link
         %li= link_to 'index', pages_path
-        %li.last 
+        %li.last
           = link_to 'dashboard', dashboard_path
     #page
       %h1

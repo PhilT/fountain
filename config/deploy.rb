@@ -1,5 +1,5 @@
 set :application, "wiki"
-set :repository,  "git://github.com/PhilT/buzz.git"
+set :repository,  "git://github.com/PhilT/fountain.git"
 
 set :scm, :git
 set :branch, 'master'
