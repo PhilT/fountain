@@ -1,0 +1,20 @@
+@import lines
+@import colors
+
+ul#menu
+  float: left
+  margin: 0
+  padding-left: 100px
+  li
+    border-right: 1px solid #999
+    float: left
+    padding: 4px
+    margin-right: 2px
+    a
+      padding: 4px
+      color= !header_color + 100
+      &:hover
+        background= !header_color + 80
+  li.last
+    border-right: none
+

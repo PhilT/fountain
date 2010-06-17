@@ -1,0 +1,14 @@
+%div#content
+  %div.homepage
+    (Go to #{link_to 'Home Page', page_path(:id => 'home-page')})
+  %ul.dashboard
+    - @version_groups.each do |key, versions|
+      - version = versions.first
+      %li{:class => version.event}
+        = username(version)
+        = created_or_updated(version)
+        = (link_to version.item.name, page_path(version.item)) rescue 'a page'
+        = time_ago_in_words(version.created_at)
+        ago
+        - if versions.length > 1
+          (#{versions.length} times)

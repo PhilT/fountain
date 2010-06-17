@@ -1,0 +1,17 @@
+%table
+  %tr
+    %th Version
+    %th When
+    %th Author
+    %th
+  - count = @page.versions.size
+  - @page.versions.reverse.each_with_index do |version, i|
+    %tr
+      %td= count - i
+      %td
+        = version.created_at.to_s(:english)
+        %span
+          = time_ago_in_words(version.created_at) + ' ago'
+      %td= User.find(version.whodunnit.to_i).name rescue '(unknown)'
+      %td= link_to "Show",page_version_path(@page, count - i)
+

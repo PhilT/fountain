@@ -1,4 +1,8 @@
 %div#datestamp
-  %span last updated:
+  %span At
+  #{link_to "Version #{@page.versions.size}", versions_page_path(@page)},
+  %span last updated by
+  %strong=@page.last_updated_by.name
+  %span, on
   %strong= @page.updated_at.to_date.to_s(:rfc822)
 

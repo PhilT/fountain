@@ -1,11 +1,11 @@
 # mysql -u root -p
-# grant all on *.* to 'buzz'@'localhost' identified by 'buzz';
+# grant all on *.* to 'fountain'@'localhost' identified by 'fountain';
 # exit
 
 common: &common
   adapter: mysql
-  username: buzz
-  password: buzz
+  username: fountain
+  password: fountain
   host: localhost
   encoding: utf8
 <% if File.exist? "/var/run/mysqld/mysqld.sock" %>
@@ -18,16 +18,17 @@ common: &common
 
 development:
   <<: *common
-  database: buzz_development
+  database: fountain_development
 
 test: &TEST
   <<: *common
-  database: buzz_test
+  database: fountain_test
 
 production:
   <<: *common
-  database: buzz_development
+  database: fountain_development
 
 
 cucumber:
   <<: *TEST
+

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100129043403) do
+ActiveRecord::Schema.define(:version => 20100617020415) do
 
   create_table "pages", :force => true do |t|
     t.string   "name"
@@ -18,6 +18,16 @@ ActiveRecord::Schema.define(:version => 20100129043403) do
     t.boolean  "public",     :default => true
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "uploads", :force => true do |t|
+    t.integer  "page_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "document_file_name"
+    t.string   "document_content_type"
+    t.integer  "document_file_size"
+    t.datetime "document_updated_at"
   end
 
   create_table "users", :force => true do |t|

@@ -1,7 +1,5 @@
 class User < ActiveRecord::Base
-  acts_as_authentic do |c|
-    c.validate_password_field           = false
-  end
+  acts_as_authentic
 
   validates_presence_of :name, :message => "Please enter your name."
   validates_presence_of :email, :message => "Please enter your Email Address."
@@ -12,6 +10,10 @@ class User < ActiveRecord::Base
 
   def email_address_with_name
     "#{name} <#{email}>"
+  end
+
+  def first_name
+    self.name.split(' ').first
   end
 end
 

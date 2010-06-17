@@ -1,1 +1,7 @@
 #content~ @page.formatted_content
+- if @page.uploads.count > 0
+  #uploads
+    - @page.uploads.each do |upload|
+      %ul
+        %li= link_to(upload.document_file_name, upload.document.url)
+

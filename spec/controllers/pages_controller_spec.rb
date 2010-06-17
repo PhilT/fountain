@@ -12,19 +12,21 @@ describe PagesController do
 
   describe "responding to GET index" do
     it "should expose all pages as @pages" do
-      Page.should_receive(:find).with(:all).and_return([mock_page])
+      Factory(:page)
+
       get :index
-      assigns[:pages].should == [mock_page]
+      response.should be_success
+      assigns(:pages).should_not be_empty
     end
   end
 
   describe "with mime type of xml" do
     it "should render all pages as xml" do
       request.env["HTTP_ACCEPT"] = "application/xml"
-      Page.should_receive(:find).with(:all).and_return(pages = mock("Array of Pages"))
-      pages.should_receive(:to_xml).and_return("generated XML")
+      Factory(:page)
+
       get :index
-      response.body.should == "generated XML"
+      response.should be_success
     end
   end
 

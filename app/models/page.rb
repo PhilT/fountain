@@ -1,5 +1,8 @@
 class Page < ActiveRecord::Base
   has_paper_trail
+  has_many :uploads, :dependent => :destroy
+  accepts_nested_attributes_for :uploads, :allow_destroy => true
+
   include ActiveSupport::CoreExtensions::String::Inflections
   validates_presence_of :title
   validates_format_of :name, :with => /^[a-zA-Z]+$/, :message => "can't contain punctuation or numbers. a-z and A-Z only"
@@ -28,6 +31,10 @@ class Page < ActiveRecord::Base
 
   def formatted_content
     ContentFormatter.new(BlueCloth.new(self.content.to_s).to_html).to_s
+  end
+
+  def last_updated_by
+    User.find(self.versions.last.whodunnit.to_i)
   end
 
 private
