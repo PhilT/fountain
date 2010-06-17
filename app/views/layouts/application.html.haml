@@ -13,16 +13,25 @@
 
       %ul#menu
         %li= link_to 'home', page_path('home-page')
-        - edit_link
         %li
-          - login_link
+          - if @page && !@page.new_record?
+            %span#edit= link_to('edit', edit_page_path(@page))
+        %li
+          %span
+            - if current_user
+              = link_to("logout", user_session_path(current_user), {:method => :delete})
+            - else
+              = link_to('login', new_user_session_path)
         %li= link_to 'index', pages_path
-        %li.last
-          = link_to 'dashboard', dashboard_path
+        %li.last= link_to 'dashboard', dashboard_path
+
+      - if logged_in?
+        %p.hello
+          Hi, #{current_user.first_name}
     #page
       %h1
         #heading= @heading
-        = render :partial => 'last_updated' if @page && !@page.updated_at.blank?
+        = render :partial => 'pages/last_updated' if @page && !@page.updated_at.blank?
       - display_flash
       = yield
     #sidebar

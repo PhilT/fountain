@@ -21,7 +21,6 @@ describe ContentFormatter do
 
       ContentFormatter.new(input_with_lf).split_pre_tags.to_s.should == expected
     end
-
   end
 
   describe Content do

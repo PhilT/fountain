@@ -30,6 +30,10 @@ class Page < ActiveRecord::Base
     ContentFormatter.new(BlueCloth.new(self.content.to_s).to_html).to_s
   end
 
+  def last_updated_by
+    User.find(self.versions.last.whodunnit.to_i)
+  end
+
 private
   def stop_homepage_destruction
     return false if self.name == 'HomePage'

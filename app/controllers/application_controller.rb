@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   filter_parameter_logging :password
   before_filter :login_required
 
-  helper_method :current_user
+  helper_method :current_user, :logged_in?
 
   private
   def current_user_session
@@ -17,6 +17,10 @@ class ApplicationController < ActionController::Base
 
   def current_user
     @current_user = current_user_session && current_user_session.user
+  end
+
+  def logged_in?
+    !current_user.nil?
   end
 
   def login_required

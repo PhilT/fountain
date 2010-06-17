@@ -11,5 +11,9 @@ class User < ActiveRecord::Base
   def email_address_with_name
     "#{name} <#{email}>"
   end
+
+  def first_name
+    self.name.split(' ').first
+  end
 end
 
