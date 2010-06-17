@@ -1,5 +1,6 @@
 @import lines
 @import colors
+@import css3
 
 #page
   float: left
@@ -57,4 +58,15 @@
     td span
       color: #666
       font-size: 75%
+
+  #uploads
+    position: relative
+    top: 20px
+    overflow: auto
+    border= 1px solid !code_border
+    +border-radius(5px)
+    background= !code_background
+    margin: 30px 3px
+    ul
+      margin: 5px
 

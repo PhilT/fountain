@@ -7,6 +7,7 @@ gem 'authlogic'
 gem 'bluecloth'
 gem 'haml'
 gem 'paper_trail'
+gem 'paperclip'
 
 group :production do
   gem 'whenever', :require => false
