@@ -10,8 +10,8 @@ gem 'paper_trail'
 gem 'paperclip'
 gem 's3'
 
-group :production do
-  gem 'whenever', :require => false
+group :staging, :production do
+  gem 'whenever'
 end
 
 group :test do
