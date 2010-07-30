@@ -1,4 +1,4 @@
-RAILS_GEM_VERSION = '2.3.8' unless defined? RAILS_GEM_VERSION
+RAILS_GEM_VERSION = '2.3.5' unless defined? RAILS_GEM_VERSION
 
 require File.join(File.dirname(__FILE__), 'boot')
 
@@ -11,4 +11,5 @@ Rails::Initializer.run do |config|
 end
 
 Sass::Plugin.options[:template_location] = RAILS_ROOT + '/app/styles'
+S3FILE = S3File.new(S3_CONFIG) if defined?(S3)
 

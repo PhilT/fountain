@@ -8,6 +8,7 @@ gem 'bluecloth'
 gem 'haml'
 gem 'paper_trail'
 gem 'paperclip'
+gem 's3'
 
 group :production do
   gem 'whenever', :require => false
