@@ -121,11 +121,11 @@ describe PagesController do
         response.flash[:notice].should == 'page updated'
       end
 
-      it "doesn't create an attachment when no attachment specified" do
+      it "creates an attachment" do
         page = Factory(:page)
-        put :update, :id => page.to_param, :page => {:name => 'Page', :title => 'Page', :content => 'Page Content', :uploads_attributes => {0 => {:document_file_name => '', :_destroy => 0}}}
+        put :update, :id => page.to_param, :page => {:name => 'Page', :title => 'Page', :content => 'Page Content', :uploads_attributes => {0 => {:document => File.open('spec/test.txt', 'r')}}}
         response.should be_redirect
-        page.reload.uploads.size.should == 0
+        page.reload.uploads.size.should == 1
       end
 
       it "should expose the requested page as @page" do

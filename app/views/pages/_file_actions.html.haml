@@ -1,8 +1,4 @@
 %ol
   - form.fields_for :uploads do |builder|
     %li
-    = builder.text_field :document_file_name, :readonly => true
     = builder.file_field :document
-    = builder.check_box :_destroy
-    = builder.label :_destroy, "Remove"
-
