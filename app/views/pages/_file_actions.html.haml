@@ -1,4 +1,2 @@
-%ol
-  - form.fields_for :uploads do |builder|
-    %li
-    = builder.file_field :document
+- form.fields_for @page.uploads.build do |builder|
+  = builder.file_field :document

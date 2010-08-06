@@ -7,7 +7,15 @@
     %span= f.text_field('title', :class => 'field')
   %p
     = f.text_area('content', :class => 'field')
+  %h5 Attachments
+  %ul.attachments
+    - @page.uploads.each do |upload|
+      %li
+        = link_to upload.document.original_filename, upload.document.url
+        = link_to 'Remove', '#'
   %p
+    Add attachment
+    %br/
     = render :partial => 'file_actions', :locals => {:form => f}
   %p
     = render :partial => 'actions', :locals => {:form => f}

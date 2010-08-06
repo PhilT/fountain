@@ -34,7 +34,6 @@ class PagesController < ApplicationController
   def edit
     @page = Page.find_by_slug(params[:id])
     @heading = "Editing #{@page.title}"
-    @page.uploads.build
   end
 
   def create
