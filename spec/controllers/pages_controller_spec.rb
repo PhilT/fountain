@@ -115,8 +115,17 @@ describe PagesController do
     describe "with valid params" do
       it "should update the requested page" do
         Page.should_receive(:find_by_slug).with("37").and_return(mock_page)
-        mock_page.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, :id => "37", :page => {:these => 'params'}
+        mock_page.should_receive(:update_attributes).and_return(true)
+        put :update, :id => "37", :page => {:name => 'Page', :title => 'Page', :content => 'Page Content'}
+        response.should be_redirect
+        response.flash[:notice].should == 'page updated'
+      end
+
+      it "doesn't create an attachment when no attachment specified" do
+        page = Factory(:page)
+        put :update, :id => page.to_param, :page => {:name => 'Page', :title => 'Page', :content => 'Page Content', :uploads_attributes => {0 => {:document_file_name => '', :_destroy => 0}}}
+        response.should be_redirect
+        page.reload.uploads.size.should == 0
       end
 
       it "should expose the requested page as @page" do
