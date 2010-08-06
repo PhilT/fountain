@@ -1,5 +1,5 @@
 #content~ @page.formatted_content
-- if @page.uploads.count > 0
+- if @page.uploads.any?
   #uploads
     - @page.uploads.each do |upload|
       %ul

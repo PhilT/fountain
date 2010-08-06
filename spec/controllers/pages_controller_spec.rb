@@ -68,6 +68,7 @@ describe PagesController do
     it "should expose the requested page as @page" do
       session[:admin] = true
       Page.should_receive(:find_by_slug).with("page-slug").and_return(mock_page)
+      mock_page.stub_chain(:uploads, :build)
       get :edit, :id => "page-slug"
       assigns[:page].should equal(mock_page)
       response.should render_template('edit')
@@ -111,9 +112,7 @@ describe PagesController do
   end
 
   describe "responding to PUT update" do
-
     describe "with valid params" do
-
       it "should update the requested page" do
         Page.should_receive(:find_by_slug).with("37").and_return(mock_page)
         mock_page.should_receive(:update_attributes).with({'these' => 'params'})

@@ -10,6 +10,7 @@ end
 Factory.define :user do |f|
   f.name 'A User'
   f.password 'password'
+  f.password_confirmation 'password'
   f.email { Factory.next :email }
 end
 
