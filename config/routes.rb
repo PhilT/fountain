@@ -3,6 +3,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :user_sessions
   map.resources :pages, :member => {:versions => :get} do |page|
     page.resources :versions, :only => [:index, :show]
+    page.resources :uploads, :only => :destroy
   end
 
   map.root :controller => 'dashboards', :action => 'show'

@@ -12,7 +12,7 @@
     - @page.uploads.each do |upload|
       %li
         = link_to upload.document.original_filename, upload.document.url
-        = link_to 'Remove', '#'
+        = link_to 'Delete attachment', page_upload_url(@page, upload), :method => :delete, :confirm => 'Are you sure?', :class => 'delete'
   %p
     Add attachment
     %br/
