@@ -1,4 +1,4 @@
-#content~ @page.formatted_content
+#content~ raw @page.formatted_content
 - if @page.uploads.any?
   #uploads
     - @page.uploads.each do |upload|

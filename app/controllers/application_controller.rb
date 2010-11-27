@@ -4,7 +4,6 @@
 class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   protect_from_forgery # :secret => '0069c6b15e17ba43821b85f002c589d4'
-  filter_parameter_logging :password
   before_filter :login_required
 
   helper_method :current_user, :logged_in?

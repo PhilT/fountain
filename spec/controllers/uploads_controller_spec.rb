@@ -1,4 +1,4 @@
-require 'spec/spec_helper'
+require 'spec_helper'
 
 describe UploadsController do
   before do
@@ -13,3 +13,4 @@ describe UploadsController do
     response.should redirect_to(edit_page_url(page))
   end
 end
+

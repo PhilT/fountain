@@ -1,9 +1,9 @@
-require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
+require 'spec_helper'
 
 describe PagesController do
   before(:each) do
     activate_authlogic
-    UserSession.create(Factory :user)
+    UserSession.create(Factory(:user))
   end
 
   def mock_page(stubs={})
@@ -106,7 +106,7 @@ describe PagesController do
       it "should re-render the 'new' template" do
         Page.stub!(:new).and_return(mock_page(:save => false))
         post :create, :page => {}
-        response.should render_template('new')
+        response.should render_template('edit')
       end
     end
   end

@@ -1,6 +1,6 @@
 source :rubygems
 
-gem 'rails', '2.3.5'
+gem 'rails'
 gem 'mysql'
 
 gem 'authlogic'
@@ -14,11 +14,9 @@ group :staging, :production do
   gem 'whenever'
 end
 
-group :test do
-  gem "ZenTest", :require => "zentest"
-  gem "rspec", :require => 'spec'
-  gem "rspec-rails", :require => false
-  gem "webrat"
-  gem "factory_girl", '1.2.4'
+group :development, :test do
+  gem 'rspec-rails'
+  gem 'webrat'
+  gem 'factory_girl'
 end
 

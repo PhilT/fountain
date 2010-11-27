@@ -44,7 +44,7 @@ class PagesController < ApplicationController
       flash[:notice] = "page created"
       redirect_to(@page)
     else
-      render :action => "new"
+      render :action => "edit"
     end
   end
 

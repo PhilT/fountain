@@ -1,4 +1,4 @@
-require 'spec/spec_helper'
+require 'spec_helper'
 
 describe ContentFormatter do
   def create_sections(pre, normal)
@@ -16,10 +16,10 @@ describe ContentFormatter do
     end
 
     it 'should handle pre and code tags with linefeeds' do
-      expected = "<p><a class=\"new\" href=\"/pages/this-is-linked\">This Is Linked</a></p>\n\n<pre><code>Part of something\n</code></pre>"
-      input_with_lf = "<p>ThisIsLinked</p>\n\n<pre><code>Part of something\n</code></pre>"
+      expected = [TextContent.new("<p><a class=\"new\" href=\"/pages/this-is-linked\">This Is Linked</a></p>\n\n"), PreformattedContent.new("<pre>\n<code>ThisIsNotLinked\n  </code>\n</pre>")]
+      input_with_lf = "<p>ThisIsLinked</p>\n\n<pre>\n<code>ThisIsNotLinked\n  </code>\n</pre>"
 
-      ContentFormatter.new(input_with_lf).split_pre_tags.to_s.should == expected
+      ContentFormatter.new(input_with_lf).split_pre_tags.should == expected
     end
   end
 

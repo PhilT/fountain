@@ -1,8 +1,12 @@
 - form_for @user do |f|
-  %p= f.error_messages
+  %ul
+    - @user.errors.full_messages.each do |error|
+      %li= error
+
   %p
     %span= f.label :name
     %span= f.text_field :name
+
   %p
     %span= f.label :email
     %span= f.text_field :email
