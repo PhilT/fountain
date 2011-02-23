@@ -4,11 +4,27 @@ Fountain
 Noticeboard | Guides | Tips | Documents | Attachments | Help | Ideas
 --------------------------------------------------------------------
 
-I wrote this wiki a while ago when I got fed up of the multitude of Wiki clones that used non-standard syntax or just looked too complicated. I wanted one that supported the original Portland repository syntax but looked a little nicer and was easy for beginners to get into (e.g. had a key for wiki syntax within easy reach).
+I wrote this Wiki a while ago when I got fed up of the multitude of Wiki clones that used non-standard syntax or just
+looked too complicated.
 
-* Basically uses Markdown. None of this [[brackets non-sense]]. Supports WikiWords
+* Basically uses Markdown
+* Uses Portland WikiWords for internal links (None of this [[brackets non-sense]])
 * Simple for first time Wiki users
-* Rename titles and see the renames in all links
+* Renaming pages also renames all references to the page
+* Dashboard shows recent changes
+* History shows recently viewed pages
+* File uploads (S3)
+* View old versions of pages
 
-After needing something similar at work recently I decided to dust it off and maybe add a few features
+Status & To Do
+--------------
+
+* Recently upgraded to Rails 3
+* File uploads needs tidying up
+* Quick ref needs adding back in
+* Will add quick edit & save modes (e.g. click on text and CTRL+ENTER in textarea to save)
+* Might add image support
+* Another UI Rework using jQuery UI
+* Email notification of page changes
+* Need to make deployment easier
 
