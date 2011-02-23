@@ -27,4 +27,5 @@ Status & To Do
 * Another UI Rework using jQuery UI
 * Email notification of page changes
 * Need to make deployment easier
+* Public/private pages (editing will always only be allowed for logged in users)
 
