@@ -2,33 +2,38 @@
 # grant all on *.* to 'fountain'@'localhost' identified by 'fountain';
 # exit
 
-common: &common
-  adapter: mysql
+login: &login
   username: fountain
   password: fountain
+
+# Allows username and password to be overridden
+<%= file = File.join(Rails.root, "config", "dblogin.yml")
+    IO.read(file) if File.exist?(file) %>
+
+common: &common
+  adapter: mysql
+  database: fountain_development
   host: localhost
   encoding: utf8
-<% if File.exist? "/var/run/mysqld/mysqld.sock" %>
-  socket: /var/run/mysqld/mysqld.sock
-<% elsif File.exist? "/opt/local/var/run/mysql5/mysqld.sock" %>
-  socket: /opt/local/var/run/mysql5/mysqld.sock
-<% elsif File.exist? "/tmp/mysql.sock" %>
-  socket: /tmp/mysql.sock
-<% end %>
+  socket: <%= [
+    '/opt/local/var/run/mysql5/mysqld.sock',
+    '/var/lib/mysql/mysql.sock',
+    '/var/run/mysqld/mysqld.sock',
+    '/tmp/mysqld.sock',
+    '/tmp/mysql.sock',
+  ].detect { |socket| File.exist?(socket) } %>
+  <<: *login
 
 development:
   <<: *common
-  database: fountain_development
 
-test: &TEST
+test:
   <<: *common
   database: fountain_test
 
+staging:
+  <<: *common
+
 production:
   <<: *common
-  database: fountain_development
-
-
-cucumber:
-  <<: *TEST
 
