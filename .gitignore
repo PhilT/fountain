@@ -5,4 +5,5 @@ rerun.txt
 *.swp
 s3_backup.rb
 dblogin.yml
+.bin
 
